@@ -8,41 +8,12 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Color("BackgroundColor")
-                .edgesIgnoringSafeArea(.all)
+            BackgroundView(game: $game)
             VStack {
-                VStack {
-                    InstructionsView(game: $game)
-                    HStack {
-                        Text("1")
-                            .bold()
-                            .foregroundColor(Color("TextColor"))
-                        Slider(value: $sliderValue, in: 1.0...100.0)
-                        Text("100")
-                            .foregroundColor(Color("TextColor"))
-                            .bold()
-                    }
+                InstructionsView(game: $game)
+                SliderView(sliderValue: $sliderValue)
                     .padding(20)
-                    Button(action: {
-                        alertIsVisible = true
-                        print(alertIsVisible)
-                    }) {
-                        Text("Hit me".uppercased())
-                            .bold()
-                            .font(.title3)
-                    }
-                    .padding(20.0)
-                    .background(
-                        ZStack {
-                            Color("ButtonColor")
-                            LinearGradient(colors: [Color.white.opacity(0.3), Color.clear], startPoint: .top, endPoint: .bottom)
-                        })
-                    .foregroundColor(Color.white)
-                    .cornerRadius(21.0)
-                    .alert(isPresented: $alertIsVisible) {
-                        return Alert(title: Text("Hello there!"), message: Text("You scored \(game.points(sliderValue: Int(sliderValue))) points in this round"), dismissButton: .default(Text("Cancel")))
-                    }
-                }
+                HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
             }
         }
     }
@@ -57,6 +28,49 @@ struct ContentView: View {
                     .padding(.trailing, 30.0)
             }
             BigNumberView(text: String(game.target))
+        }
+    }
+    
+    struct SliderView: View {
+        @Binding var sliderValue: Double
+        
+        var body: some View {
+            HStack{
+                SliderValueText(text: "1")
+                Slider(value: $sliderValue, in: 1.0...100.0)
+                SliderValueText(text: "100")
+            }
+        }
+    }
+    
+    struct HitMeButton: View {
+        @Binding var alertIsVisible: Bool
+        @Binding var sliderValue: Double
+        @Binding var game: Game
+        
+        var body: some View {
+            Button(action: {
+                alertIsVisible = true
+            }) {
+                Text("Hit me".uppercased())
+                    .bold()
+                    .font(.title3)
+            }
+            .padding(20)
+            .background(
+                ZStack {
+                    Color("ButtonColor")
+                    LinearGradient(colors: [Color.white.opacity(0.4), Color.clear], startPoint: .top, endPoint: .bottom)
+                })
+            .foregroundColor(Color.white)
+            .cornerRadius(21.0)
+            .overlay(
+                RoundedRectangle(cornerRadius: 21.0)
+                    .strokeBorder(Color.white, lineWidth: 2)
+            )
+            .alert(isPresented: $alertIsVisible) {
+                return Alert(title: Text("Hello there!"), message: Text("The slider's value is \(Int(sliderValue.rounded()))\n" + "You scored \(game.points(sliderValue: Int(sliderValue))) points in this round"), dismissButton: .default(Text("Cancel")))
+            }
         }
     }
 }

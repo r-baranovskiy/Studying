@@ -15,6 +15,19 @@ struct InstructionText: View {
     }
 }
 
+struct LabelText: View {
+    
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .bold()
+            .foregroundColor(Color("TextColor"))
+            .kerning(1.5)
+            .font(.caption)
+    }
+}
+
 struct BigNumberView: View {
     
     var text: String
@@ -27,8 +40,14 @@ struct BigNumberView: View {
     }
 }
 
-struct TextViews_Previews: PreviewProvider {
-    static var previews: some View {
-        InstructionText(text: "text")
+struct SliderValueText: View {
+    
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .bold()
+            .foregroundColor(Color("TextColor"))
+            .frame(width: 35.0)
     }
 }
