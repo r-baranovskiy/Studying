@@ -1,10 +1,3 @@
-//
-//  RoundedViews.swift
-//  Bullseye
-//
-//  Created by Кащенко on 19.12.22.
-//
-
 import SwiftUI
 
 struct RoundedImageViewStrocked: View {
