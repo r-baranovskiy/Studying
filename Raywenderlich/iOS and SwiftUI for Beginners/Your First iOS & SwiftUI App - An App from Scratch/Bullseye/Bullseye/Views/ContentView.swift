@@ -11,9 +11,16 @@ struct ContentView: View {
             BackgroundView(game: $game)
             VStack {
                 InstructionsView(game: $game)
-                SliderView(sliderValue: $sliderValue)
-                    .padding(20)
-                HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+                    .padding(.bottom, alertIsVisible ? 0 : 100)
+                if alertIsVisible {
+                    PointsView(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+                } else {
+                    HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+                }
+                if !alertIsVisible {
+                    SliderView(sliderValue: $sliderValue)
+                        .padding(20)
+                }
             }
         }
     }
@@ -23,11 +30,11 @@ struct ContentView: View {
         
         var body: some View {
             VStack {
-                InstructionText(text: "🎯🎯🎯\nPut the bullseye as close as you can to")
+                InstructionText(text: "🎯🎯🎯\nPut the Bullseye as close as you can to")
                     .padding(.leading, 30.0)
                     .padding(.trailing, 30.0)
+                BigNumberView(text: String(game.target))
             }
-            BigNumberView(text: String(game.target))
         }
     }
     
@@ -40,6 +47,7 @@ struct ContentView: View {
                 Slider(value: $sliderValue, in: 1.0...100.0)
                 SliderValueText(text: "100")
             }
+            .padding()
         }
     }
     
@@ -68,13 +76,6 @@ struct ContentView: View {
                 RoundedRectangle(cornerRadius: 21.0)
                     .strokeBorder(Color.white, lineWidth: 2)
             )
-            .alert(isPresented: $alertIsVisible) {
-                let points = game.points(sliderValue: Int(sliderValue))
-                return Alert(title: Text("Hello there!"), message: Text("The slider's value is \(Int(sliderValue.rounded()))\n" + "You scored \(game.points(sliderValue: Int(sliderValue))) points in this round"), dismissButton: .default(Text("Cancel")) {
-                    game.startNewRound(points: points)
-                }
-                )
-            }
         }
     }
 }
