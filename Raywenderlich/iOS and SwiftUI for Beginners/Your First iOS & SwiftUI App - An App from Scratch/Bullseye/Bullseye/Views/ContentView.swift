@@ -69,7 +69,11 @@ struct ContentView: View {
                     .strokeBorder(Color.white, lineWidth: 2)
             )
             .alert(isPresented: $alertIsVisible) {
-                return Alert(title: Text("Hello there!"), message: Text("The slider's value is \(Int(sliderValue.rounded()))\n" + "You scored \(game.points(sliderValue: Int(sliderValue))) points in this round"), dismissButton: .default(Text("Cancel")))
+                let points = game.points(sliderValue: Int(sliderValue))
+                return Alert(title: Text("Hello there!"), message: Text("The slider's value is \(Int(sliderValue.rounded()))\n" + "You scored \(game.points(sliderValue: Int(sliderValue))) points in this round"), dismissButton: .default(Text("Cancel")) {
+                    game.startNewRound(points: points)
+                }
+                )
             }
         }
     }
