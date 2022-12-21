@@ -65,6 +65,18 @@ struct BigNumberView: View {
     }
 }
 
+struct BigBoldText: View {
+    let text: String
+    
+    var body: some View {
+        Text(text.uppercased())
+            .kerning(2.0)
+            .foregroundColor(Color("TextColor"))
+            .font(.title)
+            .fontWeight(.black)
+    }
+}
+
 struct SliderValueText: View {
     var text: String
     
