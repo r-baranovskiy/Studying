@@ -4,15 +4,15 @@ import XCTest
 final class BullseyeTests: XCTestCase {
     
     var game: Game!
-
+    
     override func setUpWithError() throws {
         game = Game()
     }
-
+    
     override func tearDownWithError() throws {
         game = nil
     }
-
+    
     func testScorePositive() {
         let guess = game.target + 5
         let score = game.points(sliderValue: guess)
@@ -50,5 +50,15 @@ final class BullseyeTests: XCTestCase {
         game.gameRestart()
         XCTAssertEqual(game.round, 1)
         XCTAssertEqual(game.score, 0)
+    }
+    
+    func testLeaderBoard() {
+        game.startNewRound(points: 100)
+        XCTAssertEqual(game.leaderboardEntries.count, 1)
+        XCTAssertEqual(game.leaderboardEntries[0].score, 100)
+        game.startNewRound(points: 200)
+        XCTAssertEqual(game.leaderboardEntries.count, 2)
+        XCTAssertEqual(game.leaderboardEntries[0].score, 200)
+        XCTAssertEqual(game.leaderboardEntries[1].score, 100)
     }
 }
