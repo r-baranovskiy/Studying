@@ -11,15 +11,17 @@ struct ContentView: View {
             BackgroundView(game: $game)
             VStack {
                 InstructionsView(game: $game)
-                    .padding(.bottom, alertIsVisible ? 0 : 100)
+                    .padding(.bottom, alertIsVisible ? 100 : 0)
                 if alertIsVisible {
                     PointsView(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+                        .transition(.scale)
                 } else {
                     HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+                        .transition(.scale)
                 }
                 if !alertIsVisible {
                     SliderView(sliderValue: $sliderValue)
-                        .padding(20)
+                        .transition(.scale)
                 }
             }
         }
@@ -58,7 +60,9 @@ struct ContentView: View {
         
         var body: some View {
             Button(action: {
-                alertIsVisible = true
+                withAnimation {
+                    alertIsVisible = true
+                }
             }) {
                 Text("Hit me".uppercased())
                     .bold()
@@ -73,8 +77,8 @@ struct ContentView: View {
             .foregroundColor(Color.white)
             .cornerRadius(21.0)
             .overlay(
-                RoundedRectangle(cornerRadius: 21.0)
-                    .strokeBorder(Color.white, lineWidth: 2)
+                RoundedRectangle(cornerRadius: Constants.General.roundRectCornerRadius)
+                    .strokeBorder(Color.white, lineWidth: Constants.General.strokeWidth)
             )
         }
     }

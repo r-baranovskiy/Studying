@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct InstructionText: View {
-    
     var text: String
     
     var body: some View {
@@ -16,7 +15,6 @@ struct InstructionText: View {
 }
 
 struct LabelText: View {
-    
     var text: String
     
     var body: some View {
@@ -29,7 +27,6 @@ struct LabelText: View {
 }
 
 struct BodyText: View {
-    
     var text: String
     
     var body: some View {
@@ -42,7 +39,6 @@ struct BodyText: View {
 }
 
 struct ButtonText: View {
-    
     var text: String
     
     var body: some View {
@@ -59,7 +55,6 @@ struct ButtonText: View {
 }
 
 struct BigNumberView: View {
-    
     var text: String
     
     var body: some View {
@@ -71,7 +66,6 @@ struct BigNumberView: View {
 }
 
 struct SliderValueText: View {
-    
     var text: String
     
     var body: some View {
@@ -79,5 +73,29 @@ struct SliderValueText: View {
             .bold()
             .foregroundColor(Color("TextColor"))
             .frame(width: 35.0)
+    }
+}
+
+struct ScoreText: View {
+    var score: Int
+    
+    var body: some View {
+        Text(String(score))
+            .bold()
+            .kerning(-0.2)
+            .foregroundColor(Color("TextColor"))
+            .font(.title3)
+    }
+}
+
+struct DateText: View {
+    var date: Date
+    
+    var body: some View {
+        Text(date, style: .time)
+            .bold()
+            .kerning(-0.2)
+            .foregroundColor(Color("TextColor"))
+            .font(.title3)
     }
 }

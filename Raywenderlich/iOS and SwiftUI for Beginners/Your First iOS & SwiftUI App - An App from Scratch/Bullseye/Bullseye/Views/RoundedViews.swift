@@ -7,10 +7,10 @@ struct RoundedImageViewStrocked: View {
         Image(systemName: imageSystemName)
             .font(.title)
             .foregroundColor(Color("TextColor"))
-            .frame(width: 56, height: 56)
+            .frame(width: Constants.General.roundedViewLength, height: Constants.General.roundedViewLength)
             .overlay(
                 Circle()
-                    .strokeBorder(Color("ButtonStrokeColor"), lineWidth: 2))
+                    .strokeBorder(Color("ButtonStrokeColor"), lineWidth: Constants.General.strokeWidth))
     }
 }
 
@@ -21,7 +21,7 @@ struct RoundedImageViewFilled: View {
         Image(systemName: imageSystemName)
             .font(.title)
             .foregroundColor(Color("ButtonFilledTextColor"))
-            .frame(width: 56, height: 56)
+            .frame(width: Constants.General.roundedViewLength, height: Constants.General.roundedViewLength)
             .background(
                 Circle()
                     .fill(Color("ButtonFilledBackgroundColor"))
@@ -37,13 +37,27 @@ struct RoundedRectTextView: View {
             .kerning(-0.2)
             .bold()
             .font(.title3)
-            .frame(width: 68, height: 56)
+            .frame(width: Constants.General.roundRectViewWidth, height: Constants.General.roundRectViewHeight)
             .foregroundColor(Color("TextColor"))
             .overlay(
-                RoundedRectangle(cornerRadius: 21.0)
+                RoundedRectangle(cornerRadius: Constants.General.roundRectCornerRadius)
                     .stroke(lineWidth: 2)
                     .foregroundColor(Color("ButtonStrokeColor"))
             )
+    }
+}
+
+struct RoundedTextView: View {
+    let text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.title)
+            .foregroundColor(Color("TextColor"))
+            .frame(width: Constants.General.roundedViewLength, height: Constants.General.roundedViewLength)
+            .overlay(
+                Circle()
+                    .strokeBorder(Color("LeaderboardColor"), lineWidth: Constants.General.strokeWidth))
     }
 }
 
