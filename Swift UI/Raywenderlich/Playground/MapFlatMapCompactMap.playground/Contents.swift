@@ -39,3 +39,7 @@ let dwarvesAfterM = arrayOfDwarfArrays.flatMap { (dwarves) -> [String] in
     }
     return dwarvesAfterM
 }
+
+let dwarvesAfterC = arrayOfDwarfArrays.flatMap { (dwarves) -> [String] in
+    dwarves.filter({ $0 > "C" })
+}
