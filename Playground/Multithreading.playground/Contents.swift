@@ -40,3 +40,125 @@ import UIKit
  
  Background - задачи, о которых пользователь не знает. Используется для предварительной загрузки, обслуживания и других задач, которые не требуют взаимодействия с пользователем и не зависят от времени.
  */
+
+/*
+
+//MARK: - Получение очередей
+
+let mainQueue = DispatchQueue.main
+let backgroundQueue = DispatchQueue.global(qos: .default)
+DispatchQoS.userInteractive
+DispatchQoS.userInitiated
+DispatchQoS.background
+DispatchQoS.utility
+
+//MARK: - Создание очередей
+
+let serialQueue = DispatchQueue(label: "mySerialQueue")
+let concurrentQueue = DispatchQueue(label: "myConcurrentQueue", attributes: .concurrent)
+
+//MARK: - Synchronous and Asynchronous
+
+DispatchQueue.main.async {
+    print("Asynchronous")
+}
+
+DispatchQueue.main.sync {
+    print("Synchronous")
+}
+
+ Добавление задачи на выполнение с задержкой
+
+DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+    print("10 seconds")
+}
+ 
+*/
+
+//MARK: - Пример частого использования
+
+/*
+Используем global очередь для загрузки данных, затем обновляем UI, на основе полученных данных
+
+DispatchQueue.global(qos: .userInitiated).async {
+    // Loading a lot of data
+    DispatchQueue.main.async {
+        // Update UI in main thread after loading
+    }
+}
+*/
+
+//MARK: - Practice
+
+/*
+DispatchQueue.global(qos: .userInitiated).async {
+    for i in 1...20 {
+        print("GL \(i)")
+    }
+}
+
+print("End of task") // End of task, GL 1....
+*/
+
+//MARK: - Async
+
+/*
+DispatchQueue.global(qos: .userInitiated).async {
+    for i in 1...100 {
+        print("asyncUserInitiated \(i)")
+    }
+}
+
+DispatchQueue.global(qos: .background).async {
+    for i in 1...100 {
+        print("asyncBackground \(i)")
+    }
+}
+
+print("End of task") //End of task Background 1, UserInitiated 1, UserInitiated 2, Background 2, UserInitiated 3...
+*/
+
+//MARK: - Sync
+
+/*
+DispatchQueue.global(qos: .userInitiated).sync {
+    for i in 1...100 {
+        print("syncUserInitiated \(i)")
+    }
+}
+
+DispatchQueue.global(qos: .background).sync {
+    for i in 1...100 {
+        print("syncBackground \(i)")
+    }
+}
+
+print("End of task") // syncUserInitiated 1...100, syncBackground 1...100, End of task"
+*/
+
+//MARK: - myQueue
+
+/*
+let myQueue = DispatchQueue(label: "mySerialQueue")
+
+for num in 1...100 {
+    myQueue.async {
+        print(num)
+    }
+}
+
+print("End of task") // 1...100, End of task
+*/
+
+
+//MARK: - myQueueConcurrent
+
+let myQueue = DispatchQueue(label: "mySerialQueueConcurrent", attributes: .concurrent)
+
+for num in 1...1000 {
+    myQueue.async {
+        print(num)
+    }
+}
+
+print("End of task") // 940, End of task, 1000, 942, 767...
