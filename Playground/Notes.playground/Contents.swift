@@ -257,3 +257,48 @@ stepCounter.totalSteps = 896
 // Добавлено 536 шагов
 */
 
+
+
+// MARK: - Type Properties (Свойства типа)
+
+// Static Позволяет обращаться к методу/свойству класса/структуры без инициализации самого класса
+
+/*
+class SomeClass {
+    
+    static let someProperty: Int = 10
+    
+    func someFunc() {
+        print(#function)
+    }
+    
+    static func staticFunc() {
+        print(#function)
+    }
+    
+    class func classFunc() {
+        print(#function)
+    }
+    
+}
+
+let someClass = SomeClass()
+
+someClass.someFunc() // someFunc()
+
+SomeClass.staticFunc() // staticFunc()
+
+SomeClass.classFunc() // classFunc()
+
+print(SomeClass.someProperty) // 10
+*/
+
+// MARK: - Object-oriented programming (ООП)
+
+// Inheritance (Наследование)
+
+/*
+ Концепция объектно-ориентированного программирования, согласно которой абстрактный тип данных может наследовать данные и функциональность некоторого существующего типа, способствуя повторному использованию компонентов программного обеспечения
+ 
+ 
+ */
