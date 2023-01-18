@@ -205,6 +205,33 @@ print(SomeClass.someProperty) // 10
 
 // MARK: - Object-oriented programming (ООП)
 
-// Inheritance (Наследование)
+class Vehicle {
+    var currentSpeed = 0.0
+    var description: String {
+        return "\(currentSpeed) км/ч"
+    }
+}
+
+class Car: Vehicle {
+    var gear = 1
+    
+    override var description: String {
+        return super.description + " in gear \(gear)"
+    }
+}
+
+class AutomaticCar: Car {
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
+        }
+    }
+}
+
+let automaticCar = AutomaticCar()
+automaticCar.currentSpeed = 35.0
+print(automaticCar.currentSpeed) // 35.0
+print(automaticCar.gear) // 4
+print("AutomaticCar: \(automaticCar.description)") // AutomaticCar: 35.0 км/ч in gear 4
 
 
