@@ -234,4 +234,14 @@ print(automaticCar.currentSpeed) // 35.0
 print(automaticCar.gear) // 4
 print("AutomaticCar: \(automaticCar.description)") // AutomaticCar: 35.0 км/ч in gear 4
 
+private func getImages(imagesStrings: String...) -> [UIImage] {
+    var imagesArray = [UIImage]()
+    for imageString in imagesStrings {
+        if let image = UIImage(named: imageString) {
+            imagesArray.append(image)
+        }
+    }
+    return imagesArray
+}
+
 
