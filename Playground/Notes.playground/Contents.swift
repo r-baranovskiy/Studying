@@ -253,35 +253,70 @@ import UIKit
 // Any - Любой тип     AnyObject - Любой ссылочный тип (класс)
 
 /*
-var things: [Any] = []
+ var things: [Any] = []
+ 
+ things.append(3)
+ things.append("Ruslan")
+ things.append({ (name: String) -> String in "Hello \(name)" })
+ 
+ print(things) // [3, "Ruslan", (Function)]
+ 
+ 
+ // Is - Проверка элемента на тип
+ 
+ for item in things {
+ if item is String {
+ print(item) // "Ruslan"
+ } else if item is Int {
+ print(item) // 3
+ }
+ }
+ 
+ // As - Преборазование элемента в нужный тип
+ 
+ for item in things {
+ if let someString = item as? String {
+ print(someString) // "Ruslan"
+ }
+ }
+ 
+ // Crash
+ //let someString = things[0] as! String
+ //print(someString)
+ */
 
-things.append(3)
-things.append("Ruslan")
-things.append({ (name: String) -> String in "Hello \(name)" })
-
-print(things) // [3, "Ruslan", (Function)]
 
 
-// Is - Проверка элемента на тип
+// MARK: - Extension
 
-for item in things {
-    if item is String {
-        print(item) // "Ruslan"
-    } else if item is Int {
-        print(item) // 3
+/*
+extension Int {
+    enum Kind {
+        case negative, zero, positive
+    }
+    
+    var kind: Kind {
+        switch self {
+        case 0:
+            return .zero
+        case let x where x > 0:
+            return .positive
+        default:
+            return .negative
+        }
     }
 }
 
-// As - Преборазование элемента в нужный тип
+let numbers = [1, -4, 0, 2]
 
-for item in things {
-    if let someString = item as? String {
-        print(someString) // "Ruslan"
+for number in numbers {
+    switch number.kind {
+    case .negative:
+        print("\(number) is negative")
+    case .zero:
+        print("\(number) is zero")
+    case .positive:
+        print("\(number) is positive")
     }
-}
-
-// Crash
-//let someString = things[0] as! String
-//print(someString)
+} // 1 is positive, -4 is negative, 0 is zero, 2 is positive
 */
-
