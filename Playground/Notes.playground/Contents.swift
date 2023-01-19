@@ -320,3 +320,23 @@ for number in numbers {
     }
 } // 1 is positive, -4 is negative, 0 is zero, 2 is positive
 */
+
+
+
+// MARK: - Protocols
+
+protocol Moveable {
+    mutating func move(to point: CGPoint)
+}
+
+class Car: Moveable {
+    func move(to point: CGPoint) {
+        print("Car is moving")
+    }
+}
+
+var prius = Car()
+
+var thingToMove: Moveable = prius
+
+thingToMove.move(to: CGPoint(x: 15, y: 15))
