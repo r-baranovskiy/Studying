@@ -7,54 +7,54 @@ import UIKit
 // 8 -> 36 (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8)
 
 /*
-
-// V1
-func summation(_ n: Int) -> Int {
-    var sum = 0
-    
-    for num in 1...n {
-        sum += num
-    }
-    
-    return sum
-}
-
-// V2
-func summationV2(_ n: Int) -> Int {
-    (0...n).reduce(0, +)
-}
-
-*/
+ 
+ // V1
+ func summation(_ n: Int) -> Int {
+ var sum = 0
+ 
+ for num in 1...n {
+ sum += num
+ }
+ 
+ return sum
+ }
+ 
+ // V2
+ func summationV2(_ n: Int) -> Int {
+ (0...n).reduce(0, +)
+ }
+ 
+ */
 
 
 
 // MARK: - Учитывая массив целых чисел в виде строк и чисел, верните сумму значений массива, как если бы все они были числами. Верните ответ в виде числа.
 
 /*
-
-// V1
-func sumMix(_ arr: [Any]) -> Int {
-    var sum = 0
-    
-    for anyElement in arr {
-        if let intElement = anyElement as? Int {
-            sum += intElement
-        } else if let stringElement = anyElement as? String {
-            sum += Int(stringElement) ?? 0
-        }
-    }
-    
-    return sum
-}
-
-sumMix([15, 90, 2, "fdsfdsa"])
-
-// V2
-func sumMixV2(_ arr: [Any]) -> Int {
-    return arr.reduce(0) { $0 + (Int("\($1)") ?? 0) }
-}
-
-*/
+ 
+ // V1
+ func sumMix(_ arr: [Any]) -> Int {
+ var sum = 0
+ 
+ for anyElement in arr {
+ if let intElement = anyElement as? Int {
+ sum += intElement
+ } else if let stringElement = anyElement as? String {
+ sum += Int(stringElement) ?? 0
+ }
+ }
+ 
+ return sum
+ }
+ 
+ sumMix([15, 90, 2, "fdsfdsa"])
+ 
+ // V2
+ func sumMixV2(_ arr: [Any]) -> Int {
+ return arr.reduce(0) { $0 + (Int("\($1)") ?? 0) }
+ }
+ 
+ */
 
 
 
@@ -67,15 +67,122 @@ func sumMixV2(_ arr: [Any]) -> Int {
 //}
 
 /*
+ 
+ // V1
+ func flyBy(lamps: String, drone: String) -> String {
+ return lamps.replacingOccurrences(of: "x", with: "o", range: drone.startIndex..<drone.endIndex)
+ }
+ 
+ // V2
+ func flyByV2( lamps: String, drone: String) -> String {
+ String(repeating: "o", count: drone.count) + String(repeating: "x", count: (lamps.count - drone.count))
+ }
+ 
+ */
+
+
+
+// MARK: - Вы получаете массив чисел, возвращаете сумму всех положительных.
+// Пример [1,-4,7,12] => 1 + 7 + 12 = 20 Примечание: если суммировать нечего, сумма по умолчанию равна 0.
+
+/*
+ 
+ // V1
+ func sumOfPositives (_ numbers: [Int] ) -> Int {
+ numbers.filter({ $0 > 0 }).reduce((0), { $0 + $1} )
+ }
+ 
+ // V2
+ func sumOfPositivesV2 (_ numbers: [Int] ) -> Int {
+ 
+ var result: Int = 0
+ 
+ for number in numbers where number > 0 {
+ result += number
+ }
+ return result > 0 ? result : 0
+ }
+ 
+ */
+
+
+
+// MARK: - Завершите решение так, чтобы оно перевернуло переданную в него строку.
+// 'world'  =>  'dlrow', 'word'   =>  'drow'
+
+/*
+ 
+ // V1
+ func reverse(_ str: String) -> String {
+ str.reversed().reduce((""), { $0 + String($1) })
+ }
+ 
+ // V2
+ func reverseV2(_ str: String) -> String {
+ return String(str.reversed())
+ }
+ 
+ */
+
+
+
+// MARK: - Очень просто, по заданному целому числу или числу с плавающей запятой найти его противоположность. Примеры:
+// 1: -1,  14: -14,  -34: 34
+
+/*
 
 // V1
-func flyBy(lamps: String, drone: String) -> String {
-    return lamps.replacingOccurrences(of: "x", with: "o", range: drone.startIndex..<drone.endIndex)
+func opposite(number: Double) -> Double {
+    -number
 }
 
 // V2
-func flyByV2( lamps: String, drone: String) -> String {
- String(repeating: "o", count: drone.count) + String(repeating: "x", count: (lamps.count - drone.count))
+func oppositeV2(number: Double) -> Double {
+    number * -1
+}
+
+*/
+
+
+
+// MARK: - Завершите функцию квадратной суммы, чтобы она возводила в квадрат каждое переданное ей число, а затем суммировала результаты.
+// Например, для [1, 2, 2] он должен вернуть 9, потому что 1^2 + 2^2 + 2^2 = 9.
+
+/*
+
+// V1
+func squareSum(_ vals: [Int]) -> Int {
+    var sum = Int()
+    
+    for num in vals {
+        sum += num * num
+    }
+    
+    return sum
+}
+
+// V2
+
+func squareSumV2(_ vals:[Int]) -> Int {
+  vals.map{ $0 * $0 }.reduce(0, +)
+}
+
+*/
+
+
+
+// MARK: - Создайте функцию, которая проверяет, делится ли число n на два числа x И y. Все входные данные являются положительными, ненулевыми числами.
+
+/*
+
+// V1
+func isDivisible(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+    n.isMultiple(of: x) && n.isMultiple(of: y)
+}
+
+// V2
+func isDivisibleV2(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+    return n % x == 0 && n % y == 0
 }
 
 */
