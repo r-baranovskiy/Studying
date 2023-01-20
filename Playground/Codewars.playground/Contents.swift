@@ -239,3 +239,22 @@ import UIKit
  }
  
  */
+
+
+
+// MARK: - Учитывая строку цифр, вы должны заменить любую цифру ниже 5 на «0», а любую цифру 5 и выше на «1». Верните полученную строку. Примечание: ввод никогда не будет пустой строкой
+
+/*
+
+// V1
+func fakeBin(digits: String) -> String {
+    
+    digits.reduce((""), { $0 + String($1.wholeNumberValue ?? 0 < 5 ? "0" : "1") })
+}
+
+// V2
+func fakeBinV2(digits: String) -> String {
+  return digits.map({ $0 < "5" ? "0" : "1" }).joined()
+}
+
+*/
