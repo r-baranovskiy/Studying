@@ -130,18 +130,18 @@ import UIKit
 // 1: -1,  14: -14,  -34: 34
 
 /*
-
-// V1
-func opposite(number: Double) -> Double {
-    -number
-}
-
-// V2
-func oppositeV2(number: Double) -> Double {
-    number * -1
-}
-
-*/
+ 
+ // V1
+ func opposite(number: Double) -> Double {
+ -number
+ }
+ 
+ // V2
+ func oppositeV2(number: Double) -> Double {
+ number * -1
+ }
+ 
+ */
 
 
 
@@ -149,40 +149,93 @@ func oppositeV2(number: Double) -> Double {
 // Например, для [1, 2, 2] он должен вернуть 9, потому что 1^2 + 2^2 + 2^2 = 9.
 
 /*
-
-// V1
-func squareSum(_ vals: [Int]) -> Int {
-    var sum = Int()
-    
-    for num in vals {
-        sum += num * num
-    }
-    
-    return sum
-}
-
-// V2
-
-func squareSumV2(_ vals:[Int]) -> Int {
-  vals.map{ $0 * $0 }.reduce(0, +)
-}
-
-*/
+ 
+ // V1
+ func squareSum(_ vals: [Int]) -> Int {
+ var sum = Int()
+ 
+ for num in vals {
+ sum += num * num
+ }
+ 
+ return sum
+ }
+ 
+ // V2
+ 
+ func squareSumV2(_ vals:[Int]) -> Int {
+ vals.map{ $0 * $0 }.reduce(0, +)
+ }
+ 
+ */
 
 
 
 // MARK: - Создайте функцию, которая проверяет, делится ли число n на два числа x И y. Все входные данные являются положительными, ненулевыми числами.
 
 /*
+ 
+ // V1
+ func isDivisible(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+ n.isMultiple(of: x) && n.isMultiple(of: y)
+ }
+ 
+ // V2
+ func isDivisibleV2(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+ return n % x == 0 && n % y == 0
+ }
+ 
+ */
 
-// V1
-func isDivisible(_ n: Int, _ x: Int, _ y: Int) -> Bool {
-    n.isMultiple(of: x) && n.isMultiple(of: y)
-}
 
-// V2
-func isDivisibleV2(_ n: Int, _ x: Int, _ y: Int) -> Bool {
-    return n % x == 0 && n % y == 0
-}
 
-*/
+// MARK: - Преобразовать число в перевернутый массив цифр Учитывая случайное неотрицательное число, вы должны вернуть цифры этого числа в массиве в обратном порядке.
+
+// 35231 => [1,3,2,5,3]    0 => [0]
+
+/*
+ 
+ // V1
+ func digitize(_ num:Int) -> [Int] {
+ var emptyStringArray = [String]()
+ let numString = String(num)
+ 
+ numString.forEach({ emptyStringArray.append(String($0)) })
+ emptyStringArray.reverse()
+ 
+ return emptyStringArray.map({ Int($0) ?? 0 })
+ }
+ 
+ // V2
+ func digitizeV2(_ num: Int) -> [Int] {
+ guard num > 0 else {
+ return [0]
+ }
+ var result: [Int] = []
+ var i = num
+ while i != 0 {
+ result.append(i % 10)
+ i /= 10
+ }
+ return result
+ }
+ 
+ */
+
+
+
+// MARK: - Вам будет дан массив a и значение x. Все, что вам нужно сделать, это проверить, содержит ли предоставленный массив значение. Тип a и x может быть String или Int. Возвращает true, если массив содержит значение, и false, если нет.
+
+//static let exampleStringTests = [
+//    (["t", "e", "s", "t"], "e" , true),
+//    (["what", "a", "great", "kata"], "kat" , false)
+//]
+
+/*
+ 
+ // V1
+ func check<T: Equatable>(_ a: [T], _ x: T) -> Bool {
+ return a.contains(x)
+ }
+ 
+ */
