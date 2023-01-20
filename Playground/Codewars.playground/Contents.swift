@@ -1,5 +1,17 @@
 import UIKit
 
+// MARK: - Perfomance Measure
+
+func perfomanceMeasure(block: () -> Void) -> Double {
+    let start = DispatchTime.now()
+    block()
+    let end = DispatchTime.now()
+    let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+    let timeInterval = Double(nanoTime) / 1_000_000_000
+    return timeInterval
+}
+
+
 
 // MARK: - Суммирование Напишите программу, которая находит сумму всех чисел от 1 до num. Число всегда будет положительным целым числом больше 0. Например (Input -> Output):
 
@@ -258,3 +270,55 @@ func fakeBinV2(digits: String) -> String {
 }
 
 */
+
+
+
+// MARK: - Создайте функцию, которая возвращает массив целых чисел от n до 1, где n>0.
+// Пример: n=5 --> [5,4,3,2,1]
+
+/*
+
+// V1
+func reverseSeq(n: Int) -> [Int] {
+    var n = n
+    var array = [Int]()
+    
+    while n > 0 {
+        array.append(n)
+        n -= 1
+    }
+    return array
+}
+
+// V2
+func reverseSeqV2(n: Int) -> [Int] {
+  return (1...n).reversed()
+}
+ 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+// MARK: - Execution
+
+//let executionTime = perfomanceMeasure {
+//    print("hello")
+//}
+//
+//let executionTime2 = perfomanceMeasure {
+//    print("hello")
+//}
+//
+//print("Execution time: \(executionTime) seconds")
+//print("Execution time: \(executionTime2) seconds")
+
+
