@@ -78,6 +78,7 @@ import UIKit
 //
 //Input: 123456789 Output: 987654321
 
+/*
 
 func descendingOrder(of number: Int) -> Int {
     
@@ -85,12 +86,41 @@ func descendingOrder(of number: Int) -> Int {
     
     return Int(str) ?? 0
 }
+*/
 
-func descendingOrderV2(of number: Int) -> Int {
-  return Int(String("\(number)".characters.sorted(by: >)))!
+
+
+// MARK: - На этот раз ни истории, ни теории. В приведенных ниже примерах показано, как написать функцию accum:
+
+//accum("abcd") -> "A-Bb-Ccc-Dddd" accum("RqaEzty") -> "R-Qq-Aaa-Eeee-Zzzzz-Ttttt-Yyyyyyy" accum("cwAt") -> "C-Ww-Aaa-Tttt"
+//Параметр accum представляет собой строку, включающую только буквы из a..z и A..Z.
+
+/*
+
+func accum(_ s: String) -> String {
+    var str = String()
+    
+    for (index, char) in s.enumerated() {
+        str += "\(char)".uppercased() + String(repeating: "\(char)".lowercased(), count: index) + "-"
+    }
+    
+    str.removeLast()
+    return str
 }
 
-func descendingOrderV3(of number: Int) -> Int {
-    let sortedCharacters = String(number).characters.sorted { $0 > $1 }
-    return Int(String(sortedCharacters))!
+func accumV2(_ str: String) -> String {
+    return str.enumerated().map {
+        repeatElement(String($1), count: $0 + 1)
+            .joined()
+            .capitalized
+    }
+        .joined(separator: "-")
 }
+
+func accumV3(_ str: String) -> String {
+    return str.enumerated().map {
+        String(repeating: $1, count: $0 + 1).capitalized
+    }.joined(separator: "-")
+}
+
+*/
