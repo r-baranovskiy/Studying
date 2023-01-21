@@ -42,27 +42,55 @@ import UIKit
 //Функция принимает целое число и возвращает целое число. Удачного кодирования!
 
 /*
+ 
+ // V1
+ func squareDigits(_ num: Int) -> Int {
+ var resultString = String(num)
+ var squareArray = [Int]()
+ for str in resultString {
+ squareArray.append(Int(pow(Double(str.wholeNumberValue ?? 0), 2)))
+ }
+ 
+ resultString = ""
+ 
+ for int in squareArray {
+ resultString.append(String(int))
+ }
+ 
+ return Int(resultString) ?? 0
+ }
+ 
+ // V2
+ func squareDigitsV2(_ num: Int) -> Int {
+ Int("\(num)".compactMap { Int("\($0)") }.map { "\($0 * $0)" }.joined()) ?? 0
+ }
+ 
+ */
 
-// V1
-func squareDigits(_ num: Int) -> Int {
-    var resultString = String(num)
-    var squareArray = [Int]()
-    for str in resultString {
-        squareArray.append(Int(pow(Double(str.wholeNumberValue ?? 0), 2)))
-    }
+
+
+// MARK: - Ваша задача состоит в том, чтобы создать функцию, которая может принимать любое неотрицательное целое число в качестве аргумента и возвращать его с цифрами в порядке убывания. По сути, переставьте цифры, чтобы получить максимально возможное число.
+
+//Examples:
+//Input: 42145 Output: 54421
+//
+//Input: 145263 Output: 654321
+//
+//Input: 123456789 Output: 987654321
+
+
+func descendingOrder(of number: Int) -> Int {
     
-    resultString = ""
+    let str = String(number).compactMap({ $0.wholeNumberValue }).sorted(by: { $0 > $1 }).reduce((""), { String($0) + String($1) })
     
-    for int in squareArray {
-        resultString.append(String(int))
-    }
-    
-    return Int(resultString) ?? 0
+    return Int(str) ?? 0
 }
 
-// V2
-func squareDigitsV2(_ num: Int) -> Int {
-    Int("\(num)".compactMap { Int("\($0)") }.map { "\($0 * $0)" }.joined()) ?? 0
+func descendingOrderV2(of number: Int) -> Int {
+  return Int(String("\(number)".characters.sorted(by: >)))!
 }
 
-*/
+func descendingOrderV3(of number: Int) -> Int {
+    let sortedCharacters = String(number).characters.sorted { $0 > $1 }
+    return Int(String(sortedCharacters))!
+}
