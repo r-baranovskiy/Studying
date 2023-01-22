@@ -172,3 +172,47 @@ extension String {
 }
 
 */
+
+
+
+// MARK: - Обычно, когда вы что-то покупаете, вас спрашивают, верны ли номер вашей кредитной карты, номер телефона или ответ на ваш самый секретный вопрос. Однако, поскольку кто-то может заглянуть вам через плечо, вы не хотите, чтобы это отображалось на вашем экране. Вместо этого мы маскируем его. Ваша задача — написать функцию maskify, которая заменяет все символы, кроме последних четырех, на «#».
+
+//Examples
+//"4556364607935616" --> "############5616"
+//     "64607935616" -->      "#######5616"
+//               "1" -->                "1"
+//                "" -->                 ""
+//
+//// "What was the name of your first pet?"
+//
+//"Skippy" --> "##ippy"
+//
+//"Nananananananananananananananana Batman!"
+//-->
+//"####################################man!"
+
+/*
+
+// V1
+func maskify(_ string: String) -> String {
+    var str = String()
+    
+    for (index, ch) in string.enumerated() {
+        if index < string.count - 4 {
+            str.append("#")
+        } else {
+            str.append(ch)
+        }
+    }
+  return str
+}
+
+// V2
+import Foundation
+
+func maskifyV2(_ string:String) -> String {
+  string.enumerated().map { $0 < string.count - 4 ? "#" : "\($1)"}.joined()
+}
+
+*/
+
