@@ -124,3 +124,25 @@ func accumV3(_ str: String) -> String {
 }
 
 */
+
+
+
+// MARK: - Просто, учитывая строку слов, вернуть длину кратчайшего слова (слов). Строка никогда не будет пустой, и вам не нужно учитывать разные типы данных.
+
+/*
+
+// V1
+func find_short(_ str: String) -> Int {
+    let arr = str.split(separator: " ")
+    return arr.compactMap({ $0.count }).sorted(by: { $0 < $1 }).first ?? 0
+}
+
+find_short("Hello my name is Ruslan")
+
+// V2
+func find_shortV2(_ str: String) -> Int
+{
+  return str.components(separatedBy: " ").map { $0.count }.min() ?? 0
+}
+
+*/
