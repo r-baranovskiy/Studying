@@ -222,9 +222,34 @@ func maskifyV2(_ string:String) -> String {
 
 //[10, 343445353, 3453445, 3453545353453] должен вернуть 3453455.
 
+/*
+
+// V1
 func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
     let sortedArray = array.sorted()
     
     return sortedArray[0] + sortedArray[1]
 }
-sumOfTwoSmallestIntegersIn([13, 6, 9, 14])
+
+// V2
+func sumOfTwoSmallestIntegersInV2(_ array: [Int]) -> Int {
+  return array.sorted()[0...1].reduce(0, +)
+}
+
+*/
+
+// MARK: - На заводе принтер печатает этикетки для коробок. Для одного вида коробок принтеру приходится использовать цвета, которые для простоты обозначаются буквами от а до m. Цвета, используемые принтером, записываются в управляющую строку. Например, "good" контрольной строкой будет aaabbbbhaijjjm, что означает, что принтер использовал три раза цвет a, четыре раза цвет b, один раз цвет h, а затем один раз цвет a... Иногда возникают проблемы: отсутствие цветов, технический сбой и выдается "bad" управляющая строка, например. aaaxbbbbyyhwawiwjjjwwm с буквами не от a до m. Вы должны написать функцию printer_error, которая по заданной строке будет возвращать частоту ошибок принтера в виде строки, представляющей рациональное число, числитель которого — количество ошибок, а знаменатель — длина управляющей строки. Не уменьшайте эту дробь до более простого выражения. Строка имеет длину больше или равную единице и содержит только буквы от a до z.
+
+//Examples:
+//s="aaabbbbhaijjjm"
+//printer_error(s) => "0/14"
+//
+//s="aaaxbbbbyyhwawiwjjjwwm"
+//printer_error(s) => "8/22"
+
+func printerError(_ s: String) -> String {
+    let errors = s.filter { !"abcdefghijklm".contains($0)  }
+    return "\(errors.count)/\(s.count)"
+}
+
+
