@@ -247,9 +247,39 @@ func sumOfTwoSmallestIntegersInV2(_ array: [Int]) -> Int {
 //s="aaaxbbbbyyhwawiwjjjwwm"
 //printer_error(s) => "8/22"
 
+/*
+
 func printerError(_ s: String) -> String {
     let errors = s.filter { !"abcdefghijklm".contains($0)  }
     return "\(errors.count)/\(s.count)"
+}
+
+*/
+
+// MARK: - Дан треугольник последовательных нечетных чисел. Вычислите сумму чисел в n-й строке этого треугольника (начиная с индекса 1), например: (Ввод --> Вывод)
+
+//1
+//3     5
+//7     9    11
+//13    15    17    19
+//21    23    25    27    29
+
+//1 -->  1
+//2 --> 3 + 5 = 8
+
+
+
+// V1
+func rowSumOddNumbers(_ row: Int) -> Int {
+    let startNumber = (row * (row - 1)) + 1  // 7
+    let endNumber = startNumber + (row - 1) * 2 // 11
+    let sum = (startNumber + endNumber) * row / 2 // 27
+    return sum
+}
+
+// V2
+func rowSumOddNumbersV2(_ row: Int) -> Int {
+  return row * row * row
 }
 
 
