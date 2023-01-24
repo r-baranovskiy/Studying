@@ -79,14 +79,14 @@ import UIKit
 //Input: 123456789 Output: 987654321
 
 /*
-
-func descendingOrder(of number: Int) -> Int {
-    
-    let str = String(number).compactMap({ $0.wholeNumberValue }).sorted(by: { $0 > $1 }).reduce((""), { String($0) + String($1) })
-    
-    return Int(str) ?? 0
-}
-*/
+ 
+ func descendingOrder(of number: Int) -> Int {
+ 
+ let str = String(number).compactMap({ $0.wholeNumberValue }).sorted(by: { $0 > $1 }).reduce((""), { String($0) + String($1) })
+ 
+ return Int(str) ?? 0
+ }
+ */
 
 
 
@@ -96,56 +96,56 @@ func descendingOrder(of number: Int) -> Int {
 //Параметр accum представляет собой строку, включающую только буквы из a..z и A..Z.
 
 /*
-
-func accum(_ s: String) -> String {
-    var str = String()
-    
-    for (index, char) in s.enumerated() {
-        str += "\(char)".uppercased() + String(repeating: "\(char)".lowercased(), count: index) + "-"
-    }
-    
-    str.removeLast()
-    return str
-}
-
-func accumV2(_ str: String) -> String {
-    return str.enumerated().map {
-        repeatElement(String($1), count: $0 + 1)
-            .joined()
-            .capitalized
-    }
-        .joined(separator: "-")
-}
-
-func accumV3(_ str: String) -> String {
-    return str.enumerated().map {
-        String(repeating: $1, count: $0 + 1).capitalized
-    }.joined(separator: "-")
-}
-
-*/
+ 
+ func accum(_ s: String) -> String {
+ var str = String()
+ 
+ for (index, char) in s.enumerated() {
+ str += "\(char)".uppercased() + String(repeating: "\(char)".lowercased(), count: index) + "-"
+ }
+ 
+ str.removeLast()
+ return str
+ }
+ 
+ func accumV2(_ str: String) -> String {
+ return str.enumerated().map {
+ repeatElement(String($1), count: $0 + 1)
+ .joined()
+ .capitalized
+ }
+ .joined(separator: "-")
+ }
+ 
+ func accumV3(_ str: String) -> String {
+ return str.enumerated().map {
+ String(repeating: $1, count: $0 + 1).capitalized
+ }.joined(separator: "-")
+ }
+ 
+ */
 
 
 
 // MARK: - Просто, учитывая строку слов, вернуть длину кратчайшего слова (слов). Строка никогда не будет пустой, и вам не нужно учитывать разные типы данных.
 
 /*
-
-// V1
-func find_short(_ str: String) -> Int {
-    let arr = str.split(separator: " ")
-    return arr.compactMap({ $0.count }).sorted(by: { $0 < $1 }).first ?? 0
-}
-
-find_short("Hello my name is Ruslan")
-
-// V2
-func find_shortV2(_ str: String) -> Int
-{
-  return str.components(separatedBy: " ").map { $0.count }.min() ?? 0
-}
-
-*/
+ 
+ // V1
+ func find_short(_ str: String) -> Int {
+ let arr = str.split(separator: " ")
+ return arr.compactMap({ $0.count }).sorted(by: { $0 < $1 }).first ?? 0
+ }
+ 
+ find_short("Hello my name is Ruslan")
+ 
+ // V2
+ func find_shortV2(_ str: String) -> Int
+ {
+ return str.components(separatedBy: " ").map { $0.count }.min() ?? 0
+ }
+ 
+ */
 
 
 
@@ -157,21 +157,21 @@ func find_shortV2(_ str: String) -> Int
 //Jaden-Cased:     "How Can Mirrors Be Real If Our Eyes Aren't Real"
 
 /*
-
-extension String {
-    
-    func toJadenCase() -> String {
-        String(split(separator: " ").map({ $0.capitalized }).reduce((""), { $0 + " " + $1 }).dropFirst())
-    }
-}
-
-extension String {
-    func toJadenCaseV2() -> String {
-        return capitalized
-    }
-}
-
-*/
+ 
+ extension String {
+ 
+ func toJadenCase() -> String {
+ String(split(separator: " ").map({ $0.capitalized }).reduce((""), { $0 + " " + $1 }).dropFirst())
+ }
+ }
+ 
+ extension String {
+ func toJadenCaseV2() -> String {
+ return capitalized
+ }
+ }
+ 
+ */
 
 
 
@@ -192,29 +192,29 @@ extension String {
 //"####################################man!"
 
 /*
-
-// V1
-func maskify(_ string: String) -> String {
-    var str = String()
-    
-    for (index, ch) in string.enumerated() {
-        if index < string.count - 4 {
-            str.append("#")
-        } else {
-            str.append(ch)
-        }
-    }
-  return str
-}
-
-// V2
-import Foundation
-
-func maskifyV2(_ string:String) -> String {
-  string.enumerated().map { $0 < string.count - 4 ? "#" : "\($1)"}.joined()
-}
-
-*/
+ 
+ // V1
+ func maskify(_ string: String) -> String {
+ var str = String()
+ 
+ for (index, ch) in string.enumerated() {
+ if index < string.count - 4 {
+ str.append("#")
+ } else {
+ str.append(ch)
+ }
+ }
+ return str
+ }
+ 
+ // V2
+ import Foundation
+ 
+ func maskifyV2(_ string:String) -> String {
+ string.enumerated().map { $0 < string.count - 4 ? "#" : "\($1)"}.joined()
+ }
+ 
+ */
 
 
 
@@ -223,20 +223,20 @@ func maskifyV2(_ string:String) -> String {
 //[10, 343445353, 3453445, 3453545353453] должен вернуть 3453455.
 
 /*
-
-// V1
-func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
-    let sortedArray = array.sorted()
-    
-    return sortedArray[0] + sortedArray[1]
-}
-
-// V2
-func sumOfTwoSmallestIntegersInV2(_ array: [Int]) -> Int {
-  return array.sorted()[0...1].reduce(0, +)
-}
-
-*/
+ 
+ // V1
+ func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
+ let sortedArray = array.sorted()
+ 
+ return sortedArray[0] + sortedArray[1]
+ }
+ 
+ // V2
+ func sumOfTwoSmallestIntegersInV2(_ array: [Int]) -> Int {
+ return array.sorted()[0...1].reduce(0, +)
+ }
+ 
+ */
 
 // MARK: - На заводе принтер печатает этикетки для коробок. Для одного вида коробок принтеру приходится использовать цвета, которые для простоты обозначаются буквами от а до m. Цвета, используемые принтером, записываются в управляющую строку. Например, "good" контрольной строкой будет aaabbbbhaijjjm, что означает, что принтер использовал три раза цвет a, четыре раза цвет b, один раз цвет h, а затем один раз цвет a... Иногда возникают проблемы: отсутствие цветов, технический сбой и выдается "bad" управляющая строка, например. aaaxbbbbyyhwawiwjjjwwm с буквами не от a до m. Вы должны написать функцию printer_error, которая по заданной строке будет возвращать частоту ошибок принтера в виде строки, представляющей рациональное число, числитель которого — количество ошибок, а знаменатель — длина управляющей строки. Не уменьшайте эту дробь до более простого выражения. Строка имеет длину больше или равную единице и содержит только буквы от a до z.
 
@@ -248,13 +248,13 @@ func sumOfTwoSmallestIntegersInV2(_ array: [Int]) -> Int {
 //printer_error(s) => "8/22"
 
 /*
-
-func printerError(_ s: String) -> String {
-    let errors = s.filter { !"abcdefghijklm".contains($0)  }
-    return "\(errors.count)/\(s.count)"
-}
-
-*/
+ 
+ func printerError(_ s: String) -> String {
+ let errors = s.filter { !"abcdefghijklm".contains($0)  }
+ return "\(errors.count)/\(s.count)"
+ }
+ 
+ */
 
 // MARK: - Дан треугольник последовательных нечетных чисел. Вычислите сумму чисел в n-й строке этого треугольника (начиная с индекса 1), например: (Ввод --> Вывод)
 
@@ -268,21 +268,21 @@ func printerError(_ s: String) -> String {
 //2 --> 3 + 5 = 8
 
 /*
-
-// V1
-func rowSumOddNumbers(_ row: Int) -> Int {
-    let startNumber = (row * (row - 1)) + 1  // 7
-    let endNumber = startNumber + (row - 1) * 2 // 11
-    let sum = (startNumber + endNumber) * row / 2 // 27
-    return sum
-}
-
-// V2
-func rowSumOddNumbersV2(_ row: Int) -> Int {
-  return row * row * row
-}
-
-*/
+ 
+ // V1
+ func rowSumOddNumbers(_ row: Int) -> Int {
+ let startNumber = (row * (row - 1)) + 1  // 7
+ let endNumber = startNumber + (row - 1) * 2 // 11
+ let sum = (startNumber + endNumber) * row / 2 // 27
+ return sum
+ }
+ 
+ // V2
+ func rowSumOddNumbersV2(_ row: Int) -> Int {
+ return row * row * row
+ }
+ 
+ */
 
 // MARK: - Не ставь мне пять! В этом ката вы получаете начальный номер и конечный номер региона и должны вернуть количество всех чисел, кроме номеров с 5 в нем. Начальный и конечный номер включительно! Результат может содержать пятерки. ;-) Начальный номер всегда будет меньше конечного. Оба числа могут быть и отрицательными!
 
@@ -292,11 +292,11 @@ func rowSumOddNumbersV2(_ row: Int) -> Int {
 //4,17 -> 4,6,7,8,9,10,11,12,13,14,16,17 -> Result 12
 
 /*
-
-func dontGiveMeFive(_ start: Int, _ end: Int) -> Int {
-    Array(start...end).filter({!String($0).contains("5")}).count
-}
-
+ 
+ func dontGiveMeFive(_ start: Int, _ end: Int) -> Int {
+ Array(start...end).filter({!String($0).contains("5")}).count
+ }
+ 
  */
 
 
@@ -310,11 +310,50 @@ func dontGiveMeFive(_ start: Int, _ end: Int) -> Int {
 //30 --> 8 (1, 2, 3, 5, 6, 10, 15, 30)
 
 /*
+ 
+ func divisors(_ n: UInt32) -> UInt32 {
+ UInt32((1...n).filter({ n % $0 == 0 }).count)
+ }
+ 
+ divisors(5)
+ 
+ */
 
-func divisors(_ n: UInt32) -> UInt32 {
-    UInt32((1...n).filter({ n % $0 == 0 }).count)
+
+
+// MARK: - Возьмем целое число n (n >= 0) и цифру d (0 <= d <= 9) в качестве целого числа. Возведите в квадрат все числа k (0 <= k <= n) между 0 и n. Подсчитайте количество цифр d, использованных при написании всех k**2. Вызовите nb_dig (или nbDig или...) функцию, принимающую n и d в качестве параметров и возвращающую это значение.
+
+
+//Examples:
+//n = 10, d = 1
+//the k*k are 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100
+//We are using the digit 1 in: 1, 16, 81, 100. The total count is then 4.
+//
+//nb_dig(25, 1) returns 11 since
+//the k*k that contain the digit 1 are:
+//1, 16, 81, 100, 121, 144, 169, 196, 361, 441.
+//So there are 11 digits 1 for the squares of numbers between 0 and 25.
+
+/*
+
+// V1
+func nbDig(_ n: Int, _ d: Int) -> Int {
+    var count = 0
+    for k in 0...n {
+        let square = k * k
+        let string = String(square)
+        for char in string {
+            if char == Character(String(d)) {
+                count += 1
+            }
+        }
+    }
+    return count
 }
 
-divisors(5)
+// V2
+func nbDigV2(_ n: Int, _ d: Int) -> Int {
+    return (0...n).map{"\($0 * $0)".filter { $0 == Character("\(d)")}}.flatMap { $0 }.count
+}
 
 */
