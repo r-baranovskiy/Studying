@@ -395,3 +395,34 @@ func maxMultipleV2(_ d: Int, _ b: Int) -> Int {
 }
 
 */
+
+
+
+// MARK: - Вызов: Учитывая двумерный массив целых чисел, вернуть сглаженную версию массива со всеми целыми числами в отсортированном (по возрастанию) порядке.
+
+//Example:
+//
+//Given [[3, 2, 1], [4, 6, 5], [], [9, 7, 8]], your function should return [1, 2, 3, 4, 5, 6, 7, 8, 9].
+
+/*
+
+// V1
+func flattenAndSort<T: Comparable>(_ arr: [[T]]) -> [T] {
+    var sortedArray = [T]()
+    for array in arr {
+        for i in array {
+            sortedArray.append(i)
+        }
+    }
+    
+    return sortedArray.sorted()
+}
+
+flattenAndSort([[3, 2, 1], [4, 6, 5], [], [9, 7, 8]])
+
+// V2
+func flattenAndSortV2<T: Comparable>(_ arr: [[T]]) -> [T] {
+  return arr.flatMap{ $0 }.sorted()
+}
+
+*/
