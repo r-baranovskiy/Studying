@@ -456,3 +456,43 @@ func sumOfMinimumsV2(_ numbers: [[Int]]) -> Int {
 }
 
 */
+
+
+
+// MARK: - Треугольные числа называются так из-за равносторонней треугольной формы, которую они занимают, когда расположены точками. Вам нужно вернуть n-е треугольное число. Вы должны вернуть 0 для значений вне диапазона:
+
+//1st (1)   2nd (3)    3rd (6)
+//*          **        ***
+//           *         **
+//                     *
+
+//For example: (Input --> Output)
+//
+//0 --> 0
+//2 --> 3
+//3 --> 6
+//-10 --> 0
+
+/*
+
+// V1
+func triangular(_ n: Int) -> Int{
+    if n <= 0 {
+        return 0
+    }
+    var arrOfArr: [[Int]] = []
+    
+    for num in 1...n {
+        arrOfArr.append([num])
+    }
+    
+    return arrOfArr.flatMap({ $0 }).reduce(0, +)
+}
+
+// V2
+func triangularV2(_ n: Int) -> Int{
+    guard n > 0 else { return 0 }
+    return n * (1 + n) / 2
+}
+
+*/
