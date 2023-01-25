@@ -105,6 +105,27 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
         tableView.reloadData()
     }
 
+    // Left buttons
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let doneAction = UIContextualAction(
+            style: .destructive, title: "Done") { _, _, completion in
+                self.emojis.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                completion(true)
+            }
+        doneAction.backgroundColor = .systemGreen
+        
+        let likeAction = UIContextualAction(
+            style: .normal, title: "Like") { _, _, completion in
+                self.emojis[indexPath.row].isLiked = !self.emojis[indexPath.row].isLiked
+                completion(true)
+            }
+        likeAction.image = UIImage(systemName: "heart")
+        likeAction.backgroundColor = self.emojis[indexPath.row].isLiked ? .systemRed : .label
+        
+        return UISwipeActionsConfiguration(actions: [doneAction, likeAction])
+    }
     
 }
 

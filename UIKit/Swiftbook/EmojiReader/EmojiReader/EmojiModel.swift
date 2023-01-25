@@ -4,5 +4,5 @@ struct EmojiModel {
     let title: String
     let discription: String
     let emoji: String
-    let isLiked: Bool
+    var isLiked: Bool
 }
