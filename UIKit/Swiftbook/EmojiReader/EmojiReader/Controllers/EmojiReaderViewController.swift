@@ -14,7 +14,7 @@ class EmojiReaderViewController: UIViewController {
                    emoji: " 🍕", isLiked: false),
     ]
     
-    private let tableView = UITableView()
+    private let emojiTableView = UITableView()
     
     // MARK: - Lifecycle
     
@@ -25,30 +25,38 @@ class EmojiReaderViewController: UIViewController {
         setUpConstraints()
     }
     
+    @objc private func showDetailEmojiViewController() {
+        let navVC = UINavigationController(rootViewController: DetailEmojiViewController())
+        present(navVC, animated: true)
+    }
+    
     // MARK: - Appearance
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
         title = "Emoji Reader"
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self, action: #selector(showDetailEmojiViewController))
     }
     
     private func setUpTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .systemGroupedBackground
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(EmojiReaderTableViewCell.self,
+        emojiTableView.translatesAutoresizingMaskIntoConstraints = false
+        emojiTableView.backgroundColor = .systemGroupedBackground
+        emojiTableView.delegate = self
+        emojiTableView.dataSource = self
+        emojiTableView.register(EmojiReaderTableViewCell.self,
                            forCellReuseIdentifier: EmojiReaderTableViewCell.identifier)
-        self.view.addSubview(tableView)
+        self.view.addSubview(emojiTableView)
     }
     
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            emojiTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            emojiTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            emojiTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            emojiTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
@@ -79,7 +87,7 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
     // Editing cell (Delete)
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        tableView.setEditing(editing, animated: true)
+        emojiTableView.setEditing(editing, animated: true)
     }
     
     
@@ -111,7 +119,7 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
         let doneAction = UIContextualAction(
             style: .destructive, title: "Done") { _, _, completion in
                 self.emojis.remove(at: indexPath.row)
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.emojiTableView.deleteRows(at: [indexPath], with: .automatic)
                 completion(true)
             }
         doneAction.backgroundColor = .systemGreen
