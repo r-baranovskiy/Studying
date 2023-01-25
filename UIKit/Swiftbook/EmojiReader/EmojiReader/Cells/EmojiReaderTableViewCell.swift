@@ -21,7 +21,7 @@ class EmojiReaderTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let discriptionTextLabel: UILabel = {
+    private let descriptionTextLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .label
@@ -43,7 +43,7 @@ class EmojiReaderTableViewCell: UITableViewCell {
     func configureCell(emoji: EmojiModel) {
         emojiLabel.text = emoji.emoji
         titleTextLabel.text = emoji.title
-        discriptionTextLabel.text = emoji.discription
+        descriptionTextLabel.text = emoji.description
     }
     
     private func configureCellStackView() {
@@ -57,7 +57,7 @@ class EmojiReaderTableViewCell: UITableViewCell {
         let labelsStackView = UIStackView()
         labelsStackView.axis = .vertical
         labelsStackView.addArrangedSubview(titleTextLabel)
-        labelsStackView.addArrangedSubview(discriptionTextLabel)
+        labelsStackView.addArrangedSubview(descriptionTextLabel)
         
         cellStackView.addArrangedSubview(emojiStackView)
         cellStackView.addArrangedSubview(labelsStackView)

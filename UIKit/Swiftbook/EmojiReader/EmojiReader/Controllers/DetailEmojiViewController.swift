@@ -3,25 +3,59 @@ import UIKit
 class DetailEmojiViewController: UIViewController {
     
     private let detailTableView = UITableView(frame: .zero, style: .grouped)
-
+    
+    private let emojiTextField = UITextField()
+    private let titleTextField = UITextField()
+    private let descriptionTextField = UITextField()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureTextFields()
         setUpTableView()
         setUpConstraints()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate { (contex) in
+            self.updateLayout(with: size)
+        }
+    }
+    
+    // MARK: - Behaviour
+    
+    @objc private func cancelButtonPressed() {
+        dismiss(animated: true)
+    }
+    
+    @objc private func saveButtonPressed() {
+        print("saved")
+    }
+    
     // MARK: - Appearance
+    
+    private func updateLayout(with size: CGSize) {
+        self.detailTableView.frame = CGRect(origin: .zero, size: size)
+    }
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self, action: #selector(cancelButtonPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Save", style: .done,
+            target: self, action: #selector(saveButtonPressed))
     }
     
     private func setUpTableView() {
         detailTableView.translatesAutoresizingMaskIntoConstraints = false
         detailTableView.backgroundColor = .systemGroupedBackground
-        detailTableView.register(DetailTableViewCell.self,
-                                 forCellReuseIdentifier: DetailTableViewCell.identifier)
+        detailTableView.register(
+            DetailTableViewCell.self,
+            forCellReuseIdentifier: DetailTableViewCell.identifier)
         detailTableView.delegate = self
         detailTableView.dataSource = self
         self.view.addSubview(detailTableView)
@@ -35,6 +69,16 @@ class DetailEmojiViewController: UIViewController {
             detailTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
+    
+    private func configureTextFields() {
+        emojiTextField.translatesAutoresizingMaskIntoConstraints = false
+        titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        emojiTextField.placeholder = "Enter emoji"
+        titleTextField.placeholder = "Enter title"
+        descriptionTextField.placeholder = "Enter description"
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -47,16 +91,22 @@ extension DetailEmojiViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: DetailTableViewCell.identifier,
-            for: indexPath) as? DetailTableViewCell else {
+            withIdentifier: DetailTableViewCell.identifier
+        ) as? DetailTableViewCell else {
             return UITableViewCell()
         }
-        switch indexPath.row {
-        case 0:
-            cell.configure(placeholder: "Emoji")
+        
+        switch indexPath.section {
+                    case 0:
+            cell.configure(with: titleTextField)
+                    case 1:
+            cell.configure(with: emojiTextField)
+                    case 2:
+            cell.configure(with: descriptionTextField)
         default:
-            break
+            return UITableViewCell()
         }
+        
         return cell
     }
     
@@ -67,7 +117,11 @@ extension DetailEmojiViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
+            return "Title"
+        case 1:
             return "Emoji"
+        case 2:
+            return "Description"
         default:
             return "None"
         }

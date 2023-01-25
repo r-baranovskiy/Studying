@@ -2,14 +2,10 @@ import UIKit
 
 class DetailTableViewCell: UITableViewCell {
     
-    static let identifier = "DetailTableViewCell"
-    
-    let infoTextField = UITextField()
-    
+    static let identifier = "detailTableViewCell"
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUpTextField()
-        setUpContraints()
     }
     
     required init?(coder: NSCoder) {
@@ -20,25 +16,16 @@ class DetailTableViewCell: UITableViewCell {
         super.prepareForReuse()
     }
     
-    public func configure(placeholder: String) {
-        infoTextField.placeholder = placeholder
-    }
-    
-    private func setUpTextField() {
-        infoTextField.translatesAutoresizingMaskIntoConstraints = false
-        infoTextField.backgroundColor = .systemYellow
-        contentView.addSubview(infoTextField)
-    }
-    
-    // MARK: - Constraints
-    
-    private func setUpContraints() {
+    func configure(with textfield: UITextField) {
+        textfield.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(textfield)
         
         NSLayoutConstraint.activate([
-            infoTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            infoTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            infoTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            infoTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
-            ])
+            textfield.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            textfield.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
+            textfield.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            textfield.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+        ])
     }
+    
 }

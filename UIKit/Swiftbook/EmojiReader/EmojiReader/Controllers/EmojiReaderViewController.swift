@@ -4,13 +4,13 @@ class EmojiReaderViewController: UIViewController {
     
     private var emojis: [EmojiModel] = [
         EmojiModel(title: "Call the friend",
-                   discription: "Позвонить другу",
+                   description: "Позвонить другу",
                    emoji: "🛎️", isLiked: false),
         EmojiModel(title: "Feed the cat",
-                   discription: "Покормить кота",
+                   description: "Покормить кота",
                    emoji: "🐷", isLiked: false),
         EmojiModel(title: "Buy the groceries",
-                   discription: "Купить продукты",
+                   description: "Купить продукты",
                    emoji: " 🍕", isLiked: false),
     ]
     
