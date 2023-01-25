@@ -335,28 +335,28 @@ import UIKit
 //So there are 11 digits 1 for the squares of numbers between 0 and 25.
 
 /*
-
-// V1
-func nbDig(_ n: Int, _ d: Int) -> Int {
-    var count = 0
-    for k in 0...n {
-        let square = k * k
-        let string = String(square)
-        for char in string {
-            if char == Character(String(d)) {
-                count += 1
-            }
-        }
-    }
-    return count
-}
-
-// V2
-func nbDigV2(_ n: Int, _ d: Int) -> Int {
-    return (0...n).map{"\($0 * $0)".filter { $0 == Character("\(d)")}}.flatMap { $0 }.count
-}
-
-*/
+ 
+ // V1
+ func nbDig(_ n: Int, _ d: Int) -> Int {
+ var count = 0
+ for k in 0...n {
+ let square = k * k
+ let string = String(square)
+ for char in string {
+ if char == Character(String(d)) {
+ count += 1
+ }
+ }
+ }
+ return count
+ }
+ 
+ // V2
+ func nbDigV2(_ n: Int, _ d: Int) -> Int {
+ return (0...n).map{"\($0 * $0)".filter { $0 == Character("\(d)")}}.flatMap { $0 }.count
+ }
+ 
+ */
 
 
 
@@ -374,27 +374,27 @@ func nbDigV2(_ n: Int, _ d: Int) -> Int {
 //Объяснение: (185) делится на (37) , (185) меньше или равно границе (200) , а (185) > 0 .
 
 /*
-
-// V1
-func maxMultiple(_ d: Int, _ b: Int) -> Int {
-    let dArr = Array(d...b).sorted(by: { $0 > $1 })
-    var maxN = 0
-    
-    for num in dArr {
-        if num % d == 0 {
-            maxN = num
-            return num
-        }
-    }
-    return maxN
-}
-
-// V2
-func maxMultipleV2(_ d: Int, _ b: Int) -> Int {
-    return (0...b).reversed().first(where: { $0 % d == 0})!
-}
-
-*/
+ 
+ // V1
+ func maxMultiple(_ d: Int, _ b: Int) -> Int {
+ let dArr = Array(d...b).sorted(by: { $0 > $1 })
+ var maxN = 0
+ 
+ for num in dArr {
+ if num % d == 0 {
+ maxN = num
+ return num
+ }
+ }
+ return maxN
+ }
+ 
+ // V2
+ func maxMultipleV2(_ d: Int, _ b: Int) -> Int {
+ return (0...b).reversed().first(where: { $0 % d == 0})!
+ }
+ 
+ */
 
 
 
@@ -405,24 +405,54 @@ func maxMultipleV2(_ d: Int, _ b: Int) -> Int {
 //Given [[3, 2, 1], [4, 6, 5], [], [9, 7, 8]], your function should return [1, 2, 3, 4, 5, 6, 7, 8, 9].
 
 /*
-
-// V1
+ 
+ // V1
+ func flattenAndSort<T: Comparable>(_ arr: [[T]]) -> [T] {
+ var sortedArray = [T]()
+ for array in arr {
+ for i in array {
+ sortedArray.append(i)
+ }
+ }
+ 
+ return sortedArray.sorted()
+ }
+ 
+ flattenAndSort([[3, 2, 1], [4, 6, 5], [], [9, 7, 8]])
+ 
+ // V2
+ func flattenAndSortV2<T: Comparable>(_ arr: [[T]]) -> [T] {
+ return arr.flatMap{ $0 }.sorted()
+ }
+ 
+// V3
 func flattenAndSort<T: Comparable>(_ arr: [[T]]) -> [T] {
-    var sortedArray = [T]()
-    for array in arr {
-        for i in array {
-            sortedArray.append(i)
-        }
-    }
-    
-    return sortedArray.sorted()
+    return arr.joined().sorted()
 }
 
-flattenAndSort([[3, 2, 1], [4, 6, 5], [], [9, 7, 8]])
+ */
+
+
+
+// MARK: - Учитывая двумерный (вложенный) список (массив, вектор,..) размера m * n, ваша задача состоит в том, чтобы найти сумму минимальных значений в каждой строке.
+
+//[ [ 1, 2, 3, 4, 5 ]        #  minimum value of row is 1
+//, [ 5, 6, 7, 8, 9 ]        #  minimum value of row is 5
+//, [ 20, 21, 34, 56, 100 ]  #  minimum value of row is 20
+//]
+
+//Таким образом, функция должна вернуть 26, потому что сумма минимумов равна 1 + 5 + 20 = 26. Примечание. Вам всегда будет предоставлен непустой список, содержащий положительные значения.
+
+/*
+
+// V1
+func sumOfMinimums(_ numbers: [[Int]]) -> Int {
+    numbers.map({ $0.sorted(by: { $0 < $1 }) }).reduce((0), { $0 + ($1.first ?? 0) })
+}
 
 // V2
-func flattenAndSortV2<T: Comparable>(_ arr: [[T]]) -> [T] {
-  return arr.flatMap{ $0 }.sorted()
+func sumOfMinimumsV2(_ numbers: [[Int]]) -> Int {
+    return numbers.compactMap{$0.min()}.reduce(0, +)
 }
 
 */
