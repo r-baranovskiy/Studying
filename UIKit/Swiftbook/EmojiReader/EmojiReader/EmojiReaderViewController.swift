@@ -2,7 +2,7 @@ import UIKit
 
 class EmojiReaderViewController: UIViewController {
     
-    let emojis: [EmojiModel] = [
+    private var emojis: [EmojiModel] = [
         EmojiModel(title: "Call the friend",
                    discription: "Позвонить другу",
                    emoji: "🛎️", isLiked: false),
@@ -23,13 +23,6 @@ class EmojiReaderViewController: UIViewController {
         configureUI()
         setUpTableView()
         setUpConstraints()
-    }
-    
-    // MARK: - Behaviour
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        tableView.setEditing(editing, animated: true)
     }
     
     // MARK: - Appearance
@@ -58,6 +51,7 @@ class EmojiReaderViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
+    
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -81,6 +75,36 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
+    
+    // Editing cell (Delete)
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: true)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            emojis.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    // Move cell
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedEmoji = emojis.remove(at: sourceIndexPath.row)
+        emojis.insert(movedEmoji, at: destinationIndexPath.row)
+        tableView.reloadData()
+    }
+
     
 }
 
