@@ -3,26 +3,34 @@ import UIKit
 class EmojiReaderViewController: UIViewController {
     
     private let tableView = UITableView()
-
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        configureUI()
         setUpTableView()
         setUpConstraints()
     }
     
     // MARK: - Appearance
-
+    
+    private func configureUI() {
+        view.backgroundColor = .systemBackground
+        title = "Emoji Reader"
+        navigationItem.leftBarButtonItem = self.editButtonItem
+    }
+    
     private func setUpTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .systemGroupedBackground
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(EmojiReaderTableViewCell.self,
+                           forCellReuseIdentifier: EmojiReaderTableViewCell.identifier)
         self.view.addSubview(tableView)
     }
-
+    
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -37,11 +45,17 @@ class EmojiReaderViewController: UIViewController {
 
 extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: EmojiReaderTableViewCell.identifier,
+            for: indexPath) as? EmojiReaderTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = "\(indexPath)"
+        return cell
     }
     
 }
