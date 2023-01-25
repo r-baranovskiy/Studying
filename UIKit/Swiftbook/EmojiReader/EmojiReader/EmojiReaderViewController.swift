@@ -13,12 +13,19 @@ class EmojiReaderViewController: UIViewController {
         setUpConstraints()
     }
     
+    // MARK: - Behaviour
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: true)
+    }
+    
     // MARK: - Appearance
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
         title = "Emoji Reader"
-        navigationItem.leftBarButtonItem = self.editButtonItem
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
     private func setUpTableView() {
@@ -54,8 +61,12 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
             for: indexPath) as? EmojiReaderTableViewCell else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = "\(indexPath)"
+        cell.configureCell(emoji: "📦", topText: "Box", bottomText: "Коробка")
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        80
     }
     
 }
