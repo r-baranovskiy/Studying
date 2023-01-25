@@ -40,10 +40,10 @@ class EmojiReaderTableViewCell: UITableViewCell {
     
     // MARK: - Appearance
     
-    func configureCell(emoji: String, topText: String, bottomText: String) {
-        emojiLabel.text = emoji
-        titleTextLabel.text = topText
-        discriptionTextLabel.text = bottomText
+    func configureCell(emoji: EmojiModel) {
+        emojiLabel.text = emoji.emoji
+        titleTextLabel.text = emoji.title
+        discriptionTextLabel.text = emoji.discription
     }
     
     private func configureCellStackView() {

@@ -2,6 +2,18 @@ import UIKit
 
 class EmojiReaderViewController: UIViewController {
     
+    let emojis: [EmojiModel] = [
+        EmojiModel(title: "Call the friend",
+                   discription: "Позвонить другу",
+                   emoji: "🛎️", isLiked: false),
+        EmojiModel(title: "Feed the cat",
+                   discription: "Покормить кота",
+                   emoji: "🐷", isLiked: false),
+        EmojiModel(title: "Buy the groceries",
+                   discription: "Купить продукты",
+                   emoji: " 🍕", isLiked: false),
+    ]
+    
     private let tableView = UITableView()
     
     // MARK: - Lifecycle
@@ -52,7 +64,7 @@ class EmojiReaderViewController: UIViewController {
 
 extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        emojis.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,7 +73,8 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
             for: indexPath) as? EmojiReaderTableViewCell else {
             return UITableViewCell()
         }
-        cell.configureCell(emoji: "📦", topText: "Box", bottomText: "Коробка")
+        let emoji = emojis[indexPath.row]
+        cell.configureCell(emoji: emoji)
         return cell
     }
     
