@@ -19,9 +19,6 @@ final class DetailPhotoViewController: UIViewController {
         button.tintColor = .label
         button.setTitle(" Tap to share", for: .normal)
         button.setTitleColor(.label, for: .normal)
-        button.addTarget(DetailPhotoViewController.self,
-                         action: #selector(shareButtonPressed),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -34,10 +31,26 @@ final class DetailPhotoViewController: UIViewController {
         view.addSubview(shareButton)
         detailImageView.image = image
         setUpConstraints()
+        
+        shareButton.addTarget(self,
+                         action: #selector(shareButtonPressed),
+                         for: .touchUpInside)
     }
     
     @objc private func shareButtonPressed() {
+        guard let image = detailImageView.image else {
+            return
+        }
         
+        let activityVC = UIActivityViewController(
+            activityItems: [image], applicationActivities: nil)
+        activityVC.completionWithItemsHandler = { _, bool, _, _ in
+            if bool {
+                print("Success")
+            }
+        }
+        
+        present(activityVC, animated: true)
     }
     
     // MARK: - Constraints
