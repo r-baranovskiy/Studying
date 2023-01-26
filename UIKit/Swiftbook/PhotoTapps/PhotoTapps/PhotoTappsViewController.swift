@@ -4,15 +4,16 @@ class PhotoTappsViewController: UIViewController {
     
     private var photos = [UIImage]()
     
-    let layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        
-        return layout
-    }()
+    // MARK: - Layout
+    
+    private let itemsInSection: CGFloat = 3
+    private let edgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
         
     let photoCollectionView = UICollectionView(
         frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpPhotoCollectionView()
@@ -40,6 +41,7 @@ class PhotoTappsViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "PhotoTapps"
         view.addSubview(photoCollectionView)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .add)
     }
     
     private func setUpPhotoCollectionView() {
@@ -67,11 +69,11 @@ class PhotoTappsViewController: UIViewController {
 
 extension PhotoTappsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+        edgeInsets
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 60) / 2
+        let width = (collectionView.frame.width - edgeInsets.right * (itemsInSection + 1)) / itemsInSection
         let height = width
         
         return CGSize(width: width, height: height)
@@ -105,7 +107,7 @@ extension PhotoTappsViewController: UICollectionViewDelegate,
             for: indexPath) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configureCell(image: photos[indexPath.row])
+        cell.configureCell(image: photos[indexPath.item])
         return cell
     }
 }

@@ -6,7 +6,6 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     private let cellImageView: UIImageView = {
         let imageView = UIImageView()
-        
         return imageView
     }()
     
@@ -25,7 +24,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor.systemGray.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 6
-        
+        contentView.clipsToBounds = true
         contentView.addSubview(cellImageView)
     }
     
