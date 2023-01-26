@@ -524,28 +524,58 @@ func triangularV2(_ n: Int) -> Int{
 
 //Баш Примечание: Входные строки разделяются символом , а не \n. Выходные строки должны быть разделены \r вместо \n. См. «Примеры испытаний».
 
-func horMirror(_ s: String) -> String {
-    let lines = s.components(separatedBy: "\n")
-    var result = ""
-    for line in lines.reversed() {
-        result += line + "\n"
-    }
-    return result
+/*
 
+// V1
+func horMirror(_ s: String) -> String {
+    let reversedChars = String(s.reversed())
+    let subStrings = reversedChars.split(separator: "\n").map({String($0)})
+    let subStringsReversed = subStrings.map({String($0.reversed())}).joined(separator: "\n")
+    return subStringsReversed
 }
 func vertMirror(_ s: String) -> String {
-    let lines = s.components(separatedBy: "\n")
-    var result = ""
-    for line in lines {
-        let reversedLine = String(line.reversed())
-        result += reversedLine + "\n"
-    }
-    return result
-
+    let arr = s.split(separator: "\n")
+    let reversedArr = arr.map { String($0.reversed()) }
+    return reversedArr.joined(separator: "\n")
 }
 
-func oper(fct: (String) -> String, s: String) -> String {
+func oper(_ fct: (String) -> String, _ s: String) -> String {
     return fct(s)
 }
 
+// V2
+func horMirrorV2(_ s: String) -> String {
+    return s.components(separatedBy: "\n").reversed().joined(separator: "\n")
+}
 
+func vertMirrorV2(_ s: String) -> String {
+    return s.components(separatedBy: "\n").map({ String($0.reversed()) }).joined(separator: "\n")
+}
+
+func operV2(_ f: (String) -> (String), _ s: String) -> String {
+    return f(s)
+}
+
+// V3
+func processingString(_ string: String, performBeforeJoin closure: ([String]) -> [String]) -> String {
+    return closure(string.components(separatedBy: "\n")).joined(separator: "\n")
+}
+
+func horMirrorV3(_ s: String) -> String {
+    return processingString(s) {
+        return $0.reversed()
+    }
+}
+
+func vertMirrorV3(_ s: String) -> String {
+    return processingString(s) {
+        return $0.map { String($0.reversed()) }
+    }
+}
+
+// replace the dots with function parameter
+func operV3(_ closure: (String) -> String, _ s: String) -> String {
+    return closure(s)
+}
+
+*/
