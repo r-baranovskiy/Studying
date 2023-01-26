@@ -35,6 +35,12 @@ class DetailEmojiViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    public func editCell(emoji: EmojiModel) {
+        titleTextField.text = emoji.title
+        emojiTextField.text = emoji.emoji
+        descriptionTextField.text = emoji.description
+    }
+    
     @objc private func saveButtonPressed() {
         guard let title = titleTextField.text,
               let emoji = emojiTextField.text,

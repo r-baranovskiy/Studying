@@ -75,6 +75,15 @@ class EmojiReaderViewController: UIViewController, DetailEmojiViewControllerDele
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = DetailEmojiViewController()
+        detailVC.title = "Edit"
+        detailVC.editCell(emoji: emojis[indexPath.row])
+        let navVC = UINavigationController(rootViewController: detailVC)
+        present(navVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         emojis.count
     }
