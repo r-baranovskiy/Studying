@@ -1,6 +1,6 @@
 import UIKit
 
-class PhotoTappsViewController: UIViewController {
+final class PhotoTappsViewController: UIViewController {
     
     private var photos = [UIImage]()
     
@@ -24,6 +24,12 @@ class PhotoTappsViewController: UIViewController {
     }
     
     // MARK: - Behaviour
+    
+    private func showDetailVC(image: UIImage) {
+        let detailVC = DetailPhotoViewController()
+        detailVC.image = image
+        present(detailVC, animated: true)
+    }
     
     private func loadImages(firstString: String, count: Int,
                             imagesArray: inout [UIImage]) {
@@ -92,6 +98,11 @@ extension PhotoTappsViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotoTappsViewController: UICollectionViewDelegate,
                                     UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentImage = photos[indexPath.row]
+        showDetailVC(image: currentImage)
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
