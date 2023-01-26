@@ -2,7 +2,7 @@ import UIKit
 
 class PhotoTappsViewController: UIViewController {
     
-    private let photos = [UIImage]()
+    private var photos = [UIImage]()
     
     let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -18,7 +18,23 @@ class PhotoTappsViewController: UIViewController {
         setUpPhotoCollectionView()
         setUpView()
         addConstraints()
+        loadImages(firstString: "img", count: 18, imagesArray: &photos)
+        print(photos.count)
     }
+    
+    // MARK: - Behaviour
+    
+    private func loadImages(firstString: String, count: Int,
+                            imagesArray: inout [UIImage]) {
+        var imagesString = [String]()
+        
+        for imageNum in 1...count {
+            imagesString.append("\(firstString)" + "\(imageNum)")
+        }
+        imagesArray = imagesString.compactMap({ UIImage(named: $0) })
+    }
+    
+    // MARK: - Appearance
     
     private func setUpView() {
         view.backgroundColor = .systemBackground
@@ -80,7 +96,7 @@ extension PhotoTappsViewController: UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,9 +105,7 @@ extension PhotoTappsViewController: UICollectionViewDelegate,
             for: indexPath) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
+        cell.configureCell(image: photos[indexPath.row])
         return cell
     }
-    
-    
 }

@@ -496,3 +496,56 @@ func triangularV2(_ n: Int) -> Int{
 }
 
 */
+
+
+
+// MARK: - Эта ката является первой из четырех последовательностей о «Струнах в квадрате». Вам дана строка из n строк, каждая подстрока состоит из n символов: Например: s = "abcd\nefgh\nijkl\nmnop". Мы изучим некоторые преобразования этого квадрата строк.
+
+//Vertical mirror: vert_mirror (or vertMirror or vert-mirror)
+//vert_mirror(s) => "dcba\nhgfe\nlkji\nponm"
+//
+//Horizontal mirror: hor_mirror (or horMirror or hor-mirror)
+// hor_mirror(s) => "mnop\nijkl\nefgh\nabcd"
+//
+//or printed:
+//
+//vertical mirror   |horizontal mirror
+//abcd --> dcba     |abcd --> mnop
+//efgh     hgfe     |efgh     ijkl
+//ijkl     lkji     |ijkl     efgh
+//mnop     ponm     |mnop     abcd
+
+//Задача: Напишите эти две функции и функция высокого порядка oper(fct, s), где fct — это функция одной переменной f, применяемая к строке s (fct будет одной из vertMirror, horMirror)
+
+//Examples:
+//s = "abcd\nefgh\nijkl\nmnop"
+//oper(vert_mirror, s) => "dcba\nhgfe\nlkji\nponm"
+//oper(hor_mirror, s) => "mnop\nijkl\nefgh\nabcd"
+
+//Баш Примечание: Входные строки разделяются символом , а не \n. Выходные строки должны быть разделены \r вместо \n. См. «Примеры испытаний».
+
+func horMirror(_ s: String) -> String {
+    let lines = s.components(separatedBy: "\n")
+    var result = ""
+    for line in lines.reversed() {
+        result += line + "\n"
+    }
+    return result
+
+}
+func vertMirror(_ s: String) -> String {
+    let lines = s.components(separatedBy: "\n")
+    var result = ""
+    for line in lines {
+        let reversedLine = String(line.reversed())
+        result += reversedLine + "\n"
+    }
+    return result
+
+}
+
+func oper(fct: (String) -> String, s: String) -> String {
+    return fct(s)
+}
+
+
