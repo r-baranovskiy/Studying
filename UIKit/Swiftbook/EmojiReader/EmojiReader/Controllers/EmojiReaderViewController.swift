@@ -1,6 +1,6 @@
 import UIKit
 
-class EmojiReaderViewController: UIViewController {
+class EmojiReaderViewController: UIViewController, DetailEmojiViewControllerDelegate {
     
     private var emojis: [EmojiModel] = [
         EmojiModel(title: "Call the friend",
@@ -23,11 +23,21 @@ class EmojiReaderViewController: UIViewController {
         configureUI()
         setUpTableView()
         setUpConstraints()
+        
     }
     
+    // MARK: - Behaviour
+    
     @objc private func showDetailEmojiViewController() {
-        let navVC = UINavigationController(rootViewController: DetailEmojiViewController())
+        let detailVC = DetailEmojiViewController()
+        let navVC = UINavigationController(rootViewController: detailVC)
+        detailVC.delegate = self
         present(navVC, animated: true)
+    }
+    
+    func emojiDidAdded(_ emoji: EmojiModel) {
+        emojis.append(emoji)
+        emojiTableView.reloadData()
     }
     
     // MARK: - Appearance
@@ -134,7 +144,4 @@ extension EmojiReaderViewController: UITableViewDelegate, UITableViewDataSource 
         
         return UISwipeActionsConfiguration(actions: [doneAction, likeAction])
     }
-    
 }
-
-

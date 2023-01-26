@@ -1,6 +1,12 @@
 import UIKit
 
+protocol DetailEmojiViewControllerDelegate: AnyObject {
+    func emojiDidAdded(_ emoji: EmojiModel)
+}
+
 class DetailEmojiViewController: UIViewController {
+    
+    weak var delegate: DetailEmojiViewControllerDelegate?
     
     private let detailTableView = UITableView(frame: .zero, style: .grouped)
     
@@ -30,7 +36,20 @@ class DetailEmojiViewController: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        print("saved")
+        guard let title = titleTextField.text,
+              let emoji = emojiTextField.text,
+              let description = descriptionTextField.text,
+              !title.isEmpty,
+              !emoji.isEmpty,
+              !description.isEmpty else {
+            return
+        }
+        
+        let newEmoji = EmojiModel(title: title, description: description,
+                               emoji: emoji, isLiked: false)
+        
+        delegate?.emojiDidAdded(newEmoji)
+        dismiss(animated: true)
     }
     
     // MARK: - Appearance
@@ -41,6 +60,9 @@ class DetailEmojiViewController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
+        titleTextField.delegate = self
+        emojiTextField.delegate = self
+        descriptionTextField.delegate = self
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -48,6 +70,12 @@ class DetailEmojiViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "Save", style: .done,
             target: self, action: #selector(saveButtonPressed))
+        
+        if titleTextField.text == "",
+           emojiTextField.text == "",
+           descriptionTextField.text == "" {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
     }
     
     private func setUpTableView() {
@@ -81,6 +109,21 @@ class DetailEmojiViewController: UIViewController {
     }
 }
 
+extension DetailEmojiViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if titleTextField.text != "",
+           emojiTextField.text != "",
+           descriptionTextField.text != "" {
+            print("")
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+
+        return true
+    }
+}
+
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension DetailEmojiViewController: UITableViewDelegate, UITableViewDataSource {
@@ -97,11 +140,11 @@ extension DetailEmojiViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
         switch indexPath.section {
-                    case 0:
+        case 0:
             cell.configure(with: titleTextField)
-                    case 1:
+        case 1:
             cell.configure(with: emojiTextField)
-                    case 2:
+        case 2:
             cell.configure(with: descriptionTextField)
         default:
             return UITableViewCell()
