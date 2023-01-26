@@ -3,6 +3,12 @@ import UIKit
 class PhotoTappsViewController: UIViewController {
     
     private let photos = [UIImage]()
+    
+    let layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        
+        return layout
+    }()
         
     let photoCollectionView = UICollectionView(
         frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -41,20 +47,33 @@ class PhotoTappsViewController: UIViewController {
     }
 }
 
-extension PhotoTappsViewController: UICollectionViewDelegate,
-                                    UICollectionViewDataSource,
-                                    UICollectionViewDelegateFlowLayout {
-    
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension PhotoTappsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width / 2 - 30
+        let width = (collectionView.frame.width - 60) / 2
         let height = width
         
         return CGSize(width: width, height: height)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        10
+    }
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
+extension PhotoTappsViewController: UICollectionViewDelegate,
+                                    UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
@@ -71,7 +90,6 @@ extension PhotoTappsViewController: UICollectionViewDelegate,
             return UICollectionViewCell()
         }
         
-        cell.backgroundColor = .blue
         return cell
     }
     
