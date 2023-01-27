@@ -11,6 +11,8 @@ final class ViewController: UIViewController {
     @IBOutlet private var titleLabel: UILabel!
     
     @IBOutlet private var menuHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var menuButtonTrailingConstraint: NSLayoutConstraint!
+
     //MARK:- Variables
     
     private var slider: HorizontalItemSlider!
@@ -37,8 +39,10 @@ private extension ViewController {
         titleLabel.text = menuIsOpen ? "Select Item!" : "Packing List"
         view.layoutIfNeeded()
         menuHeightConstraint.constant = menuIsOpen ? 200 : 80
+        menuButtonTrailingConstraint.constant = menuIsOpen ? 16 : 8
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+            self.menuButton.transform = .init(rotationAngle: self.menuIsOpen ? .pi / 4 : 0)
             self.view.layoutIfNeeded()
         }
     }
@@ -50,6 +54,38 @@ private extension ViewController {
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
+        
+        let bottomConstraint = imageView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor, constant: imageView.frame.height)
+        let widthConstraint = imageView.widthAnchor.constraint(
+            equalTo: view.widthAnchor, multiplier: 1 / 3,  constant: -50)
+        
+        NSLayoutConstraint.activate([
+            bottomConstraint,
+            widthConstraint,
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+        ])
+        
+        view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.8) {
+            bottomConstraint.constant = imageView.frame.height * -2
+            widthConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }
+        
+        UIView.animate(withDuration: 0.8, delay: 1.35) {
+
+        }
+        
+        UIView.animate(withDuration: 0.6, delay: 2) {
+            bottomConstraint.constant = imageView.frame.height
+            widthConstraint.constant = -50
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            imageView.removeFromSuperview()
+        }
     }
     
     func transitionCloseMenu() {
