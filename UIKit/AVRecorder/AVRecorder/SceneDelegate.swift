@@ -1,3 +1,10 @@
+//
+//  SceneDelegate.swift
+//  AVRecorder
+//
+//  Created by Кащенко on 27.01.23.
+//
+
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

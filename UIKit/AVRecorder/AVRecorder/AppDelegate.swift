@@ -1,5 +1,11 @@
+//
+//  AppDelegate.swift
+//  AVRecorder
+//
+//  Created by Кащенко on 27.01.23.
+//
+
 import UIKit
-import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -7,13 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playAndRecord, options: .defaultToSpeaker)
-            try session.setActive(true )
-        } catch {
-            print("Error \(error.localizedDescription)")
-        }
+        // Override point for customization after application launch.
         return true
     }
 
