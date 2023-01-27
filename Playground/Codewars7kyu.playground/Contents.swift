@@ -425,11 +425,11 @@ import UIKit
  return arr.flatMap{ $0 }.sorted()
  }
  
-// V3
-func flattenAndSort<T: Comparable>(_ arr: [[T]]) -> [T] {
-    return arr.joined().sorted()
-}
-
+ // V3
+ func flattenAndSort<T: Comparable>(_ arr: [[T]]) -> [T] {
+ return arr.joined().sorted()
+ }
+ 
  */
 
 
@@ -444,18 +444,18 @@ func flattenAndSort<T: Comparable>(_ arr: [[T]]) -> [T] {
 //Таким образом, функция должна вернуть 26, потому что сумма минимумов равна 1 + 5 + 20 = 26. Примечание. Вам всегда будет предоставлен непустой список, содержащий положительные значения.
 
 /*
-
-// V1
-func sumOfMinimums(_ numbers: [[Int]]) -> Int {
-    numbers.map({ $0.sorted(by: { $0 < $1 }) }).reduce((0), { $0 + ($1.first ?? 0) })
-}
-
-// V2
-func sumOfMinimumsV2(_ numbers: [[Int]]) -> Int {
-    return numbers.compactMap{$0.min()}.reduce(0, +)
-}
-
-*/
+ 
+ // V1
+ func sumOfMinimums(_ numbers: [[Int]]) -> Int {
+ numbers.map({ $0.sorted(by: { $0 < $1 }) }).reduce((0), { $0 + ($1.first ?? 0) })
+ }
+ 
+ // V2
+ func sumOfMinimumsV2(_ numbers: [[Int]]) -> Int {
+ return numbers.compactMap{$0.min()}.reduce(0, +)
+ }
+ 
+ */
 
 
 
@@ -474,28 +474,28 @@ func sumOfMinimumsV2(_ numbers: [[Int]]) -> Int {
 //-10 --> 0
 
 /*
-
-// V1
-func triangular(_ n: Int) -> Int{
-    if n <= 0 {
-        return 0
-    }
-    var arrOfArr: [[Int]] = []
-    
-    for num in 1...n {
-        arrOfArr.append([num])
-    }
-    
-    return arrOfArr.flatMap({ $0 }).reduce(0, +)
-}
-
-// V2
-func triangularV2(_ n: Int) -> Int{
-    guard n > 0 else { return 0 }
-    return n * (1 + n) / 2
-}
-
-*/
+ 
+ // V1
+ func triangular(_ n: Int) -> Int{
+ if n <= 0 {
+ return 0
+ }
+ var arrOfArr: [[Int]] = []
+ 
+ for num in 1...n {
+ arrOfArr.append([num])
+ }
+ 
+ return arrOfArr.flatMap({ $0 }).reduce(0, +)
+ }
+ 
+ // V2
+ func triangularV2(_ n: Int) -> Int{
+ guard n > 0 else { return 0 }
+ return n * (1 + n) / 2
+ }
+ 
+ */
 
 
 
@@ -525,57 +525,94 @@ func triangularV2(_ n: Int) -> Int{
 //Баш Примечание: Входные строки разделяются символом , а не \n. Выходные строки должны быть разделены \r вместо \n. См. «Примеры испытаний».
 
 /*
+ 
+ // V1
+ func horMirror(_ s: String) -> String {
+ let reversedChars = String(s.reversed())
+ let subStrings = reversedChars.split(separator: "\n").map({String($0)})
+ let subStringsReversed = subStrings.map({String($0.reversed())}).joined(separator: "\n")
+ return subStringsReversed
+ }
+ func vertMirror(_ s: String) -> String {
+ let arr = s.split(separator: "\n")
+ let reversedArr = arr.map { String($0.reversed()) }
+ return reversedArr.joined(separator: "\n")
+ }
+ 
+ func oper(_ fct: (String) -> String, _ s: String) -> String {
+ return fct(s)
+ }
+ 
+ // V2
+ func horMirrorV2(_ s: String) -> String {
+ return s.components(separatedBy: "\n").reversed().joined(separator: "\n")
+ }
+ 
+ func vertMirrorV2(_ s: String) -> String {
+ return s.components(separatedBy: "\n").map({ String($0.reversed()) }).joined(separator: "\n")
+ }
+ 
+ func operV2(_ f: (String) -> (String), _ s: String) -> String {
+ return f(s)
+ }
+ 
+ // V3
+ func processingString(_ string: String, performBeforeJoin closure: ([String]) -> [String]) -> String {
+ return closure(string.components(separatedBy: "\n")).joined(separator: "\n")
+ }
+ 
+ func horMirrorV3(_ s: String) -> String {
+ return processingString(s) {
+ return $0.reversed()
+ }
+ }
+ 
+ func vertMirrorV3(_ s: String) -> String {
+ return processingString(s) {
+ return $0.map { String($0.reversed()) }
+ }
+ }
+ 
+ // replace the dots with function parameter
+ func operV3(_ closure: (String) -> String, _ s: String) -> String {
+ return closure(s)
+ }
+ 
+ */
 
-// V1
-func horMirror(_ s: String) -> String {
-    let reversedChars = String(s.reversed())
-    let subStrings = reversedChars.split(separator: "\n").map({String($0)})
-    let subStringsReversed = subStrings.map({String($0.reversed())}).joined(separator: "\n")
-    return subStringsReversed
-}
-func vertMirror(_ s: String) -> String {
-    let arr = s.split(separator: "\n")
-    let reversedArr = arr.map { String($0.reversed()) }
-    return reversedArr.joined(separator: "\n")
+
+
+// MARK: - Определите общее количество цифр в целом числе (n>=0), заданном в качестве входных данных для функции. Например, 9 — это одна цифра, 66 — 2 цифры, а 128685 — 6 цифр. Будьте осторожны, чтобы избежать переполнения/недостаточного заполнения. Все входы будут действительными.
+
+/*
+
+func digits(num n: UInt64) -> Int {
+    String(n).count
 }
 
-func oper(_ fct: (String) -> String, _ s: String) -> String {
-    return fct(s)
-}
+*/
 
-// V2
-func horMirrorV2(_ s: String) -> String {
-    return s.components(separatedBy: "\n").reversed().joined(separator: "\n")
-}
 
-func vertMirrorV2(_ s: String) -> String {
-    return s.components(separatedBy: "\n").map({ String($0.reversed()) }).joined(separator: "\n")
-}
+// MARK: - Вы только что въехали на совершенно прямую улицу с ровно n одинаковыми домами по обеим сторонам дороги. Естественно, вы хотели бы узнать номер дома людей на другой стороне улицы. Улица выглядит примерно так:
 
-func operV2(_ f: (String) -> (String), _ s: String) -> String {
-    return f(s)
-}
+//Street
+//1|   |6
+//3|   |4
+//5|   |2
+//  you
 
-// V3
-func processingString(_ string: String, performBeforeJoin closure: ([String]) -> [String]) -> String {
-    return closure(string.components(separatedBy: "\n")).joined(separator: "\n")
-}
+//Четные увеличиваются справа; нечетные уменьшаются слева. Номера домов начинаются с 1 и увеличиваются без пробелов. Когда n = 3, 1 напротив 6, 3 напротив 4 и 5 напротив 2.
+//
+//Пример (адрес, n --> вывод) Учитывая адрес вашего дома и длину улицы n, укажите номер дома на противоположной стороне улицы.
+//
+//Примечание об ошибках Если у вас истекает время ожидания, заканчивается память или вы получаете какую-либо «ошибку», читайте дальше. И n, и адрес могут получить до 500 миллиардов с более чем 200 случайными тестами.
+//
+//Если вы попытаетесь сохранить адреса 500 миллиардов домов в виде списка, у вас закончится память, и тесты рухнут.
 
-func horMirrorV3(_ s: String) -> String {
-    return processingString(s) {
-        return $0.reversed()
-    }
-}
+/*
 
-func vertMirrorV3(_ s: String) -> String {
-    return processingString(s) {
-        return $0.map { String($0.reversed()) }
-    }
-}
-
-// replace the dots with function parameter
-func operV3(_ closure: (String) -> String, _ s: String) -> String {
-    return closure(s)
+func overTheRoad(address: Int, street: Int) -> Int {
+    street * 2 + 1 - address
 }
 
 */
