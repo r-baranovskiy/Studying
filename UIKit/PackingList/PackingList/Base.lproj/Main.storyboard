@@ -39,9 +39,15 @@
                                     <constraint firstItem="OVl-Vy-Hss" firstAttribute="centerY" secondItem="7Lr-a6-pgK" secondAttribute="centerY" priority="750" id="ML0-7M-cQe"/>
                                     <constraint firstItem="IOq-Pr-fqH" firstAttribute="centerY" secondItem="OVl-Vy-Hss" secondAttribute="centerY" id="NcL-NH-gxp"/>
                                     <constraint firstItem="OVl-Vy-Hss" firstAttribute="centerX" secondItem="7Lr-a6-pgK" secondAttribute="centerX" id="PlC-5c-Tdx"/>
+                                    <constraint firstItem="OVl-Vy-Hss" firstAttribute="centerY" secondItem="7Lr-a6-pgK" secondAttribute="centerY" multiplier="2 / 3" priority="745" id="XTA-6V-Rwu"/>
                                     <constraint firstAttribute="height" constant="80" id="vCC-PK-uyy"/>
                                     <constraint firstAttribute="trailing" secondItem="IOq-Pr-fqH" secondAttribute="trailing" constant="8" id="yNV-0i-Atf"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="XTA-6V-Rwu"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tdH-ZN-xEy" customClass="TableView" customModule="PackingList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="80" width="375" height="698"/>
@@ -76,6 +82,8 @@
                         <outlet property="menuButtonTrailingConstraint" destination="yNV-0i-Atf" id="xEr-l4-ZMo"/>
                         <outlet property="menuHeightConstraint" destination="vCC-PK-uyy" id="JmQ-jL-mug"/>
                         <outlet property="tableView" destination="tdH-ZN-xEy" id="JzZ-jq-73Q"/>
+                        <outlet property="titleCenterYClosed" destination="ML0-7M-cQe" id="fl5-TZ-9Ki"/>
+                        <outlet property="titleCenterYOpened" destination="XTA-6V-Rwu" id="kSa-Hu-brp"/>
                         <outlet property="titleLabel" destination="OVl-Vy-Hss" id="KYJ-17-5qZ"/>
                     </connections>
                 </viewController>
