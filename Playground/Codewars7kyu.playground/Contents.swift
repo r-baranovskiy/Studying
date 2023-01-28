@@ -616,3 +616,47 @@ func overTheRoad(address: Int, street: Int) -> Int {
 }
 
 */
+
+
+
+// MARK: - Завершите функцию, которая принимает два числа в качестве входных данных, num и nth, и возвращает n-ю цифру num (считая справа налево). Примечание Если число отрицательное, игнорируйте его знак и рассматривайте его как положительное значение. Если nth не положительное, вернуть -1 Имейте в виду, что 42 = 00042. Это означает, что findDigit(42, 5) вернет 0
+
+//Examples(num, nth --> output)
+//5673, 4 --> 5
+//129, 2 --> 2
+//-2825, 3 --> 8
+//-456, 4 --> 0
+//0, 20 --> 0
+//65, 0 --> -1
+//24, -8 --> -1
+
+/*
+
+func findDigit(_ num:Int, _ nth: Int) -> Int {
+    if nth <= 0 {
+        return -1
+    }
+    
+    let numString = String(abs(num))
+    let index = numString.count - nth
+    
+    if index < 0 {
+        return 0
+    }
+    
+    let digitString = numString[numString.index(numString.startIndex, offsetBy: index)]
+    return Int(String(digitString)) ?? 0
+
+}
+
+func findDigitV2(_ num: Int, _ nth: Int) -> Int {
+  let positive = abs(num)
+  
+  guard nth > 0 else { return -1 }
+  guard positive > 0 else { return 0 }
+  guard nth > 1 else { return positive % 10 }
+  
+  return findDigit(positive / 10, nth - 1)
+}
+
+*/
