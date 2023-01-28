@@ -660,3 +660,42 @@ func findDigitV2(_ num: Int, _ nth: Int) -> Int {
 }
 
 */
+
+
+
+// MARK: - Дана упорядоченная последовательность чисел от 1 до N. Возможно, из него удалили один номер, тогда остальные номера были перемешаны. Найдите номер, который был удален. Если из начального массива не было удалено ни одного числа, ваша функция должна вернуть int 0. Примечание. N может быть равно 1 или меньше (в последнем случае первый массив будет []). Пример:
+
+//Example:
+//
+//The starting array sequence is [1,2,3,4,5,6,7,8,9]
+//The mixed array with one deleted number is [3,2,4,6,7,8,1,9]
+//Your function should return the int 5.
+
+/*
+
+func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
+    if array.count == mixArray.count {
+        return 0
+    }
+    
+    let mixSortedArray = mixArray.sorted()
+    
+    for (index, num) in array.enumerated() {
+        if num != mixSortedArray[index] {
+            print(num)
+            return num
+        }
+    }
+    
+    return 0
+}
+
+func findDeletedNumberV2(_ array: [Int], _ mixArray: [Int]) -> Int {
+  return array.first(where: { !mixArray.contains($0) }) ?? 0
+}
+
+func findDeletedNumberV3(_ array: [Int], _ mixArray: [Int]) -> Int {
+    return array.reduce(0, +) - mixArray.reduce(0, +)
+}
+
+*/
