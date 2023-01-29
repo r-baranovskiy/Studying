@@ -699,3 +699,42 @@ func findDeletedNumberV3(_ array: [Int], _ mixArray: [Int]) -> Int {
 }
 
 */
+
+
+
+// MARK: - Ваша задача состоит в том, чтобы сложить буквы в одну букву. Функция получит Array<Character>, каждый из которых представляет собой букву для добавления, и функция вернет Character. Ноты: Буквы всегда будут строчными. Буквы могут выходить за пределы (см. предпоследний пример описания) Если буквы не указаны, функция должна вернуть 'z'
+
+/*
+
+//Examples:
+//addLetters(["a", "b", "c"]) = "f"
+//addLetters(["a", "b"]) = "c"
+//addLetters(["z"]) = "z"
+//addLetters(["z", "a"]) = "a"
+//addLetters(["y", "c", "b"]) = "d" // notice the letters overflowing
+//addLetters([]) = "z"
+
+func addLetters(_ letters: [Character]) -> Character {
+    if letters.count == 0 {
+        return "z"
+    }
+    
+    var result = 0
+    
+    for i in letters {
+        result += Int(i.asciiValue ?? 0) - 96
+        if result > 26 {
+            result -= 26
+        }
+    }
+    
+    let returnedResult = Character(UnicodeScalar(result + 96) ?? UnicodeScalar(1))
+    return returnedResult
+}
+
+func addLettersV2(_ letters: [Character]) -> Character {
+    let sum = (letters.map { Int($0.asciiValue! - 96) }.reduce(0, +) + 25) % 26 + 97
+    return Character(UnicodeScalar(sum)!)
+}
+
+*/
