@@ -585,12 +585,12 @@ import UIKit
 // MARK: - Определите общее количество цифр в целом числе (n>=0), заданном в качестве входных данных для функции. Например, 9 — это одна цифра, 66 — 2 цифры, а 128685 — 6 цифр. Будьте осторожны, чтобы избежать переполнения/недостаточного заполнения. Все входы будут действительными.
 
 /*
-
-func digits(num n: UInt64) -> Int {
-    String(n).count
-}
-
-*/
+ 
+ func digits(num n: UInt64) -> Int {
+ String(n).count
+ }
+ 
+ */
 
 
 // MARK: - Вы только что въехали на совершенно прямую улицу с ровно n одинаковыми домами по обеим сторонам дороги. Естественно, вы хотели бы узнать номер дома людей на другой стороне улицы. Улица выглядит примерно так:
@@ -610,12 +610,12 @@ func digits(num n: UInt64) -> Int {
 //Если вы попытаетесь сохранить адреса 500 миллиардов домов в виде списка, у вас закончится память, и тесты рухнут.
 
 /*
-
-func overTheRoad(address: Int, street: Int) -> Int {
-    street * 2 + 1 - address
-}
-
-*/
+ 
+ func overTheRoad(address: Int, street: Int) -> Int {
+ street * 2 + 1 - address
+ }
+ 
+ */
 
 
 
@@ -631,35 +631,35 @@ func overTheRoad(address: Int, street: Int) -> Int {
 //24, -8 --> -1
 
 /*
-
-func findDigit(_ num:Int, _ nth: Int) -> Int {
-    if nth <= 0 {
-        return -1
-    }
-    
-    let numString = String(abs(num))
-    let index = numString.count - nth
-    
-    if index < 0 {
-        return 0
-    }
-    
-    let digitString = numString[numString.index(numString.startIndex, offsetBy: index)]
-    return Int(String(digitString)) ?? 0
-
-}
-
-func findDigitV2(_ num: Int, _ nth: Int) -> Int {
-  let positive = abs(num)
-  
-  guard nth > 0 else { return -1 }
-  guard positive > 0 else { return 0 }
-  guard nth > 1 else { return positive % 10 }
-  
-  return findDigit(positive / 10, nth - 1)
-}
-
-*/
+ 
+ func findDigit(_ num:Int, _ nth: Int) -> Int {
+ if nth <= 0 {
+ return -1
+ }
+ 
+ let numString = String(abs(num))
+ let index = numString.count - nth
+ 
+ if index < 0 {
+ return 0
+ }
+ 
+ let digitString = numString[numString.index(numString.startIndex, offsetBy: index)]
+ return Int(String(digitString)) ?? 0
+ 
+ }
+ 
+ func findDigitV2(_ num: Int, _ nth: Int) -> Int {
+ let positive = abs(num)
+ 
+ guard nth > 0 else { return -1 }
+ guard positive > 0 else { return 0 }
+ guard nth > 1 else { return positive % 10 }
+ 
+ return findDigit(positive / 10, nth - 1)
+ }
+ 
+ */
 
 
 
@@ -672,69 +672,90 @@ func findDigitV2(_ num: Int, _ nth: Int) -> Int {
 //Your function should return the int 5.
 
 /*
-
-func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
-    if array.count == mixArray.count {
-        return 0
-    }
-    
-    let mixSortedArray = mixArray.sorted()
-    
-    for (index, num) in array.enumerated() {
-        if num != mixSortedArray[index] {
-            print(num)
-            return num
-        }
-    }
-    
-    return 0
-}
-
-func findDeletedNumberV2(_ array: [Int], _ mixArray: [Int]) -> Int {
-  return array.first(where: { !mixArray.contains($0) }) ?? 0
-}
-
-func findDeletedNumberV3(_ array: [Int], _ mixArray: [Int]) -> Int {
-    return array.reduce(0, +) - mixArray.reduce(0, +)
-}
-
-*/
+ 
+ func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
+ if array.count == mixArray.count {
+ return 0
+ }
+ 
+ let mixSortedArray = mixArray.sorted()
+ 
+ for (index, num) in array.enumerated() {
+ if num != mixSortedArray[index] {
+ print(num)
+ return num
+ }
+ }
+ 
+ return 0
+ }
+ 
+ func findDeletedNumberV2(_ array: [Int], _ mixArray: [Int]) -> Int {
+ return array.first(where: { !mixArray.contains($0) }) ?? 0
+ }
+ 
+ func findDeletedNumberV3(_ array: [Int], _ mixArray: [Int]) -> Int {
+ return array.reduce(0, +) - mixArray.reduce(0, +)
+ }
+ 
+ */
 
 
 
 // MARK: - Ваша задача состоит в том, чтобы сложить буквы в одну букву. Функция получит Array<Character>, каждый из которых представляет собой букву для добавления, и функция вернет Character. Ноты: Буквы всегда будут строчными. Буквы могут выходить за пределы (см. предпоследний пример описания) Если буквы не указаны, функция должна вернуть 'z'
 
 /*
+ 
+ //Examples:
+ //addLetters(["a", "b", "c"]) = "f"
+ //addLetters(["a", "b"]) = "c"
+ //addLetters(["z"]) = "z"
+ //addLetters(["z", "a"]) = "a"
+ //addLetters(["y", "c", "b"]) = "d" // notice the letters overflowing
+ //addLetters([]) = "z"
+ 
+ func addLetters(_ letters: [Character]) -> Character {
+ if letters.count == 0 {
+ return "z"
+ }
+ 
+ var result = 0
+ 
+ for i in letters {
+ result += Int(i.asciiValue ?? 0) - 96
+ if result > 26 {
+ result -= 26
+ }
+ }
+ 
+ let returnedResult = Character(UnicodeScalar(result + 96) ?? UnicodeScalar(1))
+ return returnedResult
+ }
+ 
+ func addLettersV2(_ letters: [Character]) -> Character {
+ let sum = (letters.map { Int($0.asciiValue! - 96) }.reduce(0, +) + 25) % 26 + 97
+ return Character(UnicodeScalar(sum)!)
+ }
+ 
+ */
 
-//Examples:
-//addLetters(["a", "b", "c"]) = "f"
-//addLetters(["a", "b"]) = "c"
-//addLetters(["z"]) = "z"
-//addLetters(["z", "a"]) = "a"
-//addLetters(["y", "c", "b"]) = "d" // notice the letters overflowing
-//addLetters([]) = "z"
 
-func addLetters(_ letters: [Character]) -> Character {
-    if letters.count == 0 {
-        return "z"
-    }
+
+// MARK: - Задача Король Артур и его рыцари устраивают новогоднюю вечеринку. В прошлом году Ланселот приревновал Артура, потому что у Артура было свидание, а у Ланселота нет, и они затеяли дуэль. Чтобы этого больше не повторилось, Артур хочет убедиться, что в этом году на вечеринке будет как минимум столько же женщин, сколько и мужчин. Он дал вам список целых чисел всех тусовщиков. Артуру нужно, чтобы вы вернули true, если ему нужно пригласить больше женщин, или false, если все готово.
+
+//Массив (гарантированно неассоциативный в PHP), представляющий пол участников, где -1 представляет женщин, а 1 представляет мужчин.
+
+/*
+
+func inviteMoreWomen(_ arr: [Int]) -> Bool {
+    let positiveArray = arr.filter({ $0 < 0 })
+    let negativeArray = arr.filter({ $0 > 0 })
     
-    var result = 0
-    
-    for i in letters {
-        result += Int(i.asciiValue ?? 0) - 96
-        if result > 26 {
-            result -= 26
-        }
-    }
-    
-    let returnedResult = Character(UnicodeScalar(result + 96) ?? UnicodeScalar(1))
-    return returnedResult
+    return positiveArray.count == negativeArray.count || positiveArray.count > negativeArray.count ? false : true
 }
 
-func addLettersV2(_ letters: [Character]) -> Character {
-    let sum = (letters.map { Int($0.asciiValue! - 96) }.reduce(0, +) + 25) % 26 + 97
-    return Character(UnicodeScalar(sum)!)
+func inviteMoreWomenV2(_ arr: [Int]) -> Bool {
+    return arr.reduce(0, +) > 0
 }
 
 */
