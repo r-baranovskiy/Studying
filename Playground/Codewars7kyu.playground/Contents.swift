@@ -759,3 +759,61 @@ func inviteMoreWomenV2(_ arr: [Int]) -> Bool {
 }
 
 */
+
+
+
+// MARK: - Сбалансированное число — это число, в котором сумма цифр слева от средней цифры и сумма цифр справа от средней цифры равны. Если в числе нечетное количество цифр, то средняя цифра только одна. (Например, 92645 имеет одну среднюю цифру, 6.) В противном случае есть две средние цифры. (Например, средние цифры числа 1301 — это 3 и 0.) Среднюю цифру (цифры) не следует учитывать при определении того, является ли число сбалансированным или нет, например. 413023 — сбалансированное число, потому что сумма слева и справа равна 5. Задание Учитывая число, найдите, сбалансировано ли оно, и верните строку «Сбалансировано» или «Не сбалансировано» соответственно. Передаваемое число всегда будет положительным.
+
+//Examples
+//7 ==> return "Balanced"
+
+//Объяснение: средняя цифра (ы): 7 сумма всех цифр слева от средней цифры (цифр) -> 0 сумма всех цифр справа от средней цифры -> 0 0 и 0 равны, поэтому он сбалансирован.
+
+
+//295591 ==> return "Not Balanced"
+
+//Объяснение: средняя цифра (ы): 55 сумма всех цифр слева от средней цифры (цифр) -> 11 сумма всех цифр справа от средней цифры -> 10 11 и 10 не равны, так что это не сбалансировано.
+
+/*
+
+func balancedNumber(_ number: Int) -> String {
+    var numsArray = String(number).compactMap({ Int("\($0)") })
+    if numsArray.count <= 2 {
+        return "Balanced"
+    }
+    let midIndex = numsArray.count / 2
+    if midIndex % 2 != 0 && numsArray.count > 2 {
+        numsArray.remove(at: midIndex)
+    } else if midIndex % 2 == 0 && numsArray.count > 3 {
+        let leftSum = numsArray[..<(midIndex-1)].reduce((0), { $0 + $1 })
+        let rightSum = numsArray[(midIndex+1)...].reduce((0), { $0 + $1 })
+        if leftSum == rightSum {
+            return "Balanced"
+        }
+    }
+
+    let leftSum = numsArray[..<midIndex].reduce(0, +)
+    let rightSum = numsArray[midIndex...].reduce(0, +)
+    return leftSum == rightSum ? "Balanced" : "Not Balanced"
+}
+
+func balancedNumberV2(_ number: Int) -> String {
+  let digits = String(number).compactMap{$0.wholeNumberValue }
+  let part1 = digits.dropLast (digits.count/2 + 1).reduce(0,+)
+  let part2 = digits.dropFirst(digits.count/2 + 1).reduce(0,+)
+ return part1 == part2 ? "Balanced" : "Not Balanced"
+}
+
+func balancedNumberV3(_ number: Int) -> String {
+  
+  let digitCount = String(number).count
+  let numberOfElementsToCompare: Int = digitCount % 2 == 0 ? (digitCount / 2) - 1 : digitCount / 2
+  let intArray = String(number).map{Int(String($0))!}
+  let firstHalf = intArray.prefix(numberOfElementsToCompare).reduce(0,+)
+  let secondHalf = intArray.suffix(numberOfElementsToCompare).reduce(0,+)
+  
+  return firstHalf == secondHalf ? "Balanced" : "Not Balanced"
+  
+}
+
+*/
