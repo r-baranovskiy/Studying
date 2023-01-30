@@ -4,7 +4,7 @@ import UIKit
 
 // TableView
 private let listTableView = UITableView()
-private let categories = ["Приготовить ужин", "Убраться", "Учить Swift"]
+private var categories = ["Приготовить ужин", "Убраться", "Учить Swift"]
 
 /// The main list that displays tasks' categories
 final class ToDoListViewController: UIViewController {
@@ -19,6 +19,31 @@ final class ToDoListViewController: UIViewController {
         addConstraints()
     }
     
+    // MARK: - Behaviour
+    
+    @objc private func addButtonDidTap() {
+        var categoryTextName: String?
+        
+        let alert = UIAlertController(
+            title: "Add new category?", message: "Would you like to add a new category for your tasks?",
+            preferredStyle: .alert)
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Enter your categorie's name"
+            categoryTextName = alertTextField.text
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let okAction = UIAlertAction(title: "Add", style: .default) { _ in
+            if let categoryTextName {
+                categories.append(categoryTextName)
+                listTableView.reloadData()
+            }
+        }
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
     // MARK: - Appearance
     
     private func configureNavigationBar() {
@@ -26,6 +51,10 @@ final class ToDoListViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .CustomColor.navigationBar.color
         let textAttribute = [NSAttributedString.Key.foregroundColor : UIColor.label]
         navigationController?.navigationBar.titleTextAttributes = textAttribute
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add, target: self, action: #selector(addButtonDidTap))
+        navigationItem.rightBarButtonItem?.tintColor = .label
+        navigationItem.rightBarButtonItem?.style = .done
     }
     
     private func configureTableView() {
@@ -51,6 +80,16 @@ final class ToDoListViewController: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        tableView.cellForRow(at: indexPath)?.accessoryType = tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark ? .none : .checkmark
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
