@@ -101,8 +101,12 @@ final class ToDoListViewController: UIViewController {
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        listArray[indexPath.row].isChecked = !listArray[indexPath.row].isChecked
-        saveToListAndReload(listArray[indexPath.row])
+        let index = indexPath.row
+        
+        var removedTask = listArray.remove(at: index)
+        removedTask.isChecked = !removedTask.isChecked
+        replaceTask(removedTask, indexPath)
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

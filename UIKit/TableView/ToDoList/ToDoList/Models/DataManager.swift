@@ -5,30 +5,42 @@ final class DataManager {
     
     static let shared = DataManager()
     
-    private let keyForList = "tasksList"
+    private let dataFilePath = FileManager.default.urls(
+        for: .documentDirectory, in: .userDomainMask).first?.appendingPathExtension("tasksList")
     
-    private let userDefaults = UserDefaults.standard
-        
-    func loadList() -> [Task] {        
-        guard let safeList = loadValue([Task].self, for: keyForList) else {
+    func loadList() -> [Task] {
+        guard let dataUrl = dataFilePath,
+              let data = loadData(from: dataUrl),
+              let tasks = try? JSONDecoder().decode([Task].self, from: data)
+        else {
             return [Task]()
         }
-        return safeList
+        
+        return tasks
     }
     
     func saveList(list: [Task]) {
-        saveData(list, for: keyForList)
+        guard let dataUrl = dataFilePath else {
+            return
+        }
+        
+        saveData(list, to: dataUrl)
     }
     
-    private func saveData<T: Encodable>(_ value: T?, for key: String) {
-        let data = try? JSONEncoder().encode(value)
-        UserDefaults.standard.set(data, forKey: key)
+    private func saveData(_ data: Codable, to url: URL) {
+        do {
+            let data = try JSONEncoder().encode(data)
+            try data.write(to: url)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
-    private func loadValue<T: Decodable>(_ type: T.Type, for key: String) -> T? {
-        guard let data = UserDefaults.standard.data(forKey: key),
-              let object = try? JSONDecoder().decode(type, from: data) else { return nil }
-        return object
+    private func loadData(from url: URL) -> Data? {
+        guard let data = try? Data(contentsOf: url) else {
+            return nil
+        }
+        
+        return data
     }
-
 }
