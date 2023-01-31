@@ -1,19 +1,24 @@
 import UIKit
 
-// MARK: - UI Constants
-
-// TableView
-private let listTableView = UITableView()
-private var categories = ["Приготовить ужин", "Убраться", "Учить Swift"]
-
 /// The main list that displays tasks' categories
 final class ToDoListViewController: UIViewController {
+    
+    // MARK: - UI Constants
+
+    // TableView
+    private let listTableView = UITableView()
+
+    // Data
+    private let dataManager = DataManager.shared
+    private var listArray = [String]()
     
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        listArray = dataManager.loadList()
+        
         configureNavigationBar()
         configureTableView()
         addConstraints()
@@ -22,26 +27,7 @@ final class ToDoListViewController: UIViewController {
     // MARK: - Behaviour
     
     @objc private func addButtonDidTap() {
-        var categoryTextName: String?
-        
-        let alert = UIAlertController(
-            title: "Add new category?", message: "Would you like to add a new category for your tasks?",
-            preferredStyle: .alert)
-        alert.addTextField { alertTextField in
-            alertTextField.placeholder = "Enter your categorie's name"
-            categoryTextName = alertTextField.text
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let okAction = UIAlertAction(title: "Add", style: .default) { _ in
-            if let categoryTextName {
-                categories.append(categoryTextName)
-                listTableView.reloadData()
-            }
-        }
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
+        showAlert()
     }
     
     // MARK: - Appearance
@@ -65,6 +51,32 @@ final class ToDoListViewController: UIViewController {
                                forCellReuseIdentifier: ToDoTableViewCell.identifier)
     }
     
+    private func showAlert() {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(
+            title: "Add new category?", message: "Would you like to add a new category for your tasks?",
+            preferredStyle: .alert)
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Enter your categorie's name"
+            textField = alertTextField
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let okAction = UIAlertAction(title: "Add", style: .default) { _ in
+            if let text = textField.text {
+                self.listArray.append(text)
+                self.dataManager.saveList(list: self.listArray)
+                self.listTableView.reloadData()
+            }
+        }
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    // MARK: - Constraints
+    
     private func addConstraints() {
         view.addSubviewWithoutTranslates(listTableView)
         
@@ -82,12 +94,12 @@ final class ToDoListViewController: UIViewController {
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
         tableView.cellForRow(at: indexPath)?.accessoryType = tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark ? .none : .checkmark
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -95,7 +107,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
+        listArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,7 +117,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure(categoryString: categories[indexPath.row])
+        cell.configure(categoryString: listArray[indexPath.row])
         return cell
     }
 }
