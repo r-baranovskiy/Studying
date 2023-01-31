@@ -21,7 +21,6 @@ final class DataManager {
     }
     
     private func saveData<T: Encodable>(_ value: T?, for key: String) {
-        print(String(describing: value))
         let data = try? JSONEncoder().encode(value)
         UserDefaults.standard.set(data, forKey: key)
     }
@@ -29,7 +28,6 @@ final class DataManager {
     private func loadValue<T: Decodable>(_ type: T.Type, for key: String) -> T? {
         guard let data = UserDefaults.standard.data(forKey: key),
               let object = try? JSONDecoder().decode(type, from: data) else { return nil }
-        print(object)
         return object
     }
 

@@ -101,21 +101,11 @@ final class ToDoListViewController: UIViewController {
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        listArray[indexPath.row].isChecked = !listArray[indexPath.row].isChecked
+        saveToListAndReload(listArray[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        var deletedTask = listArray.remove(at: indexPath.row)
-        print(deletedTask)
-        
-        if deletedTask.isChecked {
-            deletedTask.isChecked = false
-        } else {
-            deletedTask.isChecked = true
-        }
-        print(deletedTask)
-        replaceTask(deletedTask, indexPath)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
@@ -131,8 +121,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let task = listArray[indexPath.row]
-        cell.accessoryType = task.isChecked ? .checkmark : .none
-        cell.configure(categoryString: task.title)
+        cell.configure(categoryString: task.title, isChecked: task.isChecked)
         return cell
     }
 }

@@ -25,8 +25,9 @@ final class ToDoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(categoryString: String) {
+    public func configure(categoryString: String, isChecked: Bool) {
         categoryLabel.text = categoryString
+        accessoryType = isChecked ? .checkmark : .none
     }
     
     private func setUpCategoryStackView() {
