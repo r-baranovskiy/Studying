@@ -817,3 +817,53 @@ func balancedNumberV3(_ number: Int) -> String {
 }
 
 */
+
+
+
+// MARK: - Измените функцию spacify, чтобы она возвращала заданную строку с пробелами, вставленными между каждым символом.
+
+// spacify("hello world") // "h e l l o   w o r l d"
+
+/*
+ 
+ func spacify(_ str: String) -> String {
+ return str.map { String($0) }.joined(separator: " ")
+ }
+ 
+ */
+
+// MARK: - Сильное число — это число, сумма факториала его цифр равна самому числу. Например, 145 сильно, так как 1! + 4! + 5! = 1 + 24 + 120 = 145. Учитывая число, найдите, является ли оно сильным или нет, и верните либо "STRONG!!!!" или "Not Strong !!".
+
+//Input >> Output Examples
+//strong_num(1) ==> return "STRONG!!!!"
+
+//Поскольку сумма факториала его цифр (1) равна самому числу, то это сильное число.
+
+//strong_num(123) ==> return "Not Strong !!"
+
+//Поскольку сумма факториала его цифр равна 1! + 2! + 3! = 9 не равно самому числу, тогда это Not Strong .
+
+/*
+
+func strongNumber(_ number: Int) -> String {
+    let numArray = String(number).replacingOccurrences(of: "0", with: "1").compactMap({ Int("\($0)") })
+    var arrFactorial = [[Int]]()
+    
+    for num in numArray {
+        var arr = [Int]()
+        for i in 1...num {
+            arr.append(i)
+        }
+        arrFactorial.append(arr)
+    }
+
+    var sumInt = Int()
+
+    for sum in arrFactorial {
+        sumInt += sum.reduce(1, *)
+    }
+    
+    return sumInt == number ? "STRONG!!!!" : "Not Strong !!"
+}
+
+*/
