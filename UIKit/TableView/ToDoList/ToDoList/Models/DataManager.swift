@@ -5,23 +5,32 @@ final class DataManager {
     
     static let shared = DataManager()
     
-    private let keyForList = "listNames"
+    private let keyForList = "tasksList"
     
     private let userDefaults = UserDefaults.standard
-    
-    private var list = [String]()
-    
-    
-    func loadList() -> [String] {
-        guard let safeList = userDefaults.value(forKey: keyForList) as? [String] else {
-            return [String]()
+        
+    func loadList() -> [Task] {        
+        guard let safeList = loadValue([Task].self, for: keyForList) else {
+            return [Task]()
         }
-        list = safeList
-        return list
+        return safeList
     }
     
-    func saveList(list: [String]) {
-        userDefaults.set(list, forKey: keyForList)
+    func saveList(list: [Task]) {
+        saveData(list, for: keyForList)
+    }
+    
+    private func saveData<T: Encodable>(_ value: T?, for key: String) {
+        print(String(describing: value))
+        let data = try? JSONEncoder().encode(value)
+        UserDefaults.standard.set(data, forKey: key)
+    }
+    
+    private func loadValue<T: Decodable>(_ type: T.Type, for key: String) -> T? {
+        guard let data = UserDefaults.standard.data(forKey: key),
+              let object = try? JSONDecoder().decode(type, from: data) else { return nil }
+        print(object)
+        return object
     }
 
 }

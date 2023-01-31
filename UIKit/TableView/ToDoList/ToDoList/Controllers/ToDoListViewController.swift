@@ -4,21 +4,21 @@ import UIKit
 final class ToDoListViewController: UIViewController {
     
     // MARK: - UI Constants
-
+    
     // TableView
     private let listTableView = UITableView()
-
+    
     // Data
     private let dataManager = DataManager.shared
-    private var listArray = [String]()
+    
+    private var listArray = [Task]()
     
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         listArray = dataManager.loadList()
-        
+        view.backgroundColor = .systemBackground
         configureNavigationBar()
         configureTableView()
         addConstraints()
@@ -27,7 +27,38 @@ final class ToDoListViewController: UIViewController {
     // MARK: - Behaviour
     
     @objc private func addButtonDidTap() {
-        showAlert()
+        var textField = UITextField()
+        
+        let alert = UIAlertController(
+            title: "Add new category?", message: "Would you like to add a new category for your tasks?",
+            preferredStyle: .alert)
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Enter your categorie's name"
+            textField = alertTextField
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let okAction = UIAlertAction(title: "Add", style: .default) { _ in
+            if let text = textField.text {
+                let task = Task(title: text, isChecked: false)
+                self.saveToListAndReload(task)
+            }
+        }
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    private func saveToListAndReload(_ task: Task) {
+        listArray.append(task)
+        dataManager.saveList(list: listArray)
+        listTableView.reloadData()
+    }
+    
+    private func replaceTask(_ task: Task, _ indexPath: IndexPath) {
+        listArray.insert(task, at: indexPath.row)
+        dataManager.saveList(list: listArray)
+        listTableView.reloadData()
     }
     
     // MARK: - Appearance
@@ -51,30 +82,6 @@ final class ToDoListViewController: UIViewController {
                                forCellReuseIdentifier: ToDoTableViewCell.identifier)
     }
     
-    private func showAlert() {
-        var textField = UITextField()
-        
-        let alert = UIAlertController(
-            title: "Add new category?", message: "Would you like to add a new category for your tasks?",
-            preferredStyle: .alert)
-        alert.addTextField { alertTextField in
-            alertTextField.placeholder = "Enter your categorie's name"
-            textField = alertTextField
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let okAction = UIAlertAction(title: "Add", style: .default) { _ in
-            if let text = textField.text {
-                self.listArray.append(text)
-                self.dataManager.saveList(list: self.listArray)
-                self.listTableView.reloadData()
-            }
-        }
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
-    }
-    
     // MARK: - Constraints
     
     private func addConstraints() {
@@ -92,16 +99,23 @@ final class ToDoListViewController: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        tableView.cellForRow(at: indexPath)?.accessoryType = tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark ? .none : .checkmark
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        var deletedTask = listArray.remove(at: indexPath.row)
+        print(deletedTask)
         
+        if deletedTask.isChecked {
+            deletedTask.isChecked = false
+        } else {
+            deletedTask.isChecked = true
+        }
+        print(deletedTask)
+        replaceTask(deletedTask, indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
@@ -116,8 +130,9 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath) as? ToDoTableViewCell else {
             return UITableViewCell()
         }
-        
-        cell.configure(categoryString: listArray[indexPath.row])
+        let task = listArray[indexPath.row]
+        cell.accessoryType = task.isChecked ? .checkmark : .none
+        cell.configure(categoryString: task.title)
         return cell
     }
 }
