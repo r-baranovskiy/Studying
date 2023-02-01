@@ -746,19 +746,19 @@ import UIKit
 //Массив (гарантированно неассоциативный в PHP), представляющий пол участников, где -1 представляет женщин, а 1 представляет мужчин.
 
 /*
-
-func inviteMoreWomen(_ arr: [Int]) -> Bool {
-    let positiveArray = arr.filter({ $0 < 0 })
-    let negativeArray = arr.filter({ $0 > 0 })
-    
-    return positiveArray.count == negativeArray.count || positiveArray.count > negativeArray.count ? false : true
-}
-
-func inviteMoreWomenV2(_ arr: [Int]) -> Bool {
-    return arr.reduce(0, +) > 0
-}
-
-*/
+ 
+ func inviteMoreWomen(_ arr: [Int]) -> Bool {
+ let positiveArray = arr.filter({ $0 < 0 })
+ let negativeArray = arr.filter({ $0 > 0 })
+ 
+ return positiveArray.count == negativeArray.count || positiveArray.count > negativeArray.count ? false : true
+ }
+ 
+ func inviteMoreWomenV2(_ arr: [Int]) -> Bool {
+ return arr.reduce(0, +) > 0
+ }
+ 
+ */
 
 
 
@@ -775,48 +775,48 @@ func inviteMoreWomenV2(_ arr: [Int]) -> Bool {
 //Объяснение: средняя цифра (ы): 55 сумма всех цифр слева от средней цифры (цифр) -> 11 сумма всех цифр справа от средней цифры -> 10 11 и 10 не равны, так что это не сбалансировано.
 
 /*
-
-func balancedNumber(_ number: Int) -> String {
-    var numsArray = String(number).compactMap({ Int("\($0)") })
-    if numsArray.count <= 2 {
-        return "Balanced"
-    }
-    let midIndex = numsArray.count / 2
-    if midIndex % 2 != 0 && numsArray.count > 2 {
-        numsArray.remove(at: midIndex)
-    } else if midIndex % 2 == 0 && numsArray.count > 3 {
-        let leftSum = numsArray[..<(midIndex-1)].reduce((0), { $0 + $1 })
-        let rightSum = numsArray[(midIndex+1)...].reduce((0), { $0 + $1 })
-        if leftSum == rightSum {
-            return "Balanced"
-        }
-    }
-
-    let leftSum = numsArray[..<midIndex].reduce(0, +)
-    let rightSum = numsArray[midIndex...].reduce(0, +)
-    return leftSum == rightSum ? "Balanced" : "Not Balanced"
-}
-
-func balancedNumberV2(_ number: Int) -> String {
-  let digits = String(number).compactMap{$0.wholeNumberValue }
-  let part1 = digits.dropLast (digits.count/2 + 1).reduce(0,+)
-  let part2 = digits.dropFirst(digits.count/2 + 1).reduce(0,+)
+ 
+ func balancedNumber(_ number: Int) -> String {
+ var numsArray = String(number).compactMap({ Int("\($0)") })
+ if numsArray.count <= 2 {
+ return "Balanced"
+ }
+ let midIndex = numsArray.count / 2
+ if midIndex % 2 != 0 && numsArray.count > 2 {
+ numsArray.remove(at: midIndex)
+ } else if midIndex % 2 == 0 && numsArray.count > 3 {
+ let leftSum = numsArray[..<(midIndex-1)].reduce((0), { $0 + $1 })
+ let rightSum = numsArray[(midIndex+1)...].reduce((0), { $0 + $1 })
+ if leftSum == rightSum {
+ return "Balanced"
+ }
+ }
+ 
+ let leftSum = numsArray[..<midIndex].reduce(0, +)
+ let rightSum = numsArray[midIndex...].reduce(0, +)
+ return leftSum == rightSum ? "Balanced" : "Not Balanced"
+ }
+ 
+ func balancedNumberV2(_ number: Int) -> String {
+ let digits = String(number).compactMap{$0.wholeNumberValue }
+ let part1 = digits.dropLast (digits.count/2 + 1).reduce(0,+)
+ let part2 = digits.dropFirst(digits.count/2 + 1).reduce(0,+)
  return part1 == part2 ? "Balanced" : "Not Balanced"
-}
-
-func balancedNumberV3(_ number: Int) -> String {
-  
-  let digitCount = String(number).count
-  let numberOfElementsToCompare: Int = digitCount % 2 == 0 ? (digitCount / 2) - 1 : digitCount / 2
-  let intArray = String(number).map{Int(String($0))!}
-  let firstHalf = intArray.prefix(numberOfElementsToCompare).reduce(0,+)
-  let secondHalf = intArray.suffix(numberOfElementsToCompare).reduce(0,+)
-  
-  return firstHalf == secondHalf ? "Balanced" : "Not Balanced"
-  
-}
-
-*/
+ }
+ 
+ func balancedNumberV3(_ number: Int) -> String {
+ 
+ let digitCount = String(number).count
+ let numberOfElementsToCompare: Int = digitCount % 2 == 0 ? (digitCount / 2) - 1 : digitCount / 2
+ let intArray = String(number).map{Int(String($0))!}
+ let firstHalf = intArray.prefix(numberOfElementsToCompare).reduce(0,+)
+ let secondHalf = intArray.suffix(numberOfElementsToCompare).reduce(0,+)
+ 
+ return firstHalf == secondHalf ? "Balanced" : "Not Balanced"
+ 
+ }
+ 
+ */
 
 
 
@@ -844,26 +844,60 @@ func balancedNumberV3(_ number: Int) -> String {
 //Поскольку сумма факториала его цифр равна 1! + 2! + 3! = 9 не равно самому числу, тогда это Not Strong .
 
 /*
+ 
+ func strongNumber(_ number: Int) -> String {
+ let numArray = String(number).replacingOccurrences(of: "0", with: "1").compactMap({ Int("\($0)") })
+ var arrFactorial = [[Int]]()
+ 
+ for num in numArray {
+ var arr = [Int]()
+ for i in 1...num {
+ arr.append(i)
+ }
+ arrFactorial.append(arr)
+ }
+ 
+ var sumInt = Int()
+ 
+ for sum in arrFactorial {
+ sumInt += sum.reduce(1, *)
+ }
+ 
+ return sumInt == number ? "STRONG!!!!" : "Not Strong !!"
+ }
+ 
+ */
 
-func strongNumber(_ number: Int) -> String {
-    let numArray = String(number).replacingOccurrences(of: "0", with: "1").compactMap({ Int("\($0)") })
-    var arrFactorial = [[Int]]()
-    
-    for num in numArray {
-        var arr = [Int]()
-        for i in 1...num {
-            arr.append(i)
-        }
-        arrFactorial.append(arr)
-    }
 
-    var sumInt = Int()
 
-    for sum in arrFactorial {
-        sumInt += sum.reduce(1, *)
-    }
-    
-    return sumInt == number ? "STRONG!!!!" : "Not Strong !!"
-}
+// MARK: - Теперь, когда конкуренция становится жесткой, она будет отделять мужчин от мальчиков. Мужчины - четные числа, а мальчики - нечетные. Задача Учитывая массив/список [] из n целых чисел, отделить четные числа от шансов или отделить мужчин от мальчиков. Возвращает массив/список, в котором сначала идут четные числа, а затем шансы Так как мужчины сильнее мальчиков, то четные числа по возрастанию, а шансы по убыванию. Размер массива/списка не менее 4 . Числа массива/списка могут быть как положительными, так и отрицательными. Не бойтесь, Гарантировано, что нулей не будет. Повторение чисел в массиве/списке может иметь место, поэтому (дублирование не учитывается при разделении).
 
-*/
+//Input >> Output Examples:
+//menFromBoys ({7, 3 , 14 , 17}) ==> return ({14, 17, 7, 3})
+//Объяснение: Так как {14} здесь четное число, значит, оно пришло первым, затем шансы в порядке убывания {17, 7, 3}.
+
+//menFromBoys ({-94, -99 , -100 , -99 , -96 , -99 }) ==> return ({-100 , -96 , -94 , -99})
+//Объяснение: Поскольку , {-100, -96, -94} здесь четные числа, поэтому они идут сначала в *возрастающем порядке*, затем шансы в порядке убывания {-99} Так как (дупликации не учитываются при разделении), то вы можете видеть, что только один (-99) появился в конечном массиве/списке.
+
+//menFromBoys ({49 , 818 , -282 , 900 , 928 , 281 , -282 , -1 }) ==> return ({-282 , 818 , 900 , 928 , 281 , 49 , -1})
+//Объяснение: Так как {-282, 818, 900, 928} здесь четные числа, то они идут сначала в порядке возрастания, а затем в порядке убывания {281, 49, -1} Поскольку (дупликации не учитываются при разделении) , то вы можете видеть, что только один (-282) появился в конечном массиве/списке.
+
+/*
+ 
+ func menFromBoys(_ arr: [Int]) -> [Int] {
+ var unicSet: Set<Int> = []
+ arr.forEach({ unicSet.insert($0) })
+ 
+ let evenArray = unicSet.filter({ $0 % 2 == 0 }).sorted(by: { $0 < $1 })
+ let oddArray = unicSet.filter({ $0 % 2 != 0 }).sorted(by: { $0 > $1 })
+ 
+ return evenArray + oddArray
+ }
+ 
+ func menFromBoysV2(_ arr: [Int]) -> [Int] {
+ let men: [Int] = Array(Set(arr.filter{ $0 % 2 == 0 })).sorted()
+ let boys: [Int] = Array(Set(arr.filter{ $0 % 2 != 0 })).sorted { $0 > $1 }
+ return men + boys
+ }
+ 
+ */
