@@ -11,7 +11,7 @@ final class ToDoListViewController: UIViewController {
     // Data
     private let dataManager = DataManager.shared
     
-    private var listArray = [Task]()
+    private var listArray = [List]()
     
     // MARK: - Lifecycles
     
@@ -40,8 +40,10 @@ final class ToDoListViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let okAction = UIAlertAction(title: "Add", style: .default) { _ in
             if let text = textField.text {
-                let task = Task(title: text, isChecked: false)
-                self.saveToListAndReload(task)
+                if let context = self.context {
+                    let task = List(context: context)
+                    self.saveToListAndReload(task)
+                }
             }
         }
         alert.addAction(okAction)
@@ -49,13 +51,13 @@ final class ToDoListViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func saveToListAndReload(_ task: Task) {
+    private func saveToListAndReload(_ task: List) {
         listArray.append(task)
         dataManager.saveList(list: listArray)
         listTableView.reloadData()
     }
     
-    private func replaceTask(_ task: Task, _ indexPath: IndexPath) {
+    private func replaceTask(_ task: List, _ indexPath: IndexPath) {
         listArray.insert(task, at: indexPath.row)
         dataManager.saveList(list: listArray)
         listTableView.reloadData()
