@@ -901,3 +901,77 @@ import UIKit
  }
  
  */
+
+
+
+// MARK: - Задача Каждый день растение растет на метры upSpeed. Каждую ночь высота этого растения уменьшается на метры downSpeed ​​из-за недостатка солнечного тепла. Изначально растение имеет высоту 0 метров. Мы сажаем семена в начале дня. Мы хотим знать, когда высота растения достигнет определенного уровня.
+
+//Пример Для upSpeed ​​= 100, downSpeed ​​= 10 и requiredHeight = 910 вывод должен быть равен 10.
+
+//After day 1 --> 100
+//After night 1 --> 90
+//After day 2 --> 190
+//After night 2 --> 180
+//After day 3 --> 280
+//After night 3 --> 270
+//After day 4 --> 370
+//After night 4 --> 360
+//After day 5 --> 460
+//After night 5 --> 450
+//After day 6 --> 550
+//After night 6 --> 540
+//After day 7 --> 640
+//After night 7 --> 630
+//After day 8 --> 730
+//After night 8 --> 720
+//After day 9 --> 820
+//After night 9 --> 810
+//After day 10 --> 910
+
+//Для upSpeed ​​= 10, downSpeed ​​= 9 и requiredHeight = 4 вывод должен быть равен 1. Потому что растение достигает желаемой высоты в день 1 (10 метров).
+
+//Input/Output
+//[input] integer upSpeed
+//
+//A positive integer representing the daily growth.
+//
+//Constraints: 5 ≤ upSpeed ≤ 100.
+//
+//[input] integer downSpeed
+//
+//A positive integer representing the nightly decline.
+//
+//Constraints: 2 ≤ downSpeed < upSpeed.
+//
+//[input] integer desiredHeight
+//
+//A positive integer representing the threshold.
+//
+//Constraints: 4 ≤ desiredHeight ≤ 1000.
+//
+//[output] an integer
+
+//Количество дней, которые потребуются растению для достижения/преодоления заданной высоты (включая последний день в общем счете).
+
+/*
+
+func growingPlant(_ upSpeed: Int, _ downSpeed: Int, _ desiredHeight: Int) -> Int {
+    var daysCont = 0
+    var currentHeight = 0
+    
+    while currentHeight < desiredHeight {
+        currentHeight += upSpeed
+        daysCont += 1
+        
+        if currentHeight >= desiredHeight {
+            return daysCont;
+        }
+        
+        currentHeight -= downSpeed;
+    }
+    return daysCont
+}
+
+growingPlant(100, 10, 910)
+
+*/
