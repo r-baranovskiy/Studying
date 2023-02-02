@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 // MARK: - Найдите сумму внутренних углов (в градусах) n-стороннего простого многоугольника. N будет больше 2.
 
@@ -975,3 +975,17 @@ func growingPlant(_ upSpeed: Int, _ downSpeed: Int, _ desiredHeight: Int) -> Int
 growingPlant(100, 10, 910)
 
 */
+
+
+
+// MARK: - Создайте функцию add(n)/Add(n), которая возвращает функцию, которая всегда добавляет n к любому числу. Примечание для Java: тип возвращаемого значения и методы не были предоставлены, чтобы немного усложнить задачу.
+
+//addOne = add(1)
+//addOne(3) // 4
+
+func add(_ n: Int) -> ((Int) -> Int) {
+    
+    return { x in x + n }
+}
+
+add(5)
