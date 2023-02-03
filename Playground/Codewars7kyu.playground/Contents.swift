@@ -954,27 +954,27 @@ import Foundation
 //Количество дней, которые потребуются растению для достижения/преодоления заданной высоты (включая последний день в общем счете).
 
 /*
-
-func growingPlant(_ upSpeed: Int, _ downSpeed: Int, _ desiredHeight: Int) -> Int {
-    var daysCont = 0
-    var currentHeight = 0
-    
-    while currentHeight < desiredHeight {
-        currentHeight += upSpeed
-        daysCont += 1
-        
-        if currentHeight >= desiredHeight {
-            return daysCont;
-        }
-        
-        currentHeight -= downSpeed;
-    }
-    return daysCont
-}
-
-growingPlant(100, 10, 910)
-
-*/
+ 
+ func growingPlant(_ upSpeed: Int, _ downSpeed: Int, _ desiredHeight: Int) -> Int {
+ var daysCont = 0
+ var currentHeight = 0
+ 
+ while currentHeight < desiredHeight {
+ currentHeight += upSpeed
+ daysCont += 1
+ 
+ if currentHeight >= desiredHeight {
+ return daysCont;
+ }
+ 
+ currentHeight -= downSpeed;
+ }
+ return daysCont
+ }
+ 
+ growingPlant(100, 10, 910)
+ 
+ */
 
 
 
@@ -983,9 +983,50 @@ growingPlant(100, 10, 910)
 //addOne = add(1)
 //addOne(3) // 4
 
-func add(_ n: Int) -> ((Int) -> Int) {
+/*
+ 
+ func add(_ n: Int) -> ((Int) -> Int) {
+ 
+ return { x in x + n }
+ }
+ 
+ add(5)
+ 
+ */
+
+
+
+// MARK: - Мой друг Джон любит ходить в кино. Он может выбирать между системой А и системой Б. Система А: он каждый раз покупает билет (15 долларов). Система B: он покупает карту (500 долларов) и первый билет за 0,90-кратную цену билета, то за каждый дополнительный билет он платит в 0,90 раза больше, чем за предыдущий билет. Джон хочет знать, сколько раз он должен сходить в кино, чтобы конечный результат Системы Б при округлении до следующего доллара был дешевле, чем Система А. Функция movie имеет 3 параметра: card (цена карты), ticket (нормальная цена билета), perc (доля от того, что он заплатил за предыдущий билет) и возвращает первое n такое, что
+//ceil(price of System B) < price of System A.
+
+//Example:
+//If John goes to the cinema 3 times:
+//
+//System A : 15 * 3 = 45
+//System B : 500 + 15 * 0.90 + (15 * 0.90) * 0.90 + (15 * 0.90 * 0.90) * 0.90 ( = 536.5849999999999, no rounding for each ticket)
+
+
+//movie(500, 15, 0.9) should return 43
+//    (with card the total price is 634, with tickets 645)
+//movie(100, 10, 0.95) should return 24
+//    (with card the total price is 235, with tickets 240)
+
+/*
+
+func movie(card: Double, ticket: Double, perc: Double) -> Int {
+    var count = 0
+    var totalA: Double = 0
+    var totalB: Double = 0
     
-    return { x in x + n }
+    while ceil(card + totalB) >= totalA {
+        totalA += ticket
+        totalB = (totalB + ticket) * perc
+        count += 1
+    }
+
+    return count
 }
 
-add(5)
+movie(card: 500, ticket: 15, perc: 0.9)
+
+*/
