@@ -1030,3 +1030,24 @@ func movie(card: Double, ticket: Double, perc: Double) -> Int {
 movie(card: 500, ticket: 15, perc: 0.9)
 
 */
+
+
+
+// MARK: - Число Дизариума — это число, сумма цифр которого с их соответствующими позициями равна самому числу. Учитывая номер, определите, является ли это Disarium или нет.
+
+//Input >> Output Examples
+//disariumNumber(89) ==> return "Disarium !!"
+//Explanation:
+//Since , 81 + 92 = 89 , thus output is "Disarium !!"
+
+//disariumNumber(564) ==> return "Not !!"
+//Explanation:
+//Since , 51 + 62 + 43 = 105 != 564 , thus output is "Not !!"
+
+func disariumNumber(_ number: Int) -> String {
+    var arr = String(number).map({ $0 }).reduce((""), { $0 + "\($1)" } )
+
+    return arr 
+}
+
+disariumNumber(89)
