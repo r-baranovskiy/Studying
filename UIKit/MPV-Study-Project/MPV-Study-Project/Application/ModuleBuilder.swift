@@ -12,7 +12,7 @@ protocol Builder {
 }
 
 class ModelBuilder: Builder {
-    static func createMain() -> UIViewController {
+    static func createMainModule() -> UIViewController {
         let model = Person(firstName: "Ruslan", secondName: "Kashchenko")
         let view = MainViewController()
         let presenter = MainPresenter(view: view, person: model)

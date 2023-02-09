@@ -19,18 +19,19 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p8Y-39-Jo8">
-                    <rect key="frame" x="175" y="416" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p8Y-39-Jo8">
+                    <rect key="frame" x="50" y="416" width="293" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo3-Yz-a1S">
-                    <rect key="frame" x="159" y="482" width="75" height="35"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo3-Yz-a1S">
+                    <rect key="frame" x="140" y="477" width="113" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Frn-00-sii"/>
+                    </constraints>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Tap"/>
                     <connections>
                         <action selector="buttonDidTap:" destination="-1" eventType="touchUpInside" id="YWD-cj-hIQ"/>
                     </connections>
@@ -38,6 +39,14 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="lo3-Yz-a1S" firstAttribute="top" secondItem="p8Y-39-Jo8" secondAttribute="bottom" constant="40" id="DY1-OW-ty2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="p8Y-39-Jo8" secondAttribute="trailing" constant="50" id="V73-rz-3Es"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="lo3-Yz-a1S" secondAttribute="trailing" constant="140" id="XyI-yh-vti"/>
+                <constraint firstItem="lo3-Yz-a1S" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="140" id="gVK-fl-ZWt"/>
+                <constraint firstItem="p8Y-39-Jo8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="50" id="q80-Kv-CSd"/>
+                <constraint firstItem="p8Y-39-Jo8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vs9-ni-Ve9"/>
+            </constraints>
             <point key="canvasLocation" x="564" y="-2"/>
         </view>
     </objects>
