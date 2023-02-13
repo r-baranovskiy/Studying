@@ -1044,10 +1044,21 @@ movie(card: 500, ticket: 15, perc: 0.9)
 //Explanation:
 //Since , 51 + 62 + 43 = 105 != 564 , thus output is "Not !!"
 
-func disariumNumber(_ number: Int) -> String {
-    var arr = String(number).map({ $0 }).reduce((""), { $0 + "\($1)" } )
+/*
 
-    return arr 
+//V1
+func disariumNumber(_ number: Int) -> String {
+    let numberString = String(number)
+    let digits = numberString.compactMap { Int(String($0)) }
+    let sum = digits.enumerated().reduce(0) { $0 + pow(Double($1.element), Double($1.offset + 1))}
+    return (sum == Double(number)) ? "Disarium !!" : "Not !!"
 }
 
-disariumNumber(89)
+// V2
+func disariumNumberV2(_ number: Int) -> String {
+    let numberArr = String(number).compactMap { Int(String($0)) }
+    let ret = numberArr.enumerated().map { (i, n) in Int(pow(Double(n), Double(i + 1))) }.reduce(0, +)
+    return ret == number ? "Disarium !!" : "Not !!"
+}
+
+*/
