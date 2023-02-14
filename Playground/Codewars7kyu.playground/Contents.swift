@@ -1062,3 +1062,28 @@ func disariumNumberV2(_ number: Int) -> String {
 }
 
 */
+
+
+
+// MARK: - Прыгающее число — это число, в котором все соседние цифры отличаются на 1. Учитывая число, найдите, прыгает оно или нет. Переданный номер всегда положительный. Вернуть результат как String . Разница между «9» и «0» не считается за 1. Все однозначные числа считаются прыгающими числами.
+
+//Input >> Output Examples
+//jumpingNumber(9) ==> return "Jumping!!"
+//
+//jumpingNumber(79) ==> return "Not!!"
+
+/*
+
+func jumpingNumber(_ number: Int) -> String {
+    let numbers = String(number).compactMap({ Int(String($0)) })
+    for i in 0..<numbers.count-1 {
+        if abs(numbers[i] - numbers[i+1]) != 1 {
+            return "Not!!"
+        }
+    }
+    return "Jumping!!"
+}
+
+jumpingNumber(9)
+
+*/
