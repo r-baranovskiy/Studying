@@ -21,6 +21,7 @@ final class MainPresenter: MainViewPresenterProtocol {
     required init(view: MainViewProtocol, networkService: NetworkManager) {
         self.view = view
         self.networkService = networkService
+        getComments()
     }
     
     func getComments() {

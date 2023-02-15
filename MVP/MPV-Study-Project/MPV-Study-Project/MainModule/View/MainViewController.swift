@@ -8,7 +8,6 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         configureTableView()
         addConstraints()
     }
@@ -17,7 +16,6 @@ class MainViewController: UIViewController {
         mainTableView.dataSource = self
         mainTableView.delegate = self
         mainTableView.translatesAutoresizingMaskIntoConstraints = false
-        mainTableView.backgroundColor = .gray
         mainTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
@@ -34,20 +32,31 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainViewProtocol {
-    func setGreeting(greeting: String) {
-        //self.greetingLabel.text = greeting
+    func success() {
+        mainTableView.reloadData()
+    }
+    
+    func failture(error: Error) {
+        print(error.localizedDescription)
     }
 }
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let comment = presenter?.comments?[indexPath.row] else { return }
+        let detailVC = ModelBuilder.createDetailViewModule(comment: comment)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return presenter?.comments?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Test"
-        cell.backgroundColor = .blue
+        let comment = presenter?.comments?[indexPath.row]
+        
+        cell.textLabel?.text = comment?.body
         return cell
     }
 }

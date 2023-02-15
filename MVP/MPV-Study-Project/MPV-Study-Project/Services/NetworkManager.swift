@@ -4,7 +4,7 @@ protocol NetworkManagerProtocol {
     func getComments(completion: @escaping (Result<[Comment]?, Error>) -> Void)
 }
 
-final class NetworkManager: NetworkManagerProtocol {
+class NetworkManager: NetworkManagerProtocol {
     func getComments(completion: @escaping (Result<[Comment]?, Error>) -> Void) {
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/comments") else {
             return
