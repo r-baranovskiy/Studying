@@ -1,34 +1,40 @@
-//
-//  MainPresenter.swift
-//  MPV-Study-Project
-//
-//  Created by Кащенко on 8.02.23.
-//
-
 import Foundation
 
 // Output
 protocol MainViewProtocol: AnyObject {
-    func setGreeting(greeting: String)
+    func success()
+    func failture(error: Error)
 }
 
 // Imput
 protocol MainViewPresenterProtocol: AnyObject {
-    init(view: MainViewProtocol, person: Person)
-    func showGreeting()
+    init(view: MainViewProtocol, networkService: NetworkManager)
+    func getComments()
+    var comments: [Comment]? { get set }
 }
 
-class MainPresenter: MainViewPresenterProtocol {
-    let view: MainViewProtocol
-    let person: Person
+final class MainPresenter: MainViewPresenterProtocol {
+    weak var view: MainViewProtocol?
+    var comments: [Comment]?
+    let networkService: NetworkManager
     
-    required init(view: MainViewProtocol, person: Person) {
+    required init(view: MainViewProtocol, networkService: NetworkManager) {
         self.view = view
-        self.person = person
+        self.networkService = networkService
     }
     
-    func showGreeting() {
-        let greeting = self.person.firstName + " " + self.person.secondName
-        self.view.setGreeting(greeting: greeting)
+    func getComments() {
+        networkService.getComments { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let comments):
+                    self.comments = comments
+                    self.view?.success()
+                case .failure(let error):
+                    self.view?.failture(error: error)
+                }
+            }
+        }
     }
 }

@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  MPV-Study-Project
-//
-//  Created by Кащенко on 8.02.23.
-//
-
 import UIKit
 
 @main
