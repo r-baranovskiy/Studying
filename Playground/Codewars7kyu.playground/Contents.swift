@@ -1087,3 +1087,22 @@ func jumpingNumber(_ number: Int) -> String {
 jumpingNumber(9)
 
 */
+
+// MARK: - Ваша задача — реализовать функцию, которая вычисляет сумму целых чисел внутри строки. Например, в строке «The30quick20brown10f0x1203jumps914ov3r1349the102l4zy dog» сумма целых чисел равна 3635.
+
+/*
+
+// V1
+func sumOfIntegersInString(_ string: String) -> Int {
+    let numbers = string.components(
+        separatedBy: CharacterSet.decimalDigits.inverted)
+        .compactMap { Int($0) }
+       return numbers.reduce(0, +)
+}
+
+// V2
+func sumOfIntegersInStringV2(_ string: String) -> Int {
+    return string.split { !$0.isNumber }.compactMap { Int($0) }.reduce(0, +)
+}
+
+*/
