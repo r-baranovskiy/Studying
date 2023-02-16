@@ -1012,24 +1012,24 @@ import Foundation
 //    (with card the total price is 235, with tickets 240)
 
 /*
-
-func movie(card: Double, ticket: Double, perc: Double) -> Int {
-    var count = 0
-    var totalA: Double = 0
-    var totalB: Double = 0
-    
-    while ceil(card + totalB) >= totalA {
-        totalA += ticket
-        totalB = (totalB + ticket) * perc
-        count += 1
-    }
-
-    return count
-}
-
-movie(card: 500, ticket: 15, perc: 0.9)
-
-*/
+ 
+ func movie(card: Double, ticket: Double, perc: Double) -> Int {
+ var count = 0
+ var totalA: Double = 0
+ var totalB: Double = 0
+ 
+ while ceil(card + totalB) >= totalA {
+ totalA += ticket
+ totalB = (totalB + ticket) * perc
+ count += 1
+ }
+ 
+ return count
+ }
+ 
+ movie(card: 500, ticket: 15, perc: 0.9)
+ 
+ */
 
 
 
@@ -1045,23 +1045,23 @@ movie(card: 500, ticket: 15, perc: 0.9)
 //Since , 51 + 62 + 43 = 105 != 564 , thus output is "Not !!"
 
 /*
-
-//V1
-func disariumNumber(_ number: Int) -> String {
-    let numberString = String(number)
-    let digits = numberString.compactMap { Int(String($0)) }
-    let sum = digits.enumerated().reduce(0) { $0 + pow(Double($1.element), Double($1.offset + 1))}
-    return (sum == Double(number)) ? "Disarium !!" : "Not !!"
-}
-
-// V2
-func disariumNumberV2(_ number: Int) -> String {
-    let numberArr = String(number).compactMap { Int(String($0)) }
-    let ret = numberArr.enumerated().map { (i, n) in Int(pow(Double(n), Double(i + 1))) }.reduce(0, +)
-    return ret == number ? "Disarium !!" : "Not !!"
-}
-
-*/
+ 
+ //V1
+ func disariumNumber(_ number: Int) -> String {
+ let numberString = String(number)
+ let digits = numberString.compactMap { Int(String($0)) }
+ let sum = digits.enumerated().reduce(0) { $0 + pow(Double($1.element), Double($1.offset + 1))}
+ return (sum == Double(number)) ? "Disarium !!" : "Not !!"
+ }
+ 
+ // V2
+ func disariumNumberV2(_ number: Int) -> String {
+ let numberArr = String(number).compactMap { Int(String($0)) }
+ let ret = numberArr.enumerated().map { (i, n) in Int(pow(Double(n), Double(i + 1))) }.reduce(0, +)
+ return ret == number ? "Disarium !!" : "Not !!"
+ }
+ 
+ */
 
 
 
@@ -1073,36 +1073,67 @@ func disariumNumberV2(_ number: Int) -> String {
 //jumpingNumber(79) ==> return "Not!!"
 
 /*
-
-func jumpingNumber(_ number: Int) -> String {
-    let numbers = String(number).compactMap({ Int(String($0)) })
-    for i in 0..<numbers.count-1 {
-        if abs(numbers[i] - numbers[i+1]) != 1 {
-            return "Not!!"
-        }
-    }
-    return "Jumping!!"
-}
-
-jumpingNumber(9)
-
-*/
+ 
+ func jumpingNumber(_ number: Int) -> String {
+ let numbers = String(number).compactMap({ Int(String($0)) })
+ for i in 0..<numbers.count-1 {
+ if abs(numbers[i] - numbers[i+1]) != 1 {
+ return "Not!!"
+ }
+ }
+ return "Jumping!!"
+ }
+ 
+ jumpingNumber(9)
+ 
+ */
 
 // MARK: - Ваша задача — реализовать функцию, которая вычисляет сумму целых чисел внутри строки. Например, в строке «The30quick20brown10f0x1203jumps914ov3r1349the102l4zy dog» сумма целых чисел равна 3635.
 
 /*
+ 
+ // V1
+ func sumOfIntegersInString(_ string: String) -> Int {
+ let numbers = string.components(
+ separatedBy: CharacterSet.decimalDigits.inverted)
+ .compactMap { Int($0) }
+ return numbers.reduce(0, +)
+ }
+ 
+ // V2
+ func sumOfIntegersInStringV2(_ string: String) -> Int {
+ return string.split { !$0.isNumber }.compactMap { Int($0) }.reduce(0, +)
+ }
+ 
+ */
 
-// V1
-func sumOfIntegersInString(_ string: String) -> Int {
-    let numbers = string.components(
-        separatedBy: CharacterSet.decimalDigits.inverted)
-        .compactMap { Int($0) }
-       return numbers.reduce(0, +)
+
+// MARK: - Число является специальным числом, если его цифры состоят только из 0, 1, 2, 3, 4 или 5. По заданному номеру определите, является ли он специальным номером или нет. Передаваемое число будет положительным (N > 0). Все однозначные числа в интервале [1:5] считаются особым числом.
+
+//Examples
+
+//specialNumber(2) ==> return "Special!!"
+//It's a single-digit number within the interval [1:5] .
+
+//specialNumber(9) ==> return "NOT!!"
+//Although, it's a single-digit number but Outside the interval [1:5] .
+
+
+//specialNumber(23) ==> return "Special!!"
+//All the number's digits formed from the interval [0:5] digits .
+
+/*
+
+func specialNumber(_ number: Int) -> String {
+    let numbers = String(number).compactMap({ Int(String($0)) }).sorted(by: >)
+    
+    if numbers.first ?? 0 <= 5 {
+        return "Special!!"
+    } else {
+        return "NOT!!"
+    }
 }
 
-// V2
-func sumOfIntegersInStringV2(_ string: String) -> Int {
-    return string.split { !$0.isNumber }.compactMap { Int($0) }.reduce(0, +)
-}
+specialNumber(123)
 
 */
