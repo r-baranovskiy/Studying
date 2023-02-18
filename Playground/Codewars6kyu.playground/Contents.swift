@@ -37,3 +37,27 @@ func solutionV3(_ num: Int) -> Int {
 }
 
 */
+
+
+
+
+// MARK: - Напишите функцию, которая принимает строку из одного или нескольких слов и возвращает ту же строку, но с перевернутыми всеми словами из пяти или более букв (точно так же, как имя этого Ката). Передаваемые строки будут состоять только из букв и пробелов. Пробелы будут включены только в том случае, если присутствует более одного слова.
+
+//Examples:
+//
+//spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
+//spinWords( "This is a test") => returns "This is a test"
+//spinWords( "This is another test" )=> returns "This is rehtona test"
+
+/*
+
+func spinWords(in sentence: String) -> String {
+    let strings = sentence.components(separatedBy: " ")
+    
+    let reversedStrings = strings
+        .map({ $0.count >= 5 ? String($0.reversed()) : $0 })
+    
+    return reversedStrings.joined(separator: " ")
+}
+
+*/
