@@ -12,28 +12,27 @@ class CoffeeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         configureNavBar()
-        view.backgroundColor = .darkGray
         coffeeTableView.delegate = self
         coffeeTableView.dataSource = self
         addConstraints()
+    }
+    
+    @objc private func addButtonDidTap() {
+        let orderVC = OrderViewController()
+        let navVC = UINavigationController(rootViewController: orderVC)
+        
+        present(navVC, animated: true)
     }
     
     // MARK: - Appearance
     
     private func configureNavBar() {
         title = "Coffee"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        navigationController?.navigationBar.barTintColor = .darkGray
-        
-        navigationController?.navigationBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white
-        ]
-        
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white
-        ]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add, target: self,
+            action: #selector(addButtonDidTap))
     }
     
     // MARK: - Constraints
