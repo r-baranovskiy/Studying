@@ -8,7 +8,7 @@
 
 ## Интерфейс
 
-![Millionaire]()
+![Interface](https://github.com/r-baranovskiy/Studying/blob/main/UIKit/NewsFeed/NewsFeedInterface.png)
 
 
 
