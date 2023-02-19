@@ -16,7 +16,7 @@ final class NetworkService {
             let object = try? JSONDecoder().decode(News.self, from: data)
             
             if let articleList = object {
-                completion(object?.articles)
+                completion(articleList.articles)
             }
             
         }.resume()

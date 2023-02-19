@@ -12,6 +12,7 @@ final class NewsListViewModel {
     }
     
     var numberOfRowsInSection: Int {
+        print(articles.count)
         return articles.count
     }
     

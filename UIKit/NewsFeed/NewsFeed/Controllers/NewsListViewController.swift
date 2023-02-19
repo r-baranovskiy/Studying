@@ -4,10 +4,13 @@ final class NewsListViewController: UIViewController {
     
     private lazy var newsTablewView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(ArticleTableViewCell.self,
+                           forCellReuseIdentifier: ArticleTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    private var newsListViewModel: NewsListViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +29,14 @@ final class NewsListViewController: UIViewController {
             return
         }
         
-        NetworkService.shared.getArticles(url: url) { _ in
-            
+        NetworkService.shared.getArticles(url: url) { articles in
+            if let articles = articles {
+                self.newsListViewModel = NewsListViewModel(articles: articles)
+                
+                DispatchQueue.main.async {
+                    self.newsTablewView.reloadData()
+                }
+            }
         }
     }
     
@@ -66,14 +75,19 @@ final class NewsListViewController: UIViewController {
 
 extension NewsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return newsListViewModel?.numberOfRowsInSection ?? 0
     }
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = newsTablewView.dequeueReusableCell(
-            withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ArticleTableViewCell
+                .identifier, for: indexPath) as? ArticleTableViewCell else {
+            return UITableViewCell()
+        }
         
+        let article = newsListViewModel?.articleAtIndex(indexPath.row)
+        cell.confiureCell(title: article?.title, description: article?.description)
         return cell
     }
 }

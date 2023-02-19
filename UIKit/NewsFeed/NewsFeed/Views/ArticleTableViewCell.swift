@@ -19,16 +19,18 @@ final class ArticleTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func confiureCell(title: String, description: String) {
+    func confiureCell(title: String?, description: String?) {
         titleleLabel.text = title
         descriptionLabel.text = description
     }
     
     private func createCell() {
+        selectionStyle = .none
         cellStackView = UIStackView(
             arrangedSubviews: [titleleLabel, descriptionLabel])
         cellStackView.distribution = .fillEqually
         cellStackView.axis = .vertical
+        cellStackView.translatesAutoresizingMaskIntoConstraints = false
         
         titleleLabel.numberOfLines = 0
         titleleLabel.font = .systemFont(ofSize: 14, weight: .bold)
@@ -41,12 +43,12 @@ final class ArticleTableViewCell: UITableViewCell {
     }
     
     private func addConstraints() {
-        addSubview(cellStackView)
+        contentView.addSubview(cellStackView)
         NSLayoutConstraint.activate([
-            cellStackView.topAnchor.constraint(equalTo: topAnchor),
-            cellStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            cellStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            cellStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            cellStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            cellStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            cellStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }
