@@ -15,9 +15,23 @@ final class NewsListViewController: UIViewController {
         configureNavBar()
         newsTablewView.delegate = self
         newsTablewView.dataSource = self
-        
+        getArticles()
         addConstraints()
     }
+    
+    // MARK: - Behaviour
+    
+    private func getArticles() {
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=ru&apiKey=8d044529a4d64f60990ef2a8a3702902") else {
+            return
+        }
+        
+        NetworkService.shared.getArticles(url: url) { _ in
+            
+        }
+    }
+    
+    // MARK: - Appearance
     
     private func configureNavBar() {
         title = "NewsFeed"
