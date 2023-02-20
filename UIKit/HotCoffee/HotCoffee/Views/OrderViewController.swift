@@ -61,9 +61,12 @@ class OrderViewController: UIViewController {
         view.addSubview(sizeSegmentedControl)
         
         NSLayoutConstraint.activate([
-            sizeSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80),
-            sizeSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -80),
-            sizeSegmentedControl.topAnchor.constraint(equalTo: orderTableView.bottomAnchor, constant: 40),
+            sizeSegmentedControl.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 80),
+            sizeSegmentedControl.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -80),
+            sizeSegmentedControl.topAnchor.constraint(
+                equalTo: orderTableView.bottomAnchor, constant: 40),
             sizeSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
         ])
     }

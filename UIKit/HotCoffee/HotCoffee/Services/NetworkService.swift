@@ -8,6 +8,8 @@ enum NetworkError: Error {
 
 final class NetworkService {
     
+    static let shared = NetworkService()
+    
     func load<T>(resource: Resource<T>, completion: @escaping (
         Result<T, NetworkError>) -> Void) {
             let task = URLSession.shared.dataTask(

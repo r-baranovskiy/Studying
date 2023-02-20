@@ -1,6 +1,8 @@
 import UIKit
 
-class CoffeeViewController: UIViewController {
+final class CoffeeViewController: UIViewController {
+    
+    private var coffeeViewModel: CoffeeViewModel?
     
     private lazy var coffeeTableView: UITableView = {
         let tableView = UITableView()
@@ -24,6 +26,23 @@ class CoffeeViewController: UIViewController {
         let navVC = UINavigationController(rootViewController: orderVC)
         
         present(navVC, animated: true)
+    }
+    
+    private func fillOrder() {
+        guard let url = URL(string: "") else {
+            fatalError("URL incorrected")
+        }
+        
+        let resource = Resource<[Order]>(url: url)
+        
+        NetworkService.shared.load(resource: resource) { result in
+            switch result {
+            case .success(let orders):
+                print(orders)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     // MARK: - Appearance
