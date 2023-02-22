@@ -102,3 +102,34 @@ func findItV2(_ seq: [Int]) -> Int {
 }
 
 */
+
+
+
+// MARK: - Цифровой корень — это рекурсивная сумма всех цифр числа. Учитывая n, возьмите сумму цифр n. Если это значение имеет более одной цифры, продолжайте уменьшать таким образом, пока не будет получено однозначное число. Ввод будет неотрицательным целым числом.
+
+//Examples
+//    16  -->  1 + 6 = 7
+//   942  -->  9 + 4 + 2 = 15  -->  1 + 5 = 6
+//132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
+//493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
+
+/*
+
+// V1
+func digitalRoot(of number: Int) -> Int {
+    return (1 + (number - 1) % 9)
+}
+
+// V2
+func digitalRootV2(of number: Int) -> Int {
+    let arr = String(number).compactMap({ Int("\($0)") })
+    var sum = arr.reduce(0, +)
+
+    while sum > 10 {
+        let arr = String(sum).compactMap({ Int("\($0)") })
+        sum = arr.reduce(0, +)
+    }
+    return sum
+}
+
+*/
