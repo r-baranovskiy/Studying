@@ -1,7 +1,7 @@
 import UIKit
 import Spring
 
-class ViewController: UIViewController {
+class SpringViewController: UIViewController {
     
     // MARK: - Constraints
     
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 
 // MARK: - Constraints
 
-extension ViewController {
+extension SpringViewController {
     private func addConstraints() {
         view.addSubview(animateView)
         view.addSubview(animateButton)
