@@ -5,5 +5,6 @@ target 'animation-learn-projects' do
   use_frameworks!
 
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+pod 'TheAnimation', :git => 'https://github.com/marty-suzuki/TheAnimation.git'
 
 end

@@ -1,21 +1,29 @@
 PODS:
   - Spring (1.0.6)
+  - TheAnimation (0.4.0)
 
 DEPENDENCIES:
   - Spring (from `https://github.com/MengTo/Spring.git`)
+  - TheAnimation (from `https://github.com/marty-suzuki/TheAnimation.git`)
 
 EXTERNAL SOURCES:
   Spring:
     :git: https://github.com/MengTo/Spring.git
+  TheAnimation:
+    :git: https://github.com/marty-suzuki/TheAnimation.git
 
 CHECKOUT OPTIONS:
   Spring:
     :commit: 50d92a5b9e08848387ae95bf44c6ad20834f7083
     :git: https://github.com/MengTo/Spring.git
+  TheAnimation:
+    :commit: 44bb115e8633d2d3a31c4573ecc095d7268935e5
+    :git: https://github.com/marty-suzuki/TheAnimation.git
 
 SPEC CHECKSUMS:
   Spring: 3d113f14575ef79aec9c5f906dfa4f5001c03254
+  TheAnimation: b6d6bac50365897a3aecc5a9e7b4e1461909c1a0
 
-PODFILE CHECKSUM: a18fc453fee3cf5ef314ad6aeb995ebc144c47de
+PODFILE CHECKSUM: 37e86041737ca04fb81ad753f9626f16fe525561
 
 COCOAPODS: 1.11.3
