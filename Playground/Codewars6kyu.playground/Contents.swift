@@ -74,34 +74,34 @@ import UIKit
 //[1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
 
 /*
-
-// V1
-func findIt(_ seq: [Int]) -> Int {
-    var dict = [Int: Int]()
-    
-    for num in seq {
-        if let count = dict[num] {
-            dict[num] = count + 1
-        } else {
-            dict[num] = 1
-        }
-    }
-    
-    for (key, value) in dict {
-        if value % 2 == 1 {
-            return key
-        }
-    }
-    
-    return -1
-}
-
-// V2
-func findItV2(_ seq: [Int]) -> Int {
-  seq.reduce(0, ^)
-}
-
-*/
+ 
+ // V1
+ func findIt(_ seq: [Int]) -> Int {
+ var dict = [Int: Int]()
+ 
+ for num in seq {
+ if let count = dict[num] {
+ dict[num] = count + 1
+ } else {
+ dict[num] = 1
+ }
+ }
+ 
+ for (key, value) in dict {
+ if value % 2 == 1 {
+ return key
+ }
+ }
+ 
+ return -1
+ }
+ 
+ // V2
+ func findItV2(_ seq: [Int]) -> Int {
+ seq.reduce(0, ^)
+ }
+ 
+ */
 
 
 
@@ -114,22 +114,38 @@ func findItV2(_ seq: [Int]) -> Int {
 //493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
 
 /*
+ 
+ // V1
+ func digitalRoot(of number: Int) -> Int {
+ return (1 + (number - 1) % 9)
+ }
+ 
+ // V2
+ func digitalRootV2(of number: Int) -> Int {
+ let arr = String(number).compactMap({ Int("\($0)") })
+ var sum = arr.reduce(0, +)
+ 
+ while sum > 10 {
+ let arr = String(sum).compactMap({ Int("\($0)") })
+ sum = arr.reduce(0, +)
+ }
+ return sum
+ }
+ 
+ */
 
-// V1
-func digitalRoot(of number: Int) -> Int {
-    return (1 + (number - 1) % 9)
+
+
+// MARK: - Напишите функцию, которая принимает целое число в качестве входных данных и возвращает количество битов, равных единице в двоичном представлении этого числа. Вы можете гарантировать, что ввод неотрицательный. Пример: двоичное представление числа 1234 равно 10011010010, поэтому в этом случае функция должна вернуть 5.
+
+/*
+
+func countBits(_ n: Int) -> Int {
+    return String(n, radix: 2).filter({ $0 == "1" }).count
 }
 
-// V2
-func digitalRootV2(of number: Int) -> Int {
-    let arr = String(number).compactMap({ Int("\($0)") })
-    var sum = arr.reduce(0, +)
-
-    while sum > 10 {
-        let arr = String(sum).compactMap({ Int("\($0)") })
-        sum = arr.reduce(0, +)
-    }
-    return sum
+func countBitsV2(_ n: Int) -> Int {
+    return n.nonzeroBitCount
 }
 
 */
