@@ -30,4 +30,32 @@ final class UnitTestingLearnAppTests: XCTestCase {
         // then
         XCTAssert(value == 100, "Highest value should be equal 100")
     }
+    
+    func testNumberOneMustBeGreaterThanNumberTwo() {
+        let numberOne = 10
+        let numberTwo = 9
+        
+        let result = sut.greaterThanSecondValue(x: numberOne, y: numberTwo)
+        
+        XCTAssert(result, "The number one must be greater than number two")
+    }
+    
+    func testNumberOneMustNotBeGreaterThanNumberTwo() {
+        let numberOne = 10
+        let numberTwo = 10
+        
+        let result = sut.greaterThanSecondValue(x: numberOne, y: numberTwo)
+        
+        XCTAssert(!result, "The number one must be greater than number two")
+    }
+    
+    func testIsDivisibleByThree() {
+        let result = sut.isDivisibleByThree(number: 3)
+        XCTAssertEqual(result, true)
+    }
+    
+    func testIsNotDivisibleByThree() {
+        let result = sut.isDivisibleByThree(number: 10)
+        XCTAssertEqual(result, false)
+    }
 }
