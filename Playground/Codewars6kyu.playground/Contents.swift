@@ -139,13 +139,53 @@ import UIKit
 // MARK: - Напишите функцию, которая принимает целое число в качестве входных данных и возвращает количество битов, равных единице в двоичном представлении этого числа. Вы можете гарантировать, что ввод неотрицательный. Пример: двоичное представление числа 1234 равно 10011010010, поэтому в этом случае функция должна вернуть 5.
 
 /*
+ 
+ func countBits(_ n: Int) -> Int {
+ return String(n, radix: 2).filter({ $0 == "1" }).count
+ }
+ 
+ func countBitsV2(_ n: Int) -> Int {
+ return n.nonzeroBitCount
+ }
+ 
+ */
 
-func countBits(_ n: Int) -> Int {
-    return String(n, radix: 2).filter({ $0 == "1" }).count
+
+
+// MARK: - Вам дан массив (который будет иметь длину не менее 3, но может быть очень большим), содержащий целые числа. Массив либо полностью состоит из нечетных целых чисел, либо полностью состоит из четных целых чисел, за исключением одного целого числа N. Напишите метод, который принимает массив в качестве аргумента и возвращает этот «выброс» N.
+
+//Examples
+//[2, 4, 0, 100, 4, 11, 2602, 36]
+//Should return: 11 (the only odd number)
+//
+//[160, 3, 1719, 19, 11, 13, -21]
+//Should return: 160 (the only even number)
+
+/*
+
+func findOutlier(_ array: [Int]) -> Int {
+    let showrtPartArray = array[0...2]
+    if showrtPartArray.filter({ $0 % 2 == 0 }).count > 1 {
+        for num in array {
+            if num % 2 != 0 {
+                return num
+            }
+        }
+    } else {
+        for num in array {
+            if num % 2 == 0 {
+                return num
+            }
+        }
+    }
+    
+    return 0
 }
 
-func countBitsV2(_ n: Int) -> Int {
-    return n.nonzeroBitCount
+func findOutlierV2(_ array: [Int]) -> Int {
+    let evens = array.filter { $0 % 2 == 0 }
+    let odds = array.filter { $0 % 2 != 0 }
+    return evens.count < odds.count ? evens[0] : odds[0]
 }
 
 */
