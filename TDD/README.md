@@ -1,6 +1,6 @@
 # TDD — это подход к разработке на через тестирование
 
-### Robert C. Martin, who is known as Uncle Bob, describes these Three Laws of TDD:
+### Robert C. Martin, известного как Дядюшка Боб, описал три главных правила TDD:
 
 ```swift
 
