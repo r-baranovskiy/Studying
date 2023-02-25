@@ -204,35 +204,65 @@ import UIKit
 //"ABBA" -> 2 # 'A' and 'B' each occur twice
 
 /*
+ 
+ func countDuplicates(_ input: String) -> Int {
+ let loweredInput = input.lowercased()
+ var charCount: [Character: Int] = [:]
+ var duplicatesCount = 0
+ 
+ for char in loweredInput {
+ if let count = charCount[char] {
+ charCount[char] = count + 1
+ } else {
+ charCount[char] = 1
+ }
+ }
+ 
+ for (_, count) in charCount {
+ if count > 1 {
+ duplicatesCount += 1
+ }
+ }
+ 
+ return duplicatesCount
+ }
+ 
+ func countDuplicatesV2(_ s:String) -> Int {
+ var counts: [String: Int] = [:]
+ for character in Array(s) {
+ counts[character.lowercased(), default: 0] += 1
+ }
+ return counts.values.filter{ $0 > 1 }.count
+ }
+ 
+ */
 
-func countDuplicates(_ input: String) -> Int {
-    let loweredInput = input.lowercased()
-    var charCount: [Character: Int] = [:]
-    var duplicatesCount = 0
+
+
+// MARK: - Цель этого упражнения - преобразовать строку в новую строку, где каждый символ в новой строке равен "(", если этот символ появляется только один раз в исходной строке, или ")", если этот символ появляется более одного раза в исходной строке. Игнорируйте заглавные буквы при определении того, является ли символ дубликатом.
+
+//Examples
+//"din"      =>  "((("
+//"recede"   =>  "()()()"
+//"Success"  =>  ")())())"
+//"(( @"     =>  "))(("
+
+/*
+
+func duplicateEncode(_ word: String) -> String {
+    let characters = Array(word.lowercased())
+    var outputString = ""
     
-    for char in loweredInput {
-        if let count = charCount[char] {
-            charCount[char] = count + 1
+    for char in characters {
+        if characters.filter({ $0 == char }).count > 1 {
+            outputString += ")"
         } else {
-            charCount[char] = 1
+            outputString += "("
         }
     }
     
-    for (_, count) in charCount {
-        if count > 1 {
-            duplicatesCount += 1
-        }
-    }
+    return outputString
     
-    return duplicatesCount
-}
-
-func countDuplicatesV2(_ s:String) -> Int {
-    var counts: [String: Int] = [:]
-    for character in Array(s) {
-        counts[character.lowercased(), default: 0] += 1
-    }
-    return counts.values.filter{ $0 > 1 }.count
 }
 
 */
