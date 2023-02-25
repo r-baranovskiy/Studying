@@ -162,30 +162,77 @@ import UIKit
 //Should return: 160 (the only even number)
 
 /*
+ 
+ func findOutlier(_ array: [Int]) -> Int {
+ let showrtPartArray = array[0...2]
+ if showrtPartArray.filter({ $0 % 2 == 0 }).count > 1 {
+ for num in array {
+ if num % 2 != 0 {
+ return num
+ }
+ }
+ } else {
+ for num in array {
+ if num % 2 == 0 {
+ return num
+ }
+ }
+ }
+ 
+ return 0
+ }
+ 
+ func findOutlierV2(_ array: [Int]) -> Int {
+ let evens = array.filter { $0 % 2 == 0 }
+ let odds = array.filter { $0 % 2 != 0 }
+ return evens.count < odds.count ? evens[0] : odds[0]
+ }
+ 
+ */
 
-func findOutlier(_ array: [Int]) -> Int {
-    let showrtPartArray = array[0...2]
-    if showrtPartArray.filter({ $0 % 2 == 0 }).count > 1 {
-        for num in array {
-            if num % 2 != 0 {
-                return num
-            }
-        }
-    } else {
-        for num in array {
-            if num % 2 == 0 {
-                return num
-            }
+
+
+// MARK: - Подсчитайте количество дубликатов. Напишите функцию, которая будет возвращать количество различных буквенных символов и цифр, не зависящих от регистра, которые встречаются во входной строке более одного раза. Можно предположить, что входная строка содержит только буквы (как прописные, так и строчные) и числовые цифры.
+
+//Example
+//"abcde" -> 0 # no characters repeats more than once
+//"aabbcde" -> 2 # 'a' and 'b'
+//"aabBcde" -> 2 # 'a' occurs twice and 'b' twice (`b` and `B`)
+//"indivisibility" -> 1 # 'i' occurs six times
+//"Indivisibilities" -> 2 # 'i' occurs seven times and 's' occurs twice
+//"aA11" -> 2 # 'a' and '1'
+//"ABBA" -> 2 # 'A' and 'B' each occur twice
+
+/*
+
+func countDuplicates(_ input: String) -> Int {
+    let loweredInput = input.lowercased()
+    var charCount: [Character: Int] = [:]
+    var duplicatesCount = 0
+    
+    for char in loweredInput {
+        if let count = charCount[char] {
+            charCount[char] = count + 1
+        } else {
+            charCount[char] = 1
         }
     }
     
-    return 0
+    for (_, count) in charCount {
+        if count > 1 {
+            duplicatesCount += 1
+        }
+    }
+    
+    return duplicatesCount
 }
 
-func findOutlierV2(_ array: [Int]) -> Int {
-    let evens = array.filter { $0 % 2 == 0 }
-    let odds = array.filter { $0 % 2 != 0 }
-    return evens.count < odds.count ? evens[0] : odds[0]
+func countDuplicatesV2(_ s:String) -> Int {
+    var counts: [String: Int] = [:]
+    for character in Array(s) {
+        counts[character.lowercased(), default: 0] += 1
+    }
+    return counts.values.filter{ $0 > 1 }.count
 }
 
 */
