@@ -23,8 +23,8 @@ struct MockData {
         ])
     }()
     
-    private let examples: ListSection = {
-        .example([
+    private let coupons: ListSection = {
+        .coupons([
             .init(title: "", imageString: "exampleOne"),
             .init(title: "", imageString: "exampleTwo"),
             .init(title: "", imageString: "exampleThree")
@@ -32,6 +32,6 @@ struct MockData {
     }()
     
     var pageData: [ListSection] {
-        [sales, categories, examples]
+        [sales, categories, coupons]
     }
 }

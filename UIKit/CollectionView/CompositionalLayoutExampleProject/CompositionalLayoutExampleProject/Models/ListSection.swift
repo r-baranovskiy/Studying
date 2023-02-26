@@ -3,13 +3,13 @@ import Foundation
 enum ListSection {
     case sales([ListItem])
     case categories([ListItem])
-    case example([ListItem])
+    case coupons([ListItem])
     
     var items: [ListItem] {
         switch self {
         case .sales(let items),
                 .categories(let items),
-                .example(let items):
+                .coupons(let items):
             return items
         }
     }
@@ -24,8 +24,8 @@ enum ListSection {
             return ""
         case .categories(_):
             return "Category"
-        case .example(_):
-            return "Example"
+        case .coupons(_):
+            return "Coupon"
         }
     }
 }

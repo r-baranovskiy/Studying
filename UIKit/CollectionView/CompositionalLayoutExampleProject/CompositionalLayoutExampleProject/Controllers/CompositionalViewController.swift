@@ -21,7 +21,7 @@ final class CompositionalViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
@@ -57,17 +57,40 @@ extension CompositionalViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        switch sections[indexPath.section] {
+        case .sales(let sales):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: SaleCollectionViewCell.identifier,
+                for: indexPath) as? SaleCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configureCell(imageName: sales[indexPath.row].imageString)
+            return cell
+        case .categories(let categories):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CategoryCollectionViewCell.identifier,
+                for: indexPath) as? CategoryCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            return cell
+        case .coupons(let coupons):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CouponCollectionViewCell.identifier,
+                for: indexPath) as? CouponCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            return cell
+        }
     }
 }
-
-// MARK: - Constraints
-
-extension CompositionalViewController {
-    private func addConstraints() {
-        NSLayoutConstraint.activate([
-            
-        ])
-    }
-}
-
+        
+        // MARK: - Constraints
+        
+        extension CompositionalViewController {
+            private func addConstraints() {
+                NSLayoutConstraint.activate([
+                    
+                ])
+            }
+        }
+        
