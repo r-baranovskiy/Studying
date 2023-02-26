@@ -124,6 +124,7 @@ private func createCategorySection() -> NSCollectionLayoutSection {
     let group = NSCollectionLayoutGroup.horizontal(
         layoutSize: groupSize,
         subitems: [item])
+    group.interItemSpacing = .flexible(10)
     
     let supplementaryHeaderItem = supplementaryHeaderItem()
     
@@ -131,7 +132,7 @@ private func createCategorySection() -> NSCollectionLayoutSection {
         group: group, interGroupSpacing: 10, behaviour: .none,
         supplementaryItems: [supplementaryHeaderItem], contentInsets: false)
 
-    section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+    section.contentInsets = .init(top: 0, leading: 20, bottom: 0, trailing: 10)
     return section
 }
 
@@ -142,7 +143,7 @@ private func createCouponSection() -> NSCollectionLayoutSection {
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
     let groupSize = NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(1),
+        widthDimension: .fractionalWidth(0.9),
         heightDimension: .fractionalHeight(0.45))
     let group = NSCollectionLayoutGroup.horizontal(
         layoutSize: groupSize,
