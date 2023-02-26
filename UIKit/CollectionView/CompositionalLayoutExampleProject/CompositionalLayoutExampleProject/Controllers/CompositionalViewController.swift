@@ -22,6 +22,8 @@ final class CompositionalViewController: UIViewController {
         return button
     }()
     
+    private let sections = MockData.shared.pageData
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
@@ -37,7 +39,6 @@ final class CompositionalViewController: UIViewController {
     }
     
     private func setUoCollectionView() {
-        collectionView.delegate = self
         collectionView.dataSource = self
         
         collectionView.register(
@@ -49,15 +50,119 @@ final class CompositionalViewController: UIViewController {
         collectionView.register(
             CouponCollectionViewCell.self,
             forCellWithReuseIdentifier: CouponCollectionViewCell.identifier)
+        collectionView.register(
+            HeaderCollectionView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: HeaderCollectionView.identifier)
+        
+        collectionView.collectionViewLayout = createLayout()
     }
-    
-    private let sections = MockData.shared.pageData
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewCompositionalLayout
 
-extension CompositionalViewController: UICollectionViewDelegate {
+extension CompositionalViewController {
+    private func createLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+            guard let self = self else { return nil }
+            let section = self.sections[sectionIndex]
+            switch section {
+            case .sales(_):
+                return createSaleSection()
+            case .categories(_):
+                return createCategorySection()
+            case .coupons(_):
+                return createCouponSection()
+            }
+        }
+    }
+}
+
+private func createLayoutSection(
+    group: NSCollectionLayoutGroup, interGroupSpacing: CGFloat,
+    behaviour: UICollectionLayoutSectionOrthogonalScrollingBehavior,
+    supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
+    contentInsets: Bool) -> NSCollectionLayoutSection {
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = behaviour
+        section.interGroupSpacing = interGroupSpacing
+        section.boundarySupplementaryItems = supplementaryItems
+        section.supplementariesFollowContentInsets = contentInsets
+        return section
+    }
+
+private func createSaleSection() -> NSCollectionLayoutSection {
+    let itemSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(1),
+        heightDimension: .fractionalHeight(1))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
+    let groupSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(0.9),
+        heightDimension: .fractionalHeight(0.2))
+    let group = NSCollectionLayoutGroup.horizontal(
+        layoutSize: groupSize,
+        subitems: [item])
+    
+    let section = createLayoutSection(
+        group: group, interGroupSpacing: 5, behaviour: .groupPaging,
+        supplementaryItems: [], contentInsets: false)
+
+    section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 0)
+    return section
+}
+
+private func createCategorySection() -> NSCollectionLayoutSection {
+    let itemSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(0.3),
+        heightDimension: .fractionalHeight(1))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(1),
+        heightDimension: .fractionalHeight(0.1))
+    let group = NSCollectionLayoutGroup.horizontal(
+        layoutSize: groupSize,
+        subitems: [item])
+    
+    let supplementaryHeaderItem = supplementaryHeaderItem()
+    
+    let section = createLayoutSection(
+        group: group, interGroupSpacing: 10, behaviour: .none,
+        supplementaryItems: [supplementaryHeaderItem], contentInsets: false)
+
+    section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+    return section
+}
+
+private func createCouponSection() -> NSCollectionLayoutSection {
+    let itemSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(1),
+        heightDimension: .fractionalHeight(1))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(1),
+        heightDimension: .fractionalHeight(0.45))
+    let group = NSCollectionLayoutGroup.horizontal(
+        layoutSize: groupSize,
+        subitems: [item])
+    
+    let supplementaryHeaderItem = supplementaryHeaderItem()
+    
+    let section = createLayoutSection(
+        group: group, interGroupSpacing: 10, behaviour: .continuous,
+        supplementaryItems: [supplementaryHeaderItem], contentInsets: false)
+
+    section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 0)
+    return section
+}
+
+private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+    .init(layoutSize: NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(1), heightDimension: .estimated(30)),
+          elementKind: UICollectionView.elementKindSectionHeader,
+          alignment: .top)
 }
 
 // MARK: - UICollectionViewDataSource
@@ -104,8 +209,13 @@ extension CompositionalViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind, withReuseIdentifier: "header", for: indexPath)
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: HeaderCollectionView.identifier,
+                for: indexPath) as? HeaderCollectionView else {
+                return UICollectionReusableView()
+            }
+            header.configureHeader(categoryName: sections[indexPath.row].title)
             return header
         default:
             return UICollectionReusableView()
