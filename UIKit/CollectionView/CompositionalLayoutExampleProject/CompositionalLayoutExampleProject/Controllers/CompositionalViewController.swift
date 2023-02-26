@@ -25,15 +25,30 @@ final class CompositionalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
+        setUoCollectionView()
         addConstraints()
     }
     
     private func setUpView() {
         view.backgroundColor = .systemBackground
-        collectionView.delegate = self
-        collectionView.dataSource = self
         title = "FoodShop"
         view.addSubview(orderButton)
+        view.addSubview(collectionView)
+    }
+    
+    private func setUoCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        collectionView.register(
+            SaleCollectionViewCell.self,
+            forCellWithReuseIdentifier: SaleCollectionViewCell.identifier)
+        collectionView.register(
+            CategoryCollectionViewCell.self,
+            forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+        collectionView.register(
+            CouponCollectionViewCell.self,
+            forCellWithReuseIdentifier: CouponCollectionViewCell.identifier)
     }
     
     private let sections = MockData.shared.pageData
@@ -72,6 +87,8 @@ extension CompositionalViewController: UICollectionViewDataSource {
                 for: indexPath) as? CategoryCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            cell.configureCell(categoryName: categories[indexPath.row].title,
+                               imageName: categories[indexPath.row].imageString)
             return cell
         case .coupons(let coupons):
             guard let cell = collectionView.dequeueReusableCell(
@@ -79,18 +96,46 @@ extension CompositionalViewController: UICollectionViewDataSource {
                 for: indexPath) as? CouponCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            cell.configureCell(imageName: coupons[indexPath.row].imageString)
             return cell
         }
     }
-}
-        
-        // MARK: - Constraints
-        
-        extension CompositionalViewController {
-            private func addConstraints() {
-                NSLayoutConstraint.activate([
-                    
-                ])
-            }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind, withReuseIdentifier: "header", for: indexPath)
+            return header
+        default:
+            return UICollectionReusableView()
         }
-        
+    }
+}
+
+// MARK: - Constraints
+
+extension CompositionalViewController {
+    private func addConstraints() {
+        NSLayoutConstraint.activate([
+            orderButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -5),
+            orderButton.heightAnchor.constraint(equalToConstant: 60),
+            orderButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 20),
+            orderButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -20),
+            
+            collectionView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.bottomAnchor.constraint(
+                equalTo: orderButton.topAnchor, constant: -20),
+            collectionView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor)
+        ])
+    }
+}
+
