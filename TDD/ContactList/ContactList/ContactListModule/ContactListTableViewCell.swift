@@ -4,8 +4,11 @@ class ContactListTableViewCell: UITableViewCell {
     
     static let identifier = "ContactListCollectionViewCell"
     
+    var nameLabel = UILabel()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(nameLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -17,6 +20,6 @@ class ContactListTableViewCell: UITableViewCell {
     }
     
     func configure(with person: Person) {
-        
+        nameLabel.text = person.name
     }
 }
