@@ -2,28 +2,30 @@ import UIKit
 
 class NewContactViewController: UIViewController {
     
-    private let nameTextField: UITextField = {
+    var contactManager: ContactManager!
+    
+    let nameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Name"
         textField.borderStyle = .line
         return textField
     }()
     
-    private let surnameTextField: UITextField = {
+    let surnameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Surname"
         textField.borderStyle = .line
         return textField
     }()
 
-    private let phoneTextField: UITextField = {
+    let phoneTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Phone"
         textField.borderStyle = .line
         return textField
     }()
     
-    private let saveButton: UIButton = {
+    let saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Save", for: .normal)
         button.sizeToFit()
@@ -55,6 +57,17 @@ class NewContactViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         addConstraints()
+        saveButton.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
+    }
+    
+    @objc func saveButtonDidTap() {
+        let name = nameTextField.text
+        let surname = surnameTextField.text
+        let phone = phoneTextField.text
+        let imageData = UIImage(systemName: "person")?.pngData()
+        
+        let person = Person(name: name ?? "", phone: phone ?? "", surname: surname ?? "", imageData: imageData)
+        contactManager.add(person: person)
     }
     
     private func setUpView() {
