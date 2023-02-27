@@ -248,21 +248,55 @@ import UIKit
 //"(( @"     =>  "))(("
 
 /*
+ 
+ func duplicateEncode(_ word: String) -> String {
+ let characters = Array(word.lowercased())
+ var outputString = ""
+ 
+ for char in characters {
+ if characters.filter({ $0 == char }).count > 1 {
+ outputString += ")"
+ } else {
+ outputString += "("
+ }
+ }
+ 
+ return outputString
+ 
+ }
+ 
+ */
 
-func duplicateEncode(_ word: String) -> String {
-    let characters = Array(word.lowercased())
-    var outputString = ""
+
+
+// MARK: - Напишите функцию persistence, которая принимает положительный параметр num и возвращает его мультипликативную стойкость, то есть количество раз, которое вы должны умножить на num, пока не получите одну цифру.
+
+//For example (Input --> Output):
+//
+//39 --> 3 (because 3*9 = 27, 2*7 = 14, 1*4 = 4 and 4 has only one digit)
+//999 --> 4 (because 9*9*9 = 729, 7*2*9 = 126, 1*2*6 = 12, and finally 1*2 = 2)
+//4 --> 0 (because 4 is already a one-digit number)
+
+/*
+
+func persistence(for num: Int) -> Int {
+    let arr = String(num).compactMap({ Int("\($0)") })
     
-    for char in characters {
-        if characters.filter({ $0 == char }).count > 1 {
-            outputString += ")"
-        } else {
-            outputString += "("
+    return arr.count == 1 ? 0 : 1 + persistence(for: arr.reduce(1, *))
+}
+
+func persistenceV2(for num: Int) -> Int {
+    var count = 0
+    var num = num
+    while num > 9 {
+        var temp = 1
+        for i in String(num) {
+            temp *= Int(String(i))!
         }
+        num = temp
+        count += 1
     }
-    
-    return outputString
-    
+    return count
 }
 
 */
