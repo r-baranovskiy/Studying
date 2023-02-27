@@ -6,7 +6,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
 
     private let categoryImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

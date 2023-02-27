@@ -6,7 +6,7 @@ class SaleCollectionViewCell: UICollectionViewCell {
     
     private let saleImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

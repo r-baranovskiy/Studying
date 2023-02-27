@@ -6,7 +6,7 @@ class CouponCollectionViewCell: UICollectionViewCell {
     
     private let couponImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
