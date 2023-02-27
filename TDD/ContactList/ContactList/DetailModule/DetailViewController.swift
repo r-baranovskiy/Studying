@@ -2,14 +2,16 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    private let imageView: UIImageView = {
+    var person: Person!
+    
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .systemGray
         return imageView
     }()
     
-    private let nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -17,7 +19,7 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    private let surnameLabel: UILabel = {
+    let surnameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -25,7 +27,7 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    private let phoneLabel: UILabel = {
+    let phoneLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -48,6 +50,18 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         addConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let imageData = person.imageData else { return }
+        guard let image = UIImage(data: imageData) else { return }
+        
+        nameLabel.text = person.name
+        surnameLabel.text = person.surname
+        phoneLabel.text = person.phone
+        imageView.image = image
     }
     
     private func setUpView() {
