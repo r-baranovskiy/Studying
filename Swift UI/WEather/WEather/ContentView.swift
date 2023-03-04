@@ -1,29 +1,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isNight = true
+    
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.blue, .white]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing)
-                .ignoresSafeArea(.all)
+            BackgroundView(isNight: $isNight)
             VStack {
-                Text("Cupertino, CA")
-                    .foregroundColor(.white)
-                    .font(.system(size: 32, weight: .medium, design: .default))
-                    .padding()
-                VStack(spacing: 10) {
-                    Image(systemName: "cloud.sun.fill")
-                        .renderingMode(.original)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 180, height: 180)
-                    Text("76°")
-                        .font(.system(size: 70, weight: .medium))
-                        .foregroundColor(.white)
-                }
+                CityTextView(city: "Minsk, BY")
                 
-                Spacer()
+                CurrentWeatherView(
+                    imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill",
+                    currentWeather: 5)
                 
                 HStack(spacing: 20) {
                     WeatherDayView(
@@ -42,14 +30,62 @@ struct ContentView: View {
                         dayOfWeek: "SAT",
                         systemImageName: "tornado", temperature: 8)
                 }
-                    Spacer()
+                Spacer()
+                Button {
+                    isNight.toggle()
+                } label: {
+                    WeatherButton(title: "Change Day Time",
+                                  backgroundColor: .white, textColor: .blue)
+                }
+                Spacer()
             }
         }
     }
 }
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+
+// MARK: - Views
+
+struct BackgroundView: View {
+    @Binding var isNight: Bool
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [
+            isNight ? .black : .blue, isNight ? .gray : Color("lightBlue")
+        ]),
+                       startPoint: .topLeading,
+                       endPoint: .bottomTrailing)
+        .ignoresSafeArea(.all)
+    }
+}
+
+struct CityTextView: View {
+    var city: String
+    
+    var body: some View {
+        Text(city)
+            .foregroundColor(.white)
+            .font(.system(size: 32, weight: .medium, design: .default))
+            .padding()
+    }
+}
+
+struct CurrentWeatherView: View {
+    var imageName: String
+    var currentWeather: Int
+    
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(systemName: imageName)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 180, height: 180)
+                .padding(.bottom, 10)
+            Text("\(currentWeather)°")
+                .font(.system(size: 70, weight: .medium))
+                .foregroundColor(.white)
+        }
+        .padding(.bottom, 40)
     }
 }
 
@@ -73,5 +109,28 @@ struct WeatherDayView: View {
                 .font(.system(size: 28, weight: .medium))
                 .foregroundColor(.white)
         }
+    }
+}
+
+struct WeatherButton: View {
+    var title: String
+    var backgroundColor: Color
+    var textColor: Color
+    
+    var body: some View {
+        Text(title)
+            .font(.system(size: 20, weight: .bold))
+            .frame(width: 280, height: 50)
+            .foregroundColor(textColor)
+            .background(backgroundColor)
+            .cornerRadius(10)
+    }
+}
+
+// MARK: - Preview
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
