@@ -20,6 +20,14 @@ final class ContactListViewController: UIViewController {
         view.backgroundColor = .systemBackground
         tableView.dataSource = dataSource
         addConstraints()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add, target: self,
+            action: #selector(didTapAddNewContact))
+    }
+    
+    @objc private func didTapAddNewContact() {
+        
     }
 }
 

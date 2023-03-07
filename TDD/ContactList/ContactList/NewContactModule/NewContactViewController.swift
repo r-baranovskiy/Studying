@@ -57,7 +57,8 @@ class NewContactViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         addConstraints()
-        saveButton.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonDidTap),
+                             for: .touchUpInside)
     }
     
     @objc func saveButtonDidTap() {
@@ -66,7 +67,8 @@ class NewContactViewController: UIViewController {
         let phone = phoneTextField.text
         let imageData = UIImage(systemName: "person")?.pngData()
         
-        let person = Person(name: name ?? "", phone: phone ?? "", surname: surname ?? "", imageData: imageData)
+        let person = Person(name: name ?? "", phone: phone ?? "",
+                            surname: surname ?? "", imageData: imageData)
         contactManager.add(person: person)
     }
     
@@ -74,37 +76,17 @@ class NewContactViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(textFieldsStackView)
     }
-    
 }
 
 extension NewContactViewController {
     private func addConstraints() {
-        
         NSLayoutConstraint.activate([
-            textFieldsStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
-            textFieldsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            textFieldsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            textFieldsStackView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
+            textFieldsStackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 50),
+            textFieldsStackView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -50),
         ])
     }
 }
-
-import SwiftUI
-struct ListProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let listVC = NewContactViewController()
-        
-        func makeUIViewController(context: UIViewControllerRepresentableContext<ListProvider.ContainerView>) -> NewContactViewController {
-            return listVC
-        }
-        
-        func updateUIViewController(_ uiViewController: ListProvider.ContainerView.UIViewControllerType, context: UIViewControllerRepresentableContext<ListProvider.ContainerView>) {
-        }
-    }
-}
-
-

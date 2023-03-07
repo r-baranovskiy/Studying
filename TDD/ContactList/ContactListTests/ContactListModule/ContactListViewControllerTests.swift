@@ -3,7 +3,7 @@ import XCTest
 
 final class ContactListViewControllerTests: XCTestCase {
     
-    var sut: ContactListViewController!
+     var sut: ContactListViewController!
 
     override func setUpWithError() throws {
         sut = ContactListViewController()
@@ -25,4 +25,6 @@ final class ContactListViewControllerTests: XCTestCase {
     func testWhenViewIsLoadedTableViewDataSourceIsSet() {
         XCTAssertTrue(sut.tableView.dataSource is ContactListTableViewDataSource)
     }
+    
+    
 }

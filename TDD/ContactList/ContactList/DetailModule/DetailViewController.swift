@@ -79,13 +79,19 @@ extension DetailViewController {
             imageView.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1.5),
+            imageView.heightAnchor.constraint(
+                equalTo: view.heightAnchor, multiplier: 0.2),
+            imageView.widthAnchor.constraint(
+                equalTo: imageView.heightAnchor, multiplier: 1.5),
             
-            labelsStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
-            labelsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            labelsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            labelsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+            labelsStackView.topAnchor.constraint(
+                equalTo: imageView.bottomAnchor, constant: 20),
+            labelsStackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 50),
+            labelsStackView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -50),
+            labelsStackView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
         ])
     }
 }
