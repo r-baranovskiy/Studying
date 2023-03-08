@@ -9,6 +9,7 @@ struct ContentView: View {
     ]
     
     @State private var moves: [Move?] = Array(repeating: nil, count: 9)
+    @State private var isGameboardDisabled = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -31,18 +32,30 @@ struct ContentView: View {
                                 return
                             }
                             moves[i] = Move(player: .human, boardIndex: i)
+                            isGameboardDisabled = true
+                            
+                            if checkWinCondition(for: .human, in: moves) {
+                                print("Human wins")
+                            }
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 let computerPosition = determineComputerMovePosition(
                                     in: moves)
                                 moves[computerPosition] = Move(
                                     player: .computer, boardIndex: computerPosition)
+                                
+                                if checkWinCondition(for: .computer, in: moves) {
+                                    print("Computer wins")
+                                }
+                                
+                                isGameboardDisabled = false
                             }
                         }
                     }
                 }
                 Spacer()
             }
+            .disabled(isGameboardDisabled)
             .padding()
         }
     }
@@ -58,8 +71,26 @@ struct ContentView: View {
         while isSquareOccupied(in: moves, forIndex: movePosition) {
             movePosition = Int.random(in: 0..<9)
         }
-        
         return movePosition
+    }
+    
+    private func checkWinCondition(for player: Player, in moves: [Move?]) -> Bool {
+        let winPatterns: Set<Set<Int>> = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+            [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+        ]
+        
+        let playerMoves = moves
+            .compactMap { $0 }
+            .filter { $0.player == player }
+        
+        let playerPosition = Set(playerMoves.map { $0.boardIndex })
+        
+        for pattern in winPatterns where pattern.isSubset(of: playerPosition) {
+            return true
+        }
+        
+        return false
     }
 }
 
