@@ -59,10 +59,22 @@ final class FirstViewController: UIViewController {
         return layer
     }()
     
+    private let animation: CABasicAnimation = {
+        let animation = CABasicAnimation()
+        animation.keyPath = "strokeEnd"
+        animation.toValue = 1
+        animation.duration = 2
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animation.fillMode = .both
+        animation.isRemovedOnCompletion = false
+        return animation
+    }()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        animation.delegate = self
         view.backgroundColor = .systemBackground
         tapButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         viewModel = FirstViewViewModel()
@@ -83,13 +95,8 @@ final class FirstViewController: UIViewController {
     }
     
     @objc private func didTapButton() {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .secondarySystemBackground
-        print(overShapeLayer.strokeEnd)
+        overShapeLayer.add(animation, forKey: nil)
         overShapeLayer.strokeEnd += 0.2
-        if overShapeLayer.strokeEnd == 1 {
-            present(vc, animated: true)
-        }
     }
     
     private func configureShapeLayer(_ shapeLayer: CAShapeLayer) {
@@ -109,6 +116,17 @@ final class FirstViewController: UIViewController {
         tapButton.layer.shadowOffset = CGSize(width: 0, height: 5)
         tapButton.layer.shadowOpacity = 0.5
         tapButton.layer.cornerRadius = 5
+    }
+}
+
+extension FirstViewController: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .secondarySystemBackground
+        
+        if flag {
+            present(vc, animated: true)
+        }
     }
 }
 
