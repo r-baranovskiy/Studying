@@ -37,21 +37,69 @@ final class FirstViewController: UIViewController {
         gradient.opacity = 1
         return gradient
     }()
+    
+    private let shapeLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.lineWidth = 20
+        layer.lineCap = CAShapeLayerLineCap(rawValue: "round")
+        layer.fillColor = nil
+        layer.strokeEnd = 1
+        layer.strokeColor = UIColor.white.cgColor
+        return layer
+    }()
+    
+    private let overShapeLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.lineWidth = 20
+        layer.lineCap = CAShapeLayerLineCap(rawValue: "round")
+        layer.fillColor = nil
+        layer.strokeEnd = 0
+        layer.opacity = 1
+        layer.strokeColor = UIColor.blue.cgColor
+        return layer
+    }()
+    
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        tapButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         viewModel = FirstViewViewModel()
         view.layer.insertSublayer(gradient, at: 0)
+        view.layer.addSublayer(shapeLayer)
+        view.layer.addSublayer(overShapeLayer)
         view.addSubview(imageView)
         view.addSubview(tapButton)
         addConstraints()
     }
     
     override func viewDidLayoutSubviews() {
+        layers()
         gradient.frame.size.width = view.bounds.width
         gradient.frame.size.height = view.safeAreaInsets.top + 50 + imageView.frame.size.height / 2
-        layers()
+        configureShapeLayer(shapeLayer)
+        configureShapeLayer(overShapeLayer)
+    }
+    
+    @objc private func didTapButton() {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .secondarySystemBackground
+        print(overShapeLayer.strokeEnd)
+        overShapeLayer.strokeEnd += 0.2
+        if overShapeLayer.strokeEnd == 1 {
+            present(vc, animated: true)
+        }
+    }
+    
+    private func configureShapeLayer(_ shapeLayer: CAShapeLayer) {
+        shapeLayer.frame = view.bounds
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: view.frame.width / 2 - 100,
+                              y: view.frame.height / 2))
+        path.addLine(to: CGPoint(x: view.frame.width / 2 + 100,
+                                 y: view.frame.height / 2))
+        shapeLayer.path = path.cgPath
     }
     
     private func layers() {
